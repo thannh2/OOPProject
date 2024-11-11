@@ -10,7 +10,7 @@ public class GamePanel extends JPanel implements Runnable {
     private static final int FPS = 60;
 
     private Thread gameThread;
-    private Keyboard keyboard;
+    private Keyboard keyboard = new Keyboard();
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));

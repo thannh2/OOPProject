@@ -16,6 +16,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
+        this.addKeyListener(keyboard);
         this.setFocusable(true);
     }
 
@@ -24,14 +25,13 @@ public class GamePanel extends JPanel implements Runnable {
         this.gameThread.start();
     }
 
-    private void update() {
+    public void update() {
         // TODO: Viết code update ở đây
         // Bao gồm update nhân vật, trạng thái game, ...
     }
 
-    private void render() {
-        // TODO: Viết code render ở đây
-        // Bao gồm vẽ nhân vật, UI, ...
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             if (deltaTime >= 1) {
                 update();
-                render();
+                repaint();
                 deltaTime--;
             }
 

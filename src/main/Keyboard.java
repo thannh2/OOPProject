@@ -4,7 +4,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 
 public class Keyboard implements KeyListener {
-    public boolean up, down, right, left;
+    public boolean up, down, right, left, punch, kick;
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -30,6 +30,14 @@ public class Keyboard implements KeyListener {
         if (number == KeyEvent.VK_D) {
             right = true;
         }
+
+        if(number == KeyEvent.VK_J) {
+            punch = true;
+        }
+
+        if(number == KeyEvent.VK_K) {
+            kick = true;
+        }
     }
 
     @Override
@@ -50,6 +58,14 @@ public class Keyboard implements KeyListener {
 
         if (number == KeyEvent.VK_D) {
             right = false;
+        }
+
+        if(number == KeyEvent.VK_J) {
+            punch = false;
+        }
+
+        if(number == KeyEvent.VK_K) {
+            kick = false;
         }
     }
 }

@@ -1,6 +1,9 @@
 package src.main;
 
 import javax.swing.JPanel;
+
+import src.entity.Player;
+
 import java.awt.*;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -11,10 +14,11 @@ public class GamePanel extends JPanel implements Runnable {
 
     private Thread gameThread;
     private Keyboard keyboard = new Keyboard();
+    public Player player = new Player(this, keyboard);
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
-        this.setBackground(Color.black);
+        this.setBackground(Color.white);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyboard);
         this.setFocusable(true);
@@ -26,12 +30,17 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        // TODO: Viết code update ở đây
-        // Bao gồm update nhân vật, trạng thái game, ...
+        player.update();
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        Graphics2D g2 = (Graphics2D)g;
+
+        player.draw(g2);
+
+        g2.dispose();
     }
 
     @Override

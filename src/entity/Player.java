@@ -1,24 +1,47 @@
 package src.entity;
 
+import java.util.Map;
+import java.util.HashMap;
+
 import src.main.GamePanel;
 import src.main.Keyboard;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import javafx.scene.shape.Rectangle;
+import src.main.ActionBox;
+
 public class Player extends Entity {
     GamePanel gp;
     Keyboard kb;
+    private Map<String, ActionBox> actions;
+
+    public int Direction;
 
     public Player(GamePanel gp, Keyboard kb) {
         this.gp = gp;
         this.kb = kb;
         setDefaultValues();
         getPlayerImage();
+        Direction = 0;
+
+        Rectangle zeroBox = new Rectangle(0, 0, 0, 0);
+        int x = (int)this.x;
+        int y = (int)this.y;
+
+		int entityLeftX = x + 24;
+		int entityRightX = x + 88; // 24 toi le trai, 88 toi le phai 
+		int entityTopY = y + 24;
+		int entityBotY = y + 120; // 24 toi dau, 120 toi chan
+        actions = new HashMap<>();
+        actions.put("punch4", new Action(new Rectangle(x + Direction*82, y + 52, 38, 19),new Rectangle()));
+
     }
 
     public void setDefaultValues() {

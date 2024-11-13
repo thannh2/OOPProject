@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 enum Action {
     Up, Down, Left, Right,
     Punch, Kick,
-    Idle,
+    Idle, Direction
 }
 
 public class Entity {

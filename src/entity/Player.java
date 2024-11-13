@@ -49,6 +49,7 @@ public class Player extends Entity {
         y = 100.0f;
         velX = 0.0f;
         velY = 0.0f;
+        speed = 4;
         action = Action.Idle;
     }
 
@@ -81,6 +82,7 @@ public class Player extends Entity {
         if (kb.up == true) {
             action = Action.Up;
             velY = -speed;
+            y += velY;
         }
         else if (kb.down == true) {
             action = Action.Down;
@@ -89,37 +91,63 @@ public class Player extends Entity {
         else if (kb.left == true) {
             action = Action.Left;
             velX = -speed;
+            x += velX;
         }
         else if (kb.right == true) {
             action = Action.Right;
             velX = speed;
+            x += velX;
         }
         else if (kb.punch == true) {
+            actionNum = 0;
+            actionCounter = 4;
             action = Action.Punch;
-            actionCounter++;
-            if (actionCounter > 3) {
-                // if (actionNum == 1) actionNum = 2;
-                // else if (actionNum == 2) actionNum = 3;
-                // else if (actionNum == 3) actionNum = 4;
-                // else if (actionNum == 4) actionNum = 1;
-                actionNum = actionNum % 4 + 1;
-                actionCounter = 0;
-            }
+            // actionCounter++;
+            // if (actionCounter > 3) {
+            //     // if (actionNum == 1) actionNum = 2;
+            //     // else if (actionNum == 2) actionNum = 3;
+            //     // else if (actionNum == 3) actionNum = 4;
+            //     // else if (actionNum == 4) actionNum = 1;
+            //     actionNum = actionNum % 4 + 1;
+            //     actionCounter = 0;
+            // }
+            
         }
         else if (kb.kick == true){
+            kickNum = 0;
+            kickCounter = 4;
             action = Action.Kick;
-            kickCounter++;
-            if (kickCounter > 3) {
-                // if (kickNum == 1) kickNum = 2;
-                // else if (kickNum == 2) kickNum = 3;
-                // else if (kickNum == 3) kickNum = 4;
-                // else if (kickNum == 4) kickNum = 1;
-                kickNum = kickNum % 4 + 1;
-                kickCounter = 0;
-            }
+            // kickCounter++;
+            // if (kickCounter > 3) {
+            //     // if (kickNum == 1) kickNum = 2;
+            //     // else if (kickNum == 2) kickNum = 3;
+            //     // else if (kickNum == 3) kickNum = 4;
+            //     // else if (kickNum == 4) kickNum = 1;
+            //     kickNum = kickNum % 4 + 1;
+            //     kickCounter = 0;
+            // }
+            
         }
         else {
-            action = Action.Idle;
+            if(action == Action.Kick || action == Action.Punch){
+            if(actionNum<=5){
+                actionCounter++;
+                if(actionCounter > 3){
+                actionNum++;
+                actionCounter = 0;
+                }
+                if(actionNum > 4) action = Action.Idle;
+            }
+            if(kickNum<=5){
+                kickCounter++;
+                if(kickCounter > 3){
+                kickNum++;
+                kickCounter = 0;
+                }
+                if(kickNum > 4) action = Action.Idle;
+            }
+            }
+            else action = Action.Idle;
         }
 
         spriteCounter++;
@@ -130,9 +158,14 @@ public class Player extends Entity {
             spriteCounter = 0;
         }
 
-        this.x += this.velX;
-        this.y += this.velY;
-        this.velY += 0.01;
+       // this.x += this.velX;
+       // this.y += this.velY;
+       velY = 0;
+        if(y < 500) {
+            action = Action.Down;
+        this.velY += 2;
+        y += velY;
+        }
     }
 
     public void draw(Graphics2D g2) {
@@ -172,6 +205,9 @@ public class Player extends Entity {
                 else if (actionNum == 4) {
                     image = punch4;
                 }
+                else if (actionNum == 0) {
+                    image = idle;
+                }
                 break;
             case Kick:
                 if (kickNum == 1) {
@@ -185,6 +221,9 @@ public class Player extends Entity {
                 }
                 else if (kickNum == 4) {
                     image = kick4;
+                }
+                else if (kickNum == 0) {
+                    image = idle;
                 }
                 break;
         }

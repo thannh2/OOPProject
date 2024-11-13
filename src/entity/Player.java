@@ -2,6 +2,7 @@ package src.entity;
 
 import src.main.GamePanel;
 import src.main.Keyboard;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -9,29 +10,26 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-
 public class Player extends Entity {
-    
     GamePanel gp;
     Keyboard kb;
 
-    public Player(GamePanel gp, Keyboard kb){
+    public Player(GamePanel gp, Keyboard kb) {
         this.gp = gp;
         this.kb = kb;
         setDefaultValues();
         getPlayerImage();
     }
 
-    public void setDefaultValues(){
+    public void setDefaultValues() {
         x = 100;
         y = 100;
         speed = 4;
-        direction = "idle";
+        action = Action.Idle;
     }
 
-    public void getPlayerImage(){
-        
-        try{
+    public void getPlayerImage() {
+        try {
             up1 = ImageIO.read(new File("./res/gokuu/up_1.png"));
             up2 = ImageIO.read(new File("./res/gokuu/up_2.png"));
             down1 = ImageIO.read(new File("./res/gokuu/down_1.png"));
@@ -50,120 +48,119 @@ public class Player extends Entity {
             kick2 = ImageIO.read(new File("./res/gokuu/kick2.png"));
             kick3 = ImageIO.read(new File("./res/gokuu/kick3.png"));
             kick4 = ImageIO.read(new File("./res/gokuu/kick4.png"));
-        }catch(IOException e){
+        } catch(IOException e){
             e.printStackTrace();
         }
     }
 
-    public void update(){
-        if(kb.up == true){
-            direction = "up";
+    public void update() {
+        if (kb.up == true) {
+            action = Action.Up;
             y -= speed;
         }
-        else if (kb.down == true){
-            direction = "down";
+        else if (kb.down == true) {
+            action = Action.Down;
             y += speed;
         }
-        else if (kb.left == true){
-            direction = "left";
+        else if (kb.left == true) {
+            action = Action.Left;
             x -= speed;
         }
-        else if (kb.right == true){
-            direction = "right";
+        else if (kb.right == true) {
+            action = Action.Right;
             x += speed;
         }
-        else if (kb.punch == true){
-            direction = "punch";
+        else if (kb.punch == true) {
+            action = Action.Punch;
             actionCounter++;
-            if(actionCounter > 3){
-                if(actionNum == 1) actionNum = 2;
-                else if (actionNum == 2) actionNum = 3;
-                else if (actionNum == 3) actionNum = 4;
-                else if (actionNum == 4) actionNum = 1;
+            if (actionCounter > 3) {
+                // if (actionNum == 1) actionNum = 2;
+                // else if (actionNum == 2) actionNum = 3;
+                // else if (actionNum == 3) actionNum = 4;
+                // else if (actionNum == 4) actionNum = 1;
+                actionNum = actionNum % 4 + 1;
                 actionCounter = 0;
             }
         }
         else if (kb.kick == true){
-            direction = "kick";
+            action = Action.Kick;
             kickCounter++;
-            if(kickCounter > 3){
-                if(kickNum == 1) kickNum = 2;
-                else if (kickNum == 2) kickNum = 3;
-                else if (kickNum == 3) kickNum = 4;
-                else if (kickNum == 4) kickNum = 1;
+            if (kickCounter > 3) {
+                // if (kickNum == 1) kickNum = 2;
+                // else if (kickNum == 2) kickNum = 3;
+                // else if (kickNum == 3) kickNum = 4;
+                // else if (kickNum == 4) kickNum = 1;
+                kickNum = kickNum % 4 + 1;
                 kickCounter = 0;
             }
         }
-        else{
-            direction = "idle";
+        else {
+            action = Action.Idle;
         }
 
         spriteCounter++;
-        if(spriteCounter > 15){
-            if(spriteNum == 1) spriteNum = 2;
-            else if (spriteNum == 2) spriteNum = 1;
+        if (spriteCounter > 15) {
+            // if(spriteNum == 1) spriteNum = 2;
+            // else if (spriteNum == 2) spriteNum = 1;
+            spriteNum = spriteNum % 2 + 1;
             spriteCounter = 0;
         }
     }
 
-    public void draw(Graphics2D g2){
-        // g2.setColor(Color.WHITE);
-
-        //  g2.fillRect(x, y, 247, 247);
-
+    public void draw(Graphics2D g2) {
         BufferedImage image = null;
 
-        switch (direction) {
-            case "up":
-            image = up1;
+        switch (action) {
+            case Up:
+                image = up1;
                 break;
-            case "down":
-            image = down1;
+            case Down:
+                image = down1;
                 break;
-            case "left":
-            image = left1;
+            case Left:
+                image = left1;
                 break;
-            case "right":
-            image = right1;
+            case Right:
+                image = right1;
                 break;
-            case "idle":
-            if(spriteNum == 1){
-                image = idle; 
-            }
-            if(spriteNum == 2){
-                image = idle2;
-            }
-            break;
-            case "punch":
-            if(actionNum == 1){
-                image = punch1;
-            }
-            else if(actionNum == 2){
-                image = punch2;
-            }
-            else if(actionNum == 3){
-                image = punch3;
-            }
-            else if(actionNum == 4){
-                image = punch4;
-            }
-            break;
-            case "kick":
-            if(kickNum == 1){
-                image = kick1;
-            }
-            else if(kickNum == 2){
-                image = kick2;
-            }
-            else if(kickNum == 3){
-                image = kick3;
-            }
-            else if(kickNum == 4){
-                image = kick4;
-            }
-            break;
-                     
+            case Idle:
+                if (spriteNum == 1) {
+                    image = idle;
+                }
+                if (spriteNum == 2) {
+                    image = idle2;
+                }
+                break;
+            case Punch:
+                if (actionNum == 1) {
+                    image = punch1;
+                }
+                else if (actionNum == 2) {
+                    image = punch2;
+                }
+                else if (actionNum == 3) {
+                    image = punch3;
+                }
+                else if (actionNum == 4) {
+                    image = punch4;
+                }
+                break;
+            case Kick:
+                if (kickNum == 1) {
+                    image = kick1;
+                }
+                else if (kickNum == 2) {
+                    image = kick2;
+                }
+                else if (kickNum == 3) {
+                    image = kick3;
+                }
+                else if (kickNum == 4) {
+                    image = kick4;
+                }
+                break;
         }
+
         g2.drawImage(image, x, y, 128, 120, null);
     }
 }

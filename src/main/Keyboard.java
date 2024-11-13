@@ -31,11 +31,11 @@ public class Keyboard implements KeyListener {
             right = true;
         }
 
-        if(number == KeyEvent.VK_J) {
+        if (number == KeyEvent.VK_J) {
             punch = true;
         }
 
-        if(number == KeyEvent.VK_K) {
+        if (number == KeyEvent.VK_K) {
             kick = true;
         }
     }
@@ -60,11 +60,11 @@ public class Keyboard implements KeyListener {
             right = false;
         }
 
-        if(number == KeyEvent.VK_J) {
+        if (number == KeyEvent.VK_J) {
             punch = false;
         }
 
-        if(number == KeyEvent.VK_K) {
+        if (number == KeyEvent.VK_K) {
             kick = false;
         }
     }

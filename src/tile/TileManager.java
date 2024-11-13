@@ -1,4 +1,4 @@
-package res.tile;
+package src.tile;
 
 import java.awt.Graphics2D;
 import java.io.*;
@@ -24,6 +24,6 @@ public class TileManager {
         }
     }
     public void draw(Graphics2D g2) {
-        // g2.drawImage(img, xform, gp);
+        g2.drawImage(img, xform, gp);
     }
 }

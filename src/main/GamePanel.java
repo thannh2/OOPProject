@@ -1,10 +1,8 @@
 package src.main;
 
-import javax.swing.JPanel;
-
-import src.entity.Player;
-
 import java.awt.*;
+import javax.swing.JPanel;
+import src.entity.Player;
 
 public class GamePanel extends JPanel implements Runnable {
     private static final int SCREEN_WIDTH = 1280;

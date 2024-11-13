@@ -15,15 +15,15 @@ public class TileManager {
         tile = new Tile[10];
     }
 
-    public void getTileImage() {
-        try {
-            //TODO: Them cac chieu thuc vao day
-
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-    }
-    public void draw(Graphics2D g2) {
-        g2.drawImage(img, xform, gp);
-    }
+    // public void getTileImage() {
+    //     try {
+    //         //TODO: Them cac chieu thuc vao day
+    //
+    //     } catch(IOException e) {
+    //         e.printStackTrace();
+    //     }
+    // }
+    // public void draw(Graphics2D g2) {
+    //     g2.drawImage(img, xform, gp);
+    // }
 }

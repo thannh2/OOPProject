@@ -22,9 +22,10 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        x = 100;
-        y = 100;
-        speed = 4;
+        x = 100.0f;
+        y = 100.0f;
+        velX = 0.0f;
+        velY = 0.0f;
         action = Action.Idle;
     }
 
@@ -56,19 +57,19 @@ public class Player extends Entity {
     public void update() {
         if (kb.up == true) {
             action = Action.Up;
-            y -= speed;
+            velY = -speed;
         }
         else if (kb.down == true) {
             action = Action.Down;
-            y += speed;
+            velY = speed;
         }
         else if (kb.left == true) {
             action = Action.Left;
-            x -= speed;
+            velX = -speed;
         }
         else if (kb.right == true) {
             action = Action.Right;
-            x += speed;
+            velX = speed;
         }
         else if (kb.punch == true) {
             action = Action.Punch;
@@ -105,6 +106,10 @@ public class Player extends Entity {
             spriteNum = spriteNum % 2 + 1;
             spriteCounter = 0;
         }
+
+        this.x += this.velX;
+        this.y += this.velY;
+        this.velY += 0.01;
     }
 
     public void draw(Graphics2D g2) {
@@ -161,6 +166,6 @@ public class Player extends Entity {
                 break;
         }
 
-        g2.drawImage(image, x, y, 128, 120, null);
+        g2.drawImage(image, (int)x, (int)y, 128, 120, null);
     }
 }

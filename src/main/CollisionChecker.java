@@ -11,9 +11,12 @@ public class CollisionChecker {
 	}
 
 	public void checkTile(Entity entity) {
-		int entityLeftX = entity.x;
-		int entityRightX = entity.x + 128; //128 mean player witdh
-		int entityTopY = entity.y;
-		int entityBotY = entity.y + 120; //120 mean player height
+        int x = (int)entity.x;
+        int y = (int)entity.y;
+
+		int entityLeftX = x;
+		int entityRightX = x + 128; //128 mean player witdh
+		int entityTopY = y;
+		int entityBotY = y + 120; //120 mean player height
 	}
 }

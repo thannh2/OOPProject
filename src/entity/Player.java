@@ -17,15 +17,11 @@ public class Player extends Entity {
     Keyboard kb;
     private Map<Action, ActionBox> actions;
 
-    public int Direction;
-
-    public Player(GamePanel gp, Keyboard kb, Player2 player2) {
+    public Player(GamePanel gp, Keyboard kb) {
         this.gp = gp;
         this.kb = kb;
-        // this.player2 = player2;
         setDefaultValues();
         getPlayerImage();
-        Direction = 1;
 
         int x = (int)this.x;
         int y = (int)this.y;
@@ -37,15 +33,13 @@ public class Player extends Entity {
 		int entityBotY = y + 120; // 24 toi dau, 120 toi chan
         actions = new HashMap<>();
 
-        if (Direction == 1) {
-            actions.put(Action.Punch, new ActionBox(new Rectangle(x + 80, y + 62, 48, 17), new Rectangle(x + 48, y + 35, 48, 85)));
-            actions.put(Action.Kick, new ActionBox(new Rectangle(x + 56, y + 64, 70, 16), new Rectangle(x + 16, y + 32, 46, 80)));
-            actions.put(Action.Idle, new ActionBox(zeroBox, new Rectangle(entityLeftX, entityTopY, 46, 72)));
-            actions.put(Action.Up, new ActionBox(zeroBox, new Rectangle(entityLeftX, entityTopY, 46, 72)));
-            actions.put(Action.Down, new ActionBox(zeroBox, new Rectangle(entityLeftX, entityTopY, 46, 72)));
-            actions.put(Action.Left, new ActionBox(zeroBox, new Rectangle(entityLeftX, entityTopY, 104, 72)));
-            actions.put(Action.Right, new ActionBox(zeroBox, new Rectangle(entityLeftX, entityTopY, 104, 72)));
-        }
+        actions.put(Action.Punch, new ActionBox(new Rectangle(x + 80, y + 62, 48, 17), new Rectangle(x + 48, y + 35, 48, 85)));
+        actions.put(Action.Kick, new ActionBox(new Rectangle(x + 56, y + 64, 70, 16), new Rectangle(x + 16, y + 32, 46, 80)));
+        actions.put(Action.Idle, new ActionBox(zeroBox, new Rectangle(entityLeftX, entityTopY, 46, 72)));
+        actions.put(Action.Up, new ActionBox(zeroBox, new Rectangle(entityLeftX, entityTopY, 46, 72)));
+        actions.put(Action.Down, new ActionBox(zeroBox, new Rectangle(entityLeftX, entityTopY, 46, 72)));
+        actions.put(Action.Left, new ActionBox(zeroBox, new Rectangle(entityLeftX, entityTopY, 104, 72)));
+        actions.put(Action.Right, new ActionBox(zeroBox, new Rectangle(entityLeftX, entityTopY, 104, 72)));
     }
     
     public void setDefaultValues() {
@@ -68,6 +62,7 @@ public class Player extends Entity {
     public Rectangle getHurtbox() {
         return actions.get(action).getHurtbox();
     }
+
     public void getPlayerImage() {
         try {
             up1 = ImageIO.read(new File("./res/gokuu/up_1.png"));
@@ -112,7 +107,12 @@ public class Player extends Entity {
             action = Action.Up;
             velY = -speed;
             y += velY;
-            actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
+            if(direction == 1) {
+                actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
+
+            } else {
+                actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 24 - 46, (int)this.y + 24);
+            }
             // velY = -speed;
             // y += velY;
             doJump = true;
@@ -120,33 +120,46 @@ public class Player extends Entity {
         else if (kb.down == true) {
             action = Action.Down;
             velY = speed;
-            actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
+            if(direction == 1) {
+                actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
+            } else {
+                actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 24 - 46, (int)this.y + 24);
+            }
         }
         else if (kb.left == true) {
+            direction = -1;
             action = Action.Left;
-            Direction = -1;
-            
             velX = -speed;
             x += velX;
-            actions.get(action).getHurtbox().setLocation((int)this.x + 16, (int)this.y + 48);
-            direction = -1;
+            if(direction == 1) {
+                actions.get(action).getHurtbox().setLocation((int)this.x + 16, (int)this.y + 48);
+            } else {
+                actions.get(action).getHurtbox().setLocation((int)this.x , (int)this.y + 48);
+            }
         }
         else if (kb.right == true) {
+            direction = 1;
             action = Action.Right;
-            Direction = 1;
             velX = speed;
             x += velX;
-            actions.get(action).getHurtbox().setLocation((int)this.x , (int)this.y + 48);
-            direction = 1;
+            if(direction == 1) {
+                actions.get(action).getHurtbox().setLocation((int)this.x , (int)this.y + 48);
+            } else {
+                actions.get(action).getHurtbox().setLocation((int)this.x + 16, (int)this.y + 48);
+            }
         }
         else if (kb.punch == true) {
-            
             actionNum = 1;
             actionCounter = 4;
             actionDo = 1;
             action = Action.Punch;
-            actions.get(action).getHitbox().setLocation((int)this.x + 80, (int)this.y + 62);
-            actions.get(action).getHurtbox().setLocation((int)this.x + 48, (int)this.y + 35);
+            if(direction == 1) {
+                actions.get(action).getHitbox().setLocation((int)this.x + 80, (int)this.y + 62);
+                actions.get(action).getHurtbox().setLocation((int)this.x + 48, (int)this.y + 35);
+            } else {
+                actions.get(action).getHitbox().setLocation((int)this.x + 128 - 80 - 48, (int)this.y + 62);
+                actions.get(action).getHurtbox().setLocation((int)this.x + 128 - 48 - 48, (int)this.y + 35);
+            }
 
             // actionCounter++;
             // if (actionCounter > 3) {
@@ -164,8 +177,13 @@ public class Player extends Entity {
             kickCounter = 4;
             kickDo = 1;
             action = Action.Kick;
-            actions.get(action).getHitbox().setLocation((int)this.x + 56, (int)this.y + 64);
-            actions.get(action).getHurtbox().setLocation((int)this.x + 16, (int)this.y + 32);
+            if(direction == 1) {
+                actions.get(action).getHitbox().setLocation((int)this.x + 56, (int)this.y + 64);
+                actions.get(action).getHurtbox().setLocation((int)this.x + 16, (int)this.y + 32);
+            } else {
+                actions.get(action).getHitbox().setLocation((int)this.x + 120 - 56 - 70, (int)this.y + 64);
+                actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 16 - 46, (int)this.y + 32);
+            }
 
             // kickCounter++;
             // if (kickCounter > 3) {
@@ -188,7 +206,11 @@ public class Player extends Entity {
                 }
                 if(actionNum > 4) {
                 action = Action.Idle;
-                actions.get(action).getHurtbox().setLocation((int)this.x + 38, (int)this.y + 32);
+                if(direction == 1) {
+                    actions.get(action).getHurtbox().setLocation((int)this.x + 38, (int)this.y + 32);
+                } else {
+                    actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 38 - 46, (int)this.y + 32);
+                }
                 actionDo = 0;
                 }
             }
@@ -200,12 +222,16 @@ public class Player extends Entity {
                 }
                 if(kickNum > 4) {
                 action = Action.Idle;
-                actions.get(action).getHurtbox().setLocation((int)this.x + 38, (int)this.y + 32);
+                if(direction == 1) {
+                    actions.get(action).getHurtbox().setLocation((int)this.x + 38, (int)this.y + 32);
+                } else {
+                    actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 38 - 46, (int)this.y + 32);
+                }
                 kickDo = 0;
                 }
             }
             if(doJump==true){
-                velY += -speed;
+                velY -= speed;
                 JumpCounter++;
                 if(JumpCounter>1){
                     y += velY;
@@ -214,7 +240,11 @@ public class Player extends Entity {
             }
             }
             else action = Action.Idle;
-            actions.get(action).getHurtbox().setLocation((int)this.x + 38, (int)this.y + 32);
+            if(direction == 1) {
+                actions.get(action).getHurtbox().setLocation((int)this.x + 38, (int)this.y + 32);
+            } else {
+                actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 38 - 46, (int)this.y + 32);
+            }
 
         }
 
@@ -231,31 +261,23 @@ public class Player extends Entity {
        velY = 0;
         if(y < 500) {
             if(action != Action.Up){
-<<<<<<< HEAD
                 action = Action.Down;
-                actions.get(action).getHitbox().setLocation((int)this.x + 24, (int)this.y + 24);
-                actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
-        this.velY += 2;
-=======
-            action = Action.Down;
-        this.velY += speed;
->>>>>>> 66dc782970870b6bcd3e546ead90cd83062bc18d
-        y += velY;
+                this.velY += speed;
+                y += velY;
+                if(direction == 1) {
+                    actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
+                } else {
+                    actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 24 - 46, (int)this.y + 24);
+                }
             } 
         } else if (y == 500 && kb.down == true) {
             action = Action.Idle;
+            if(direction == 1) {
+                actions.get(action).getHurtbox().setLocation((int)this.x + 38, (int)this.y + 32);
+            } else {
+                actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 38 - 46, (int)this.y + 32);
+            }
         }
-<<<<<<< HEAD
-    //     if(player2.x < x){
-    //         reverse = true;
-    //     }
-    //     else reverse = false;
-=======
-        // if(player2.x < x){
-        //     reverse = true;
-        // }
-        // else reverse = false;
->>>>>>> 66dc782970870b6bcd3e546ead90cd83062bc18d
     }
 
 

@@ -18,7 +18,7 @@ public class GamePanel extends JPanel implements Runnable {
     private Keyboard2 keyboard2 = new Keyboard2();
     public Player2 player2 = new Player2(this, keyboard2);
 
-    public Player player = new Player(this, keyboard, player2);
+    public Player player = new Player(this, keyboard);
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -36,7 +36,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
         player.update();
-        player2.update(player.reverse);
+        player2.update();
     }
 
     public void paintComponent(Graphics g) {
@@ -52,7 +52,13 @@ public class GamePanel extends JPanel implements Runnable {
         g2.setColor(Color.BLUE);
         g2.draw(player.getHurtbox());
 
+        player2.update();
         player2.draw(g2);
+        g2.setColor(Color.RED);
+        g2.draw(player2.getHitbox());
+    
+        g2.setColor(Color.BLUE);
+        g2.draw(player2.getHurtbox());
 
         g2.dispose();
 

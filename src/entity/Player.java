@@ -28,10 +28,11 @@ public class Player extends Entity {
         y = 100.0f;
         velX = 0.0f;
         velY = 0.0f;
-        speed = 4;
+        speed = 8;
         action = Action.Idle;
         reverse = false;
         doJump = false;
+        direction = 1;
     }
 
     public void getPlayerImage() {
@@ -88,11 +89,13 @@ public class Player extends Entity {
             action = Action.Left;
             velX = -speed;
             x += velX;
+            direction = -1;
         }
         else if (kb.right == true) {
             action = Action.Right;
             velX = speed;
             x += velX;
+            direction = 1;
         }
         else if (kb.punch == true) {
             actionNum = 1;
@@ -151,7 +154,7 @@ public class Player extends Entity {
                 }
             }
             if(doJump==true){
-                velY += -speed-4;
+                velY += -speed;
                 JumpCounter++;
                 if(JumpCounter>1){
                     y += velY;
@@ -176,14 +179,14 @@ public class Player extends Entity {
         if(y < 500) {
             if(action != Action.Up){
             action = Action.Down;
-        this.velY += speed+4;
+        this.velY += speed;
         y += velY;
             }
         }
-        if(player2.x < x){
-            reverse = true;
-        }
-        else reverse = false;
+        // if(player2.x < x){
+        //     reverse = true;
+        // }
+        // else reverse = false;
     }
 
     public void draw(Graphics2D g2) {
@@ -191,18 +194,18 @@ public class Player extends Entity {
 
         switch (action) {
             case Up:
-                if(reverse == false){ 
+                if(direction == 1){ 
                 image = up1;
                 }
-                else if(reverse == true){
+                else if(direction == -1){
                     image = rup;
                 }
                 break;
             case Down:
-            if(reverse == false){ 
+            if(direction == 1){ 
                 image = down1;
                 }
-                else if(reverse == true){
+                else if(direction == -1){
                     image = rdown;
                 }
                 break;
@@ -213,7 +216,7 @@ public class Player extends Entity {
                 image = right1;
                 break;
             case Idle:
-            if(reverse == false){
+            if(direction == 1){
                 if (spriteNum == 1) {
                     image = idle;
                 }
@@ -221,7 +224,7 @@ public class Player extends Entity {
                     image = idle2;
                 }
             }
-            else if(reverse == true){
+            else if(direction == -1){
                 if (spriteNum == 1) {
                     image = ridle;
                 }
@@ -231,7 +234,7 @@ public class Player extends Entity {
             }
                 break;
             case Punch:
-            if(reverse == false){
+            if(direction == 1){
                 if (actionNum == 1) {
                     image = punch1;
                 }
@@ -248,7 +251,7 @@ public class Player extends Entity {
                     image = idle;
                 }
             }
-            else if (reverse == true){
+            else if (direction == -1){
                 if (actionNum == 1) {
                     image = rpunch1;
                 }
@@ -267,7 +270,7 @@ public class Player extends Entity {
             }
                 break;
             case Kick:
-            if(reverse == false){
+            if(direction == 1){
                 if (kickNum == 1) {
                     image = kick1;
                 }
@@ -284,7 +287,7 @@ public class Player extends Entity {
                     image = idle;
                 }
             }
-            else if (reverse == true){
+            else if (direction == -1){
                 if (kickNum == 1) {
                     image = rkick1;
                 }

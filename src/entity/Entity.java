@@ -30,4 +30,6 @@ public class Entity {
 
     public boolean doJump = false;
     public int JumpCounter = 0;
+
+    public int direction;
 }

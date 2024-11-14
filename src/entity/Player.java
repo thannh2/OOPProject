@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
+
+import src.entity.Character.Goku;
+import src.entity.Character.Vegeta;
 import src.main.ActionBox;
 import src.main.GamePanel;
 import src.main.Keyboard;
@@ -17,9 +20,13 @@ public class Player extends Entity {
     Keyboard kb;
     private Map<Action, ActionBox> actions;
 
-    public Player(GamePanel gp, Keyboard kb) {
+    Goku goku = new Goku();
+    Vegeta vegeta = new Vegeta();
+
+    public Player(GamePanel gp, Keyboard kb, String character) {
         this.gp = gp;
         this.kb = kb;
+        this.character = character;
         setDefaultValues();
         getPlayerImage();
 
@@ -64,41 +71,65 @@ public class Player extends Entity {
     }
 
     public void getPlayerImage() {
-        try {
-            up1 = ImageIO.read(new File("./res/gokuu/up_1.png"));
-            
-            down1 = ImageIO.read(new File("./res/gokuu/down_1.png"));
-            
-            left1 = ImageIO.read(new File("./res/gokuu/left_1.png"));
-            left2 = ImageIO.read(new File("./res/gokuu/left_2.png"));
-            right1 = ImageIO.read(new File("./res/gokuu/right_1.png"));
-            right2 = ImageIO.read(new File("./res/gokuu/right_2.png"));
-            idle = ImageIO.read(new File("./res/gokuu/idle.png"));
-            idle2 = ImageIO.read(new File("./res/gokuu/idle2.png"));
-            punch1 = ImageIO.read(new File("./res/gokuu/punch1.png"));
-            punch2 = ImageIO.read(new File("./res/gokuu/punch2.png"));
-            punch3 = ImageIO.read(new File("./res/gokuu/punch3.png"));
-            punch4 = ImageIO.read(new File("./res/gokuu/punch4.png"));
-            kick1 = ImageIO.read(new File("./res/gokuu/kick1.png"));
-            kick2 = ImageIO.read(new File("./res/gokuu/kick2.png"));
-            kick3 = ImageIO.read(new File("./res/gokuu/kick3.png"));
-            kick4 = ImageIO.read(new File("./res/gokuu/kick4.png"));
+        if(character == "goku"){
+            up1 = goku.up1;
+            down1 = goku.down1;
+            left1 = goku.left1;
+            right1 = goku.right1;
+            idle = goku.idle;
+            idle2 = goku.idle2;
+            punch1 = goku.punch1;
+            punch2 = goku.punch2;
+            punch3 = goku.punch3;
+            punch4 = goku.punch4;
+            kick1 = goku.kick1;
+            kick2 = goku.kick2;
+            kick3 = goku.kick3;
+            kick4 = goku.kick4;
 
             //reverse image
-            rup = ImageIO.read(new File("./res/gokuu/rup.png"));
-            rdown = ImageIO.read(new File("./res/gokuu/rdown.png"));
-            ridle = ImageIO.read(new File("./res/gokuu/ridle.png"));
-            ridle2 = ImageIO.read(new File("./res/gokuu/ridle2.png"));
-            rpunch1 = ImageIO.read(new File("./res/gokuu/rpunch1.png"));
-            rpunch2 = ImageIO.read(new File("./res/gokuu/rpunch2.png"));
-            rpunch3 = ImageIO.read(new File("./res/gokuu/rpunch3.png"));
-            rpunch4 = ImageIO.read(new File("./res/gokuu/rpunch4.png"));
-            rkick1 = ImageIO.read(new File("./res/gokuu/rkick1.png"));
-            rkick2 = ImageIO.read(new File("./res/gokuu/rkick2.png"));
-            rkick3 = ImageIO.read(new File("./res/gokuu/rkick3.png"));
-            rkick4 = ImageIO.read(new File("./res/gokuu/rkick4.png"));
-        } catch(IOException e){
-            e.printStackTrace();
+            rup = goku.rup;
+            rdown = goku.rdown;
+            ridle = goku.ridle;
+            ridle2 = goku.ridle2;
+            rpunch1 = goku.rpunch1;
+            rpunch2 = goku.rpunch2;
+            rpunch3 = goku.rpunch3;
+            rpunch4 = goku.rpunch4;
+            rkick1 = goku.rkick1;
+            rkick2 = goku.rkick2;
+            rkick3 = goku.rkick3;
+            rkick4 = goku.rkick4;
+        }
+        else if(character == "vegeta"){
+            up1 = vegeta.up1;
+            down1 = vegeta.down1;
+            left1 = vegeta.left1;
+            right1 = vegeta.right1;
+            idle = vegeta.idle;
+            idle2 = vegeta.idle2;
+            punch1 = vegeta.punch1;
+            punch2 = vegeta.punch2;
+            punch3 = vegeta.punch3;
+            punch4 = vegeta.punch4;
+            kick1 = vegeta.kick1;
+            kick2 = vegeta.kick2;
+            kick3 = vegeta.kick3;
+            kick4 = vegeta.kick4;
+
+            //reverse image
+            rup = vegeta.rup;
+            rdown = vegeta.rdown;
+            ridle = vegeta.ridle;
+            ridle2 = vegeta.ridle2;
+            rpunch1 = vegeta.rpunch1;
+            rpunch2 = vegeta.rpunch2;
+            rpunch3 = vegeta.rpunch3;
+            rpunch4 = vegeta.rpunch4;
+            rkick1 = vegeta.rkick1;
+            rkick2 = vegeta.rkick2;
+            rkick3 = vegeta.rkick3;
+            rkick4 = vegeta.rkick4;
         }
     }
 

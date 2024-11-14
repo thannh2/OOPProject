@@ -32,4 +32,6 @@ public class Entity {
     public int JumpCounter = 0;
 
     public int direction;
+
+    public String character = null;
 }

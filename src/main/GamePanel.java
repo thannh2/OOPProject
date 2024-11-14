@@ -16,9 +16,9 @@ public class GamePanel extends JPanel implements Runnable {
     
 
     private Keyboard2 keyboard2 = new Keyboard2();
-    public Player2 player2 = new Player2(this, keyboard2);
+    public Player2 player2 = new Player2(this, keyboard2, "goku");
 
-    public Player player = new Player(this, keyboard);
+    public Player player = new Player(this, keyboard, "vegeta");
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));

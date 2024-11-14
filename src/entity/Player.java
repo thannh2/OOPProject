@@ -105,8 +105,8 @@ public class Player extends Entity {
     public void update() {
         if (kb.up == true) {
             action = Action.Up;
-            velY = -speed;
-            y += velY;
+            // velY = -speed;
+            // y += velY;
             if(direction == 1) {
                 actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
 

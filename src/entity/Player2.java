@@ -1,7 +1,7 @@
 package src.entity;
 
 import src.main.GamePanel;
-import src.main.Keyboard;
+import src.main.Keyboard2;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -10,69 +10,64 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Player extends Entity {
+public class Player2 extends Entity {
     GamePanel gp;
-    Keyboard kb;
-    Player2 player2;
+    Keyboard2 kb;
 
-    public Player(GamePanel gp, Keyboard kb, Player2 player2) {
+
+    public Player2(GamePanel gp, Keyboard2 kb) {
         this.gp = gp;
         this.kb = kb;
-        this.player2 = player2;
         setDefaultValues();
         getPlayerImage();
     }
 
     public void setDefaultValues() {
-        x = 100.0f;
+        x = 400.0f;
         y = 100.0f;
         velX = 0.0f;
         velY = 0.0f;
         speed = 4;
         action = Action.Idle;
-        reverse = false;
+        reverse = true;
     }
 
     public void getPlayerImage() {
         try {
-            up1 = ImageIO.read(new File("./res/gokuu/up_1.png"));
-            
-            down1 = ImageIO.read(new File("./res/gokuu/down_1.png"));
-            
-            left1 = ImageIO.read(new File("./res/gokuu/left_1.png"));
-            left2 = ImageIO.read(new File("./res/gokuu/left_2.png"));
-            right1 = ImageIO.read(new File("./res/gokuu/right_1.png"));
-            right2 = ImageIO.read(new File("./res/gokuu/right_2.png"));
-            idle = ImageIO.read(new File("./res/gokuu/idle.png"));
-            idle2 = ImageIO.read(new File("./res/gokuu/idle2.png"));
-            punch1 = ImageIO.read(new File("./res/gokuu/punch1.png"));
-            punch2 = ImageIO.read(new File("./res/gokuu/punch2.png"));
-            punch3 = ImageIO.read(new File("./res/gokuu/punch3.png"));
-            punch4 = ImageIO.read(new File("./res/gokuu/punch4.png"));
-            kick1 = ImageIO.read(new File("./res/gokuu/kick1.png"));
-            kick2 = ImageIO.read(new File("./res/gokuu/kick2.png"));
-            kick3 = ImageIO.read(new File("./res/gokuu/kick3.png"));
-            kick4 = ImageIO.read(new File("./res/gokuu/kick4.png"));
+            up1 = ImageIO.read(new File("./res/vegeta/vegetaUp.png"));
+            down1 = ImageIO.read(new File("./res/vegeta/vegetaDown.png"));
+            left1 = ImageIO.read(new File("./res/vegeta/vegetaLeft.png"));
+            right1 = ImageIO.read(new File("./res/vegeta/vegetaRight.png"));
+            idle = ImageIO.read(new File("./res/vegeta/vegetaIdle.png"));
+            idle2 = ImageIO.read(new File("./res/vegeta/vegetaIdle2.png"));
+            punch1 = ImageIO.read(new File("./res/vegeta/vegetaPunch1.png"));
+            punch2 = ImageIO.read(new File("./res/vegeta/vegetaPunch2.png"));
+            punch3 = ImageIO.read(new File("./res/vegeta/vegetaPunch3.png"));
+            punch4 = ImageIO.read(new File("./res/vegeta/vegetaPunch4.png"));
+            kick1 = ImageIO.read(new File("./res/vegeta/vegetaKick1.png"));
+            kick2 = ImageIO.read(new File("./res/vegeta/vegetaKick2.png"));
+            kick3 = ImageIO.read(new File("./res/vegeta/vegetaKick3.png"));
+            kick4 = ImageIO.read(new File("./res/vegeta/vegetaKick4.png"));
 
             //reverse image
-            rup = ImageIO.read(new File("./res/gokuu/rup.png"));
-            rdown = ImageIO.read(new File("./res/gokuu/rdown.png"));
-            ridle = ImageIO.read(new File("./res/gokuu/ridle.png"));
-            ridle2 = ImageIO.read(new File("./res/gokuu/ridle2.png"));
-            rpunch1 = ImageIO.read(new File("./res/gokuu/rpunch1.png"));
-            rpunch2 = ImageIO.read(new File("./res/gokuu/rpunch2.png"));
-            rpunch3 = ImageIO.read(new File("./res/gokuu/rpunch3.png"));
-            rpunch4 = ImageIO.read(new File("./res/gokuu/rpunch4.png"));
-            rkick1 = ImageIO.read(new File("./res/gokuu/rkick1.png"));
-            rkick2 = ImageIO.read(new File("./res/gokuu/rkick2.png"));
-            rkick3 = ImageIO.read(new File("./res/gokuu/rkick3.png"));
-            rkick4 = ImageIO.read(new File("./res/gokuu/rkick4.png"));
+            rup = ImageIO.read(new File("./res/vegeta/rup.png"));
+            rdown = ImageIO.read(new File("./res/vegeta/rdown.png"));
+            ridle = ImageIO.read(new File("./res/vegeta/ridle.png"));
+            ridle2 = ImageIO.read(new File("./res/vegeta/ridle2.png"));
+            rpunch1 = ImageIO.read(new File("./res/vegeta/rpunch1.png"));
+            rpunch2 = ImageIO.read(new File("./res/vegeta/rpunch2.png"));
+            rpunch3 = ImageIO.read(new File("./res/vegeta/rpunch3.png"));
+            rpunch4 = ImageIO.read(new File("./res/vegeta/rpunch4.png"));
+            rkick1 = ImageIO.read(new File("./res/vegeta/rkick1.png"));
+            rkick2 = ImageIO.read(new File("./res/vegeta/rkick2.png"));
+            rkick3 = ImageIO.read(new File("./res/vegeta/rkick3.png"));
+            rkick4 = ImageIO.read(new File("./res/vegeta/rkick4.png"));
         } catch(IOException e){
             e.printStackTrace();
         }
     }
 
-    public void update() {
+    public void update(boolean r) {
         if (kb.up == true) {
             action = Action.Up;
             velY = -speed;
@@ -170,10 +165,8 @@ public class Player extends Entity {
         y += velY;
             }
         }
-        if(player2.x < x){
-            reverse = true;
-        }
-        else reverse = false;
+        if(r == true) reverse = false;
+        else if ( r == false) reverse = true;
     }
 
     public void draw(Graphics2D g2) {

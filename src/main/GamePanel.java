@@ -3,6 +3,7 @@ package src.main;
 import java.awt.*;
 import javax.swing.JPanel;
 import src.entity.Player;
+import src.entity.Player2;
 
 public class GamePanel extends JPanel implements Runnable {
     private static final int SCREEN_WIDTH = 1280;
@@ -12,13 +13,19 @@ public class GamePanel extends JPanel implements Runnable {
 
     private Thread gameThread;
     private Keyboard keyboard = new Keyboard();
-    public Player player = new Player(this, keyboard);
+    
+
+    private Keyboard2 keyboard2 = new Keyboard2();
+    public Player2 player2 = new Player2(this, keyboard2);
+
+    public Player player = new Player(this, keyboard, player2);
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.white);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyboard);
+        this.addKeyListener(keyboard2);
         this.setFocusable(true);
     }
 
@@ -29,6 +36,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
         player.update();
+        player2.update(player.reverse);
     }
 
     public void paintComponent(Graphics g) {
@@ -36,9 +44,18 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D)g;
 
+        player.update();
         player.draw(g2);
+        g2.setColor(Color.RED);
+        g2.draw(player.getHitbox());
+    
+        g2.setColor(Color.BLUE);
+        g2.draw(player.getHurtbox());
+
+        player2.draw(g2);
 
         g2.dispose();
+
     }
 
     @Override

@@ -8,7 +8,6 @@ public class CollisionChecker {
 		this.gp = gp;
 	}
 
-	// public void checkTile(Entity entity) {
-       
-	// }
+	// 
+	
 }

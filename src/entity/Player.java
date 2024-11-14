@@ -53,9 +53,11 @@ public class Player extends Entity {
         y = 100.0f;
         velX = 0.0f;
         velY = 0.0f;
-        speed = 4;
+        speed = 8;
         action = Action.Idle;
         reverse = false;
+        doJump = false;
+        direction = 1;
     }
     
 
@@ -111,6 +113,9 @@ public class Player extends Entity {
             velY = -speed;
             y += velY;
             actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
+            // velY = -speed;
+            // y += velY;
+            doJump = true;
         }
         else if (kb.down == true) {
             action = Action.Down;
@@ -124,6 +129,7 @@ public class Player extends Entity {
             velX = -speed;
             x += velX;
             actions.get(action).getHurtbox().setLocation((int)this.x + 16, (int)this.y + 48);
+            direction = -1;
         }
         else if (kb.right == true) {
             action = Action.Right;
@@ -131,6 +137,7 @@ public class Player extends Entity {
             velX = speed;
             x += velX;
             actions.get(action).getHurtbox().setLocation((int)this.x , (int)this.y + 48);
+            direction = 1;
         }
         else if (kb.punch == true) {
             
@@ -172,8 +179,8 @@ public class Player extends Entity {
             
         }
         else {
-            if(actionDo == 1 || kickDo == 1){
-            if(actionNum<=5){
+            if(actionDo == 1 || kickDo == 1 || doJump == true){
+            if(actionDo == 1){
                 actionCounter++;
                 if(actionCounter > 3){
                 actionNum++;
@@ -185,7 +192,7 @@ public class Player extends Entity {
                 actionDo = 0;
                 }
             }
-            if(kickNum<=5){
+            if(kickDo == 1){
                 kickCounter++;
                 if(kickCounter > 3){
                 kickNum++;
@@ -196,6 +203,14 @@ public class Player extends Entity {
                 actions.get(action).getHurtbox().setLocation((int)this.x + 38, (int)this.y + 32);
                 kickDo = 0;
                 }
+            }
+            if(doJump==true){
+                velY += -speed;
+                JumpCounter++;
+                if(JumpCounter>1){
+                    y += velY;
+                }
+                if(y<380) doJump = false;
             }
             }
             else action = Action.Idle;
@@ -216,19 +231,31 @@ public class Player extends Entity {
        velY = 0;
         if(y < 500) {
             if(action != Action.Up){
+<<<<<<< HEAD
                 action = Action.Down;
                 actions.get(action).getHitbox().setLocation((int)this.x + 24, (int)this.y + 24);
                 actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
         this.velY += 2;
+=======
+            action = Action.Down;
+        this.velY += speed;
+>>>>>>> 66dc782970870b6bcd3e546ead90cd83062bc18d
         y += velY;
             } 
         } else if (y == 500 && kb.down == true) {
             action = Action.Idle;
         }
+<<<<<<< HEAD
     //     if(player2.x < x){
     //         reverse = true;
     //     }
     //     else reverse = false;
+=======
+        // if(player2.x < x){
+        //     reverse = true;
+        // }
+        // else reverse = false;
+>>>>>>> 66dc782970870b6bcd3e546ead90cd83062bc18d
     }
 
 
@@ -238,18 +265,18 @@ public class Player extends Entity {
 
         switch (action) {
             case Up:
-                if(reverse == false){ 
+                if(direction == 1){ 
                 image = up1;
                 }
-                else if(reverse == true){
+                else if(direction == -1){
                     image = rup;
                 }
                 break;
             case Down:
-            if(reverse == false){ 
+            if(direction == 1){ 
                 image = down1;
                 }
-                else if(reverse == true){
+                else if(direction == -1){
                     image = rdown;
                 }
                 break;
@@ -260,7 +287,7 @@ public class Player extends Entity {
                 image = right1;
                 break;
             case Idle:
-            if(reverse == false){
+            if(direction == 1){
                 if (spriteNum == 1) {
                     image = idle;
                 }
@@ -268,7 +295,7 @@ public class Player extends Entity {
                     image = idle2;
                 }
             }
-            else if(reverse == true){
+            else if(direction == -1){
                 if (spriteNum == 1) {
                     image = ridle;
                 }
@@ -278,7 +305,7 @@ public class Player extends Entity {
             }
                 break;
             case Punch:
-            if(reverse == false){
+            if(direction == 1){
                 if (actionNum == 1) {
                     image = punch1;
                 }
@@ -295,7 +322,7 @@ public class Player extends Entity {
                     image = idle;
                 }
             }
-            else if (reverse == true){
+            else if (direction == -1){
                 if (actionNum == 1) {
                     image = rpunch1;
                 }
@@ -314,7 +341,7 @@ public class Player extends Entity {
             }
                 break;
             case Kick:
-            if(reverse == false){
+            if(direction == 1){
                 if (kickNum == 1) {
                     image = kick1;
                 }
@@ -331,7 +358,7 @@ public class Player extends Entity {
                     image = idle;
                 }
             }
-            else if (reverse == true){
+            else if (direction == -1){
                 if (kickNum == 1) {
                     image = rkick1;
                 }

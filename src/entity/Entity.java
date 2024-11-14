@@ -27,4 +27,7 @@ public class Entity {
     public int kickCounter = 0;
     public int kickNum = 1;
     public int kickDo = 0;
+
+    public boolean doJump = false;
+    public int JumpCounter = 0;
 }

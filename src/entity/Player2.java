@@ -70,8 +70,8 @@ public class Player2 extends Entity {
     public void update(boolean r) {
         if (kb.up == true) {
             action = Action.Up;
-            velY = -speed;
-            y += velY;
+            
+            doJump = true;
         }
         else if (kb.down == true) {
             action = Action.Down;
@@ -120,8 +120,8 @@ public class Player2 extends Entity {
             
         }
         else {
-            if(actionDo == 1 || kickDo == 1){
-            if(actionNum<=5){
+            if(actionDo == 1 || kickDo == 1 || doJump == true){
+            if(actionDo == 1){
                 actionCounter++;
                 if(actionCounter > 3){
                 actionNum++;
@@ -132,7 +132,7 @@ public class Player2 extends Entity {
                 actionDo = 0;
                 }
             }
-            if(kickNum<=5){
+            if(kickDo == 1){
                 kickCounter++;
                 if(kickCounter > 3){
                 kickNum++;
@@ -142,6 +142,14 @@ public class Player2 extends Entity {
                 action = Action.Idle;
                 kickDo = 0;
                 }
+            }
+            if(doJump==true){
+                velY += -speed-4;
+                JumpCounter++;
+                if(JumpCounter>1){
+                    y += velY;
+                }
+                if(y<380) doJump = false;
             }
             }
             else action = Action.Idle;
@@ -161,7 +169,7 @@ public class Player2 extends Entity {
         if(y < 500) {
             if(action != Action.Up){
             action = Action.Down;
-        this.velY += 2;
+        this.velY += speed+4;
         y += velY;
             }
         }

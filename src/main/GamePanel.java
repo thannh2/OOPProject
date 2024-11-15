@@ -13,19 +13,19 @@ public class GamePanel extends JPanel implements Runnable {
 
     private Thread gameThread;
     private Keyboard keyboard = new Keyboard();
-    
 
-    private Keyboard2 keyboard2 = new Keyboard2();
-    public Player2 player2 = new Player2(this, keyboard2, "goku");
+    private Player player = new Player(this, keyboard, "vegeta");
+    private Player player2 = new Player(this, keyboard, "goku");
 
-    public Player player = new Player(this, keyboard, "vegeta");
+    // private Keyboard2 keyboard2 = new Keyboard2();
+    // public Player2 player2 = new Player2(this, keyboard2, "goku");
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.white);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyboard);
-        this.addKeyListener(keyboard2);
+        // this.addKeyListener(keyboard2);
         this.setFocusable(true);
     }
 
@@ -48,7 +48,7 @@ public class GamePanel extends JPanel implements Runnable {
         player.draw(g2);
         g2.setColor(Color.RED);
         g2.draw(player.getHitbox());
-    
+
         g2.setColor(Color.BLUE);
         g2.draw(player.getHurtbox());
 
@@ -56,12 +56,11 @@ public class GamePanel extends JPanel implements Runnable {
         player2.draw(g2);
         g2.setColor(Color.RED);
         g2.draw(player2.getHitbox());
-    
+
         g2.setColor(Color.BLUE);
         g2.draw(player2.getHurtbox());
 
         g2.dispose();
-
     }
 
     @Override

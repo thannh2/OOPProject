@@ -1,16 +1,16 @@
-package src.entity.Character;
+package src.entity.character;
 
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Vegeta extends character{
-    public Vegeta(){
+public class Vegeta extends Character {
+    public Vegeta() {
         getImage();
     }
 
-    public void getImage(){
+    public void getImage() {
         try {
             up1 = ImageIO.read(new File("./res/vegeta/vegetaUp.png"));
             down1 = ImageIO.read(new File("./res/vegeta/vegetaDown.png"));
@@ -40,7 +40,7 @@ public class Vegeta extends character{
             rkick2 = ImageIO.read(new File("./res/vegeta/rkick2.png"));
             rkick3 = ImageIO.read(new File("./res/vegeta/rkick3.png"));
             rkick4 = ImageIO.read(new File("./res/vegeta/rkick4.png"));
-        } catch(IOException e){
+        } catch(IOException e) {
             e.printStackTrace();
         }
     }

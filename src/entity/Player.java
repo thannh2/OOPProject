@@ -1,6 +1,6 @@
 package src.entity;
 
-import src.entity.Skill.kiBlast;
+import src.entity.skill.KiBlast;
 import src.main.GamePanel;
 import src.main.Keyboard;
 
@@ -16,7 +16,7 @@ public class Player extends Entity {
     Keyboard kb;
     Player2 player2;
 
-    kiBlast L;
+    KiBlast L;
 
     public Player(GamePanel gp, Keyboard kb, Player2 player2) {
         this.gp = gp;
@@ -41,9 +41,9 @@ public class Player extends Entity {
     public void getPlayerImage() {
         try {
             up1 = ImageIO.read(new File("./res/gokuu/up_1.png"));
-            
+
             down1 = ImageIO.read(new File("./res/gokuu/down_1.png"));
-            
+
             left1 = ImageIO.read(new File("./res/gokuu/left_1.png"));
             left2 = ImageIO.read(new File("./res/gokuu/left_2.png"));
             right1 = ImageIO.read(new File("./res/gokuu/right_1.png"));
@@ -121,7 +121,7 @@ public class Player extends Entity {
             //     actionNum = actionNum % 4 + 1;
             //     actionCounter = 0;
             // }
-            
+
         }
         else if (kb.kick == true){
             kickNum = 1;
@@ -137,7 +137,7 @@ public class Player extends Entity {
             //     kickNum = kickNum % 4 + 1;
             //     kickCounter = 0;
             // }
-            
+
         }
          else if(kb.skill == true){
             if(skillx > 1280 || skillx < 0){
@@ -224,7 +224,7 @@ public class Player extends Entity {
 
         switch (action) {
             case Up:
-                if(direction == 1){ 
+                if(direction == 1){
                 image = up1;
                 }
                 else if(direction == -1){
@@ -232,7 +232,7 @@ public class Player extends Entity {
                 }
                 break;
             case Down:
-            if(direction == 1){ 
+            if(direction == 1){
                 image = down1;
                 }
                 else if(direction == -1){

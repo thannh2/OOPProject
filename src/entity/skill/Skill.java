@@ -1,8 +1,8 @@
-package src.entity.Skill;
+package src.entity.skill;
 
 import java.awt.image.BufferedImage;
 
-public class skill {
+public class Skill {
     public int x, y, speed;
 
     BufferedImage pic1, pic2, rpic1, rpic2;

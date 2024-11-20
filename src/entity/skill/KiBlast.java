@@ -1,4 +1,4 @@
-package src.entity.Skill;
+package src.entity.skill;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,10 +9,11 @@ import java.awt.image.BufferedImage;
 
 import src.main.GamePanel;
 
-public class kiBlast extends skill {
+public class KiBlast extends Skill {
     GamePanel gp;
     boolean test = true;
-    public kiBlast(int x, int y, GamePanel gp, int direction){
+
+    public KiBlast(int x, int y, GamePanel gp, int direction){
         this.x = x;
         this.y = y;
         this.gp = gp;

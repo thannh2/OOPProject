@@ -1,8 +1,7 @@
 package src.main;
 
-import java.awt.event.KeyListener;
-import java.awt.RenderingHints.Key;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class Keyboard2 implements KeyListener {
     public boolean up, down, right, left, punch, kick, skill;
@@ -32,11 +31,11 @@ public class Keyboard2 implements KeyListener {
             right = true;
         }
 
-        if (number == KeyEvent.VK_NUMPAD1) {
+        if (number == KeyEvent.VK_N) {
             punch = true;
         }
 
-        if (number == KeyEvent.VK_NUMPAD2) {
+        if (number == KeyEvent.VK_M) {
             kick = true;
         }
         if (number == KeyEvent.VK_NUMPAD3) {
@@ -64,11 +63,11 @@ public class Keyboard2 implements KeyListener {
             right = false;
         }
 
-        if (number == KeyEvent.VK_NUMPAD1) {
+        if (number == KeyEvent.VK_N) {
             punch = false;
         }
 
-        if (number == KeyEvent.VK_NUMPAD2) {
+        if (number == KeyEvent.VK_M) {
             kick = false;
         }
         if (number == KeyEvent.VK_NUMPAD3) {

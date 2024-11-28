@@ -70,12 +70,21 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D)g;
 
+        // player.update();
         player.draw(g2);
-        player2.draw(g2);
-        L1.draw(g2);
-        L2.draw(g2);
+        g2.setColor(Color.RED);
+        g2.draw(player.getHitbox());
+    
+        g2.setColor(Color.BLUE);
+        g2.draw(player.getHurtbox());
 
-        g2.dispose();
+        // player2.update();
+        player2.draw(g2);
+        g2.setColor(Color.RED);
+        g2.draw(player2.getHitbox());
+    
+        g2.setColor(Color.BLUE);
+        g2.draw(player2.getHurtbox());
     }
 
     @Override

@@ -4,7 +4,7 @@ import java.awt.*;
 import javax.swing.JPanel;
 import src.entity.Player;
 import src.entity.Player2;
-import src.entity.Skill.kiBlast;
+import src.entity.Skill.KiBlast;
 
 public class GamePanel extends JPanel implements Runnable {
     private static final int SCREEN_WIDTH = 1280;
@@ -14,15 +14,14 @@ public class GamePanel extends JPanel implements Runnable {
 
     private Thread gameThread;
     private Keyboard keyboard = new Keyboard();
-    
 
     private Keyboard2 keyboard2 = new Keyboard2();
     public Player2 player2 = new Player2(this, keyboard2);
 
     public Player player = new Player(this, keyboard, player2);
 
-    public kiBlast L1 = new kiBlast(10000, 100000, this,2);
-    public kiBlast L2 = new kiBlast(10000, 100000, this, 2);
+    public KiBlast L1 = new KiBlast(10000, 100000, this, 2);
+    public KiBlast L2 = new KiBlast(10000, 100000, this, 2);
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -44,20 +43,20 @@ public class GamePanel extends JPanel implements Runnable {
         if(L1.x < 0 || L1.x > 1280){
         if(player.kiBlastDo==1){
             if(player.direction == 1){
-            L1 = new kiBlast((int)player.x + 80, (int)player.y + 40, this, player.direction);
+            L1 = new KiBlast((int)player.x + 80, (int)player.y + 40, this, player.direction);
             }
             else if(player.direction == -1){
-                L1 = new kiBlast((int)player.x -20, (int)player.y + 40, this, player.direction);
+                L1 = new KiBlast((int)player.x -20, (int)player.y + 40, this, player.direction);
             }
         }
         }
         if(L2.x < 0 || L2.x > 1280){
             if(player2.kiBlastDo==1){
                 if(player2.direction == 1){
-                L2 = new kiBlast((int)player2.x + 80, (int)player2.y + 40, this, player2.direction);
+                L2 = new KiBlast((int)player2.x + 80, (int)player2.y + 40, this, player2.direction);
                 }
                 else if(player2.direction == -1){
-                    L2 = new kiBlast((int)player2.x -20, (int)player2.y + 40, this, player2.direction);
+                    L2 = new KiBlast((int)player2.x -20, (int)player2.y + 40, this, player2.direction);
                 }
             }
             }

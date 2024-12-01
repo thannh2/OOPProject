@@ -1,22 +1,28 @@
 package src.main;
-
-import src.entity.Entity;
+import java.awt.Rectangle;
+import src.entity.Player;
+import src.entity.Player2;
 
 public class CollisionChecker {
 
 	GamePanel gp;
-
 	public CollisionChecker(GamePanel gp) {
 		this.gp = gp;
 	}
 
-	public void checkTile(Entity entity) {
-        int x = (int)entity.x;
-        int y = (int)entity.y;
+	public boolean intersects(Rectangle mine, Rectangle other) {
+        return mine.x < other.x + other.width &&
+               mine.x + mine.width > other.x &&
+               mine.y < other.y + other.height &&
+               mine.y + mine.height > other.y;
+	}
 
-		int entityLeftX = x;
-		int entityRightX = x + 128; //128 mean player witdh
-		int entityTopY = y;
-		int entityBotY = y + 120; //120 mean player height
+	public boolean checkCollision(Player player, Player2 player2) {
+		Rectangle playerHitbox = player.getHitbox();
+		Rectangle player2Hurtbox = player2.getHurtbox();
+		if(intersects(playerHitbox, player2Hurtbox)) {
+			return true;
+		}
+		return false;
 	}
 }

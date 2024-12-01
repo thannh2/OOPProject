@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
-import src.entity.skill.KiBlast;
+import src.entity.Skill.KiBlast;
 import src.main.ActionBox;
 import src.main.GamePanel;
 import src.main.Keyboard;
@@ -40,8 +40,8 @@ public class Player extends Entity {
         actions.put(Action.Idle, new ActionBox(zeroBox, new Rectangle(0, 0, 46, 72)));
         actions.put(Action.Up, new ActionBox(zeroBox, new Rectangle(0, 0, 46, 72)));
         actions.put(Action.Down, new ActionBox(zeroBox, new Rectangle(0, 0, 46, 72)));
-        actions.put(Action.Left, new ActionBox(zeroBox, new Rectangle(0, 0, 104, 72)));
-        actions.put(Action.Right, new ActionBox(zeroBox, new Rectangle(0, 0, 104, 72)));
+        actions.put(Action.Left, new ActionBox(zeroBox, new Rectangle(0, 0, 80, 72)));
+        actions.put(Action.Right, new ActionBox(zeroBox, new Rectangle(0, 0, 80, 72)));
         actions.put(Action.Skill, new ActionBox(zeroBox, new Rectangle(0, 0, 104, 72)));
     }
 
@@ -158,7 +158,7 @@ public class Player extends Entity {
             action = Action.Right;
             velX = speed;
             x += velX;
-            actions.get(action).getHurtbox().setLocation((int)this.x, (int)this.y + 48);
+            actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 48);
             }
             else{
                 velY += -speed;
@@ -175,10 +175,10 @@ public class Player extends Entity {
             actionDo = 1;
             action = Action.Punch;
             if(direction == 1) {
-                actions.get(action).getHitbox().setLocation((int)this.x + 80, (int)this.y + 62);
+                actions.get(action).getHitbox().setLocation((int)this.x + 80, (int)this.y + 56);
                 actions.get(action).getHurtbox().setLocation((int)this.x + 48, (int)this.y + 35);
             } else {
-                actions.get(action).getHitbox().setLocation((int)this.x + 128 - 80 - 48, (int)this.y + 62);
+                actions.get(action).getHitbox().setLocation((int)this.x + 128 - 80 - 48, (int)this.y + 56);
                 actions.get(action).getHurtbox().setLocation((int)this.x + 128 - 48 - 48, (int)this.y + 35);
             }
 

@@ -30,11 +30,11 @@ public class Player2 extends Entity {
         //hitbox & hurtbox
         actions.put(Action.Punch, new ActionBox(new Rectangle(x + 80, y + 62, 48, 17), new Rectangle(x + 48, y + 35, 48, 85)));
         actions.put(Action.Kick, new ActionBox(new Rectangle(x + 56, y + 64, 70, 16), new Rectangle(x + 16, y + 32, 46, 80)));
-        actions.put(Action.Idle, new ActionBox(zeroBox, new Rectangle(0, 0, 46, 72)));
-        actions.put(Action.Up, new ActionBox(zeroBox, new Rectangle(0, 0, 46, 72)));
-        actions.put(Action.Down, new ActionBox(zeroBox, new Rectangle(0, 0, 46, 72)));
-        actions.put(Action.Left, new ActionBox(zeroBox, new Rectangle(0, 0, 104, 72)));
-        actions.put(Action.Right, new ActionBox(zeroBox, new Rectangle(0, 0, 104, 72)));
+        actions.put(Action.Idle, new ActionBox(zeroBox, new Rectangle(0, 0, 56, 72)));
+        actions.put(Action.Up, new ActionBox(zeroBox, new Rectangle(0, 0, 48, 72)));
+        actions.put(Action.Down, new ActionBox(zeroBox, new Rectangle(0, 0, 48, 72)));
+        actions.put(Action.Left, new ActionBox(zeroBox, new Rectangle(0, 0, 80, 72)));
+        actions.put(Action.Right, new ActionBox(zeroBox, new Rectangle(0, 0, 80, 72)));
         actions.put(Action.Skill, new ActionBox(zeroBox, new Rectangle(0, 0, 104, 72)));
     }
     public Rectangle getHitbox() {
@@ -103,9 +103,9 @@ public class Player2 extends Entity {
             velY = -speed;
             y += velY;
             if(direction == 1) {
-                actions.get(action).getHurtbox().setLocation((int)this.x + 32, (int)this.y + 24);
+                actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 24);
             } else {
-                actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 32 - 46, (int)this.y + 24);
+                actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 48, (int)this.y + 24);
             }
             // velY = -speed;
             // y += velY;
@@ -126,7 +126,7 @@ public class Player2 extends Entity {
             action = Action.Left;
             velX = -speed;
             x += velX;
-            actions.get(action).getHurtbox().setLocation((int)this.x + 16, (int)this.y + 48);
+            actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 48);
             }
             else{
                 velY += -speed;
@@ -143,7 +143,7 @@ public class Player2 extends Entity {
             action = Action.Right;
             velX = speed;
             x += velX;
-            actions.get(action).getHurtbox().setLocation((int)this.x, (int)this.y + 48);
+            actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 48);
             }
             else{
                 velY += -speed;
@@ -160,10 +160,10 @@ public class Player2 extends Entity {
             actionDo = 1;
             action = Action.Punch;
             if(direction == 1) {
-                actions.get(action).getHitbox().setLocation((int)this.x + 72, (int)this.y + 62);
+                actions.get(action).getHitbox().setLocation((int)this.x + 72, (int)this.y + 56);
                 actions.get(action).getHurtbox().setLocation((int)this.x + 48, (int)this.y + 35);
             } else {
-                actions.get(action).getHitbox().setLocation((int)this.x + 128 - 72 - 48, (int)this.y + 62);
+                actions.get(action).getHitbox().setLocation((int)this.x + 128 - 72 - 48, (int)this.y + 56);
                 actions.get(action).getHurtbox().setLocation((int)this.x + 128 - 48 - 48, (int)this.y + 35);
             }
 
@@ -228,9 +228,9 @@ public class Player2 extends Entity {
                     if(actionNum > 4) {
                         action = Action.Idle;
                         if(direction == 1) {
-                            actions.get(action).getHurtbox().setLocation((int)this.x + 20, (int)this.y + 32);
+                            actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
                         } else {
-                            actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 20 - 46, (int)this.y + 32);
+                            actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 56, (int)this.y + 32);
                         }
                         actionDo = 0;
                     }
@@ -244,9 +244,9 @@ public class Player2 extends Entity {
                     if(kickNum > 4) {
                         action = Action.Idle;
                         if(direction == 1) {
-                            actions.get(action).getHurtbox().setLocation((int)this.x + 20, (int)this.y + 32);
+                            actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
                         } else {
-                            actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 20 - 46, (int)this.y + 32);
+                            actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 56, (int)this.y + 32);
                         }
                         kickDo = 0;
                     }
@@ -268,9 +268,9 @@ public class Player2 extends Entity {
                     if(kiBlastNum>2) {
                         action = Action.Idle;
                         if(direction == 1) {
-                            actions.get(action).getHurtbox().setLocation((int)this.x + 20, (int)this.y + 32);
+                            actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
                         } else {
-                            actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 20 - 46, (int)this.y + 32);
+                            actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 56, (int)this.y + 32);
                         }
                         kiBlastDo = 0;
                     }
@@ -279,9 +279,9 @@ public class Player2 extends Entity {
             else {
                 action = Action.Idle;
                 if(direction == 1) {
-                    actions.get(action).getHurtbox().setLocation((int)this.x + 20, (int)this.y + 32);
+                    actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
                 } else {
-                    actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 20 - 46, (int)this.y + 32);
+                    actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 56, (int)this.y + 32);
                 }
             }
         }
@@ -303,9 +303,9 @@ public class Player2 extends Entity {
                 this.velY += speed;
                 y += velY;
                 if(direction == 1) {
-                    actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
+                    actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 24);
                 } else {
-                    actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 24 - 46, (int)this.y + 24);
+                    actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 48, (int)this.y + 24);
                 }
             } 
             // else if (y == 500) {

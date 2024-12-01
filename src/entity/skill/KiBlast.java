@@ -1,4 +1,4 @@
-package src.entity.skill;
+package src.entity.Skill;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;

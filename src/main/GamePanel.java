@@ -4,7 +4,7 @@ import java.awt.*;
 import javax.swing.JPanel;
 import src.entity.Player;
 import src.entity.Player2;
-import src.entity.skill.KiBlast;
+import src.entity.Skill.KiBlast;
 
 public class GamePanel extends JPanel implements Runnable {
     private static final int SCREEN_WIDTH = 1280;
@@ -23,6 +23,8 @@ public class GamePanel extends JPanel implements Runnable {
     public KiBlast L1 = new KiBlast(10000, 100000, this, 2);
     public KiBlast L2 = new KiBlast(10000, 100000, this, 2);
 
+    CollisionChecker collisionChecker = new CollisionChecker(this);
+
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.white);
@@ -35,6 +37,16 @@ public class GamePanel extends JPanel implements Runnable {
     public void startGameThread() {
         this.gameThread = new Thread(this);
         this.gameThread.start();
+    }
+
+
+    public void checkCollisions() {
+        if (collisionChecker.checkCollision(player, player2)) {
+            System.out.println("Player 1 attacked Player 2!");
+        }
+        // if (collisionChecker.checkCollision(player2, player)) {
+        //     System.out.println("Player 2 attacked Player 1!");
+        // }
     }
 
     public void update() {
@@ -60,6 +72,7 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
             }
+        checkCollisions();
         L1.update();
         L2.update();
     }

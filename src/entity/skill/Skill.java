@@ -1,4 +1,4 @@
-package src.entity.Skill;
+package src.entity.skill;
 
 import java.awt.image.BufferedImage;
 

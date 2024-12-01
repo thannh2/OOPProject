@@ -35,6 +35,7 @@ public class Player2 extends Entity {
         actions.put(Action.Down, new ActionBox(zeroBox, new Rectangle(0, 0, 46, 72)));
         actions.put(Action.Left, new ActionBox(zeroBox, new Rectangle(0, 0, 104, 72)));
         actions.put(Action.Right, new ActionBox(zeroBox, new Rectangle(0, 0, 104, 72)));
+        actions.put(Action.Skill, new ActionBox(zeroBox, new Rectangle(0, 0, 104, 72)));
     }
     public Rectangle getHitbox() {
         return actions.get(action).getHitbox();
@@ -187,16 +188,16 @@ public class Player2 extends Entity {
                 kiBlastNum = 1;
                 kiBlastDo = 1;
                 action = Action.Skill;
-                actions.get(action).getHitbox().setLocation((int)this.x + 120 - 38 - 46, (int)this.y + 32);
+                //actions.get(action).getHitbox().setLocation((int)this.x + 120 - 38 - 46, (int)this.y + 32);
             }
         }
         else {
            // L.update();
-            if(direction == 1) {
-                actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
-            } else {
-                actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 46, (int)this.y + 32);
-            }
+            // if(direction == 1) {
+            //     actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
+            // } else {
+            //     actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 46, (int)this.y + 32);
+            // }
             if(actionDo == 1 || kickDo == 1 || doJump == true || kiBlastDo == 1){
                 if(actionDo == 1){
                     actionCounter++;

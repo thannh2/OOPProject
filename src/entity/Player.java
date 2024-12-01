@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
-import src.entity.Skill.KiBlast;
+import src.entity.skill.KiBlast;
 import src.main.ActionBox;
 import src.main.GamePanel;
 import src.main.Keyboard;

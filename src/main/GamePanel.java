@@ -4,7 +4,7 @@ import java.awt.*;
 import javax.swing.JPanel;
 import src.entity.Player;
 import src.entity.Player2;
-import src.entity.Skill.KiBlast;
+import src.entity.skill.KiBlast;
 
 public class GamePanel extends JPanel implements Runnable {
     private static final int SCREEN_WIDTH = 1280;
@@ -77,6 +77,8 @@ public class GamePanel extends JPanel implements Runnable {
         g2.setColor(Color.BLUE);
         g2.draw(player.getHurtbox());
 
+        L1.draw(g2);
+
         // player2.update();
         player2.draw(g2);
         g2.setColor(Color.RED);
@@ -84,6 +86,8 @@ public class GamePanel extends JPanel implements Runnable {
     
         g2.setColor(Color.BLUE);
         g2.draw(player2.getHurtbox());
+
+        L2.draw(g2);
     }
 
     @Override

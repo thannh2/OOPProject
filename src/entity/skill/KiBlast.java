@@ -43,9 +43,9 @@ public class KiBlast extends Skill {
             x-=speed;
         }
         skillCounter++;
-        if(skillCounter>1){
-            skillAct++;
-            if(skillAct == 2) skillAct = 1;
+        if(skillCounter>2){
+            if(skillAct == 1) skillAct = 2;
+            else skillAct = 1;
             skillCounter = 0;
         }
     }
@@ -56,7 +56,7 @@ public class KiBlast extends Skill {
         if(skillAct == 1) {
             image = pic1;
         }
-        else if (skillAct == 2){
+        else{
             image = pic2;
         }
         }
@@ -64,7 +64,7 @@ public class KiBlast extends Skill {
             if(skillAct == 1) {
                 image = rpic1;
             }
-            else if (skillAct == 2){
+            else{
                 image = rpic2;
             }
         }

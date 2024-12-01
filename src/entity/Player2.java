@@ -121,18 +121,38 @@ public class Player2 extends Entity {
         //     }
         // }
         else if (kb.left == true) {
+            if(doJump == false){
             direction = -1;
             action = Action.Left;
             velX = -speed;
             x += velX;
-            actions.get(action).getHurtbox().setLocation((int)this.x + 32, (int)this.y + 48);
+            actions.get(action).getHurtbox().setLocation((int)this.x + 16, (int)this.y + 48);
+            }
+            else{
+                velY += -speed;
+                    JumpCounter++;
+                    if(JumpCounter > 1){
+                        y += velY;
+                    }
+                    if(y < 380) doJump = false;
+            }
         }
         else if (kb.right == true) {
+            if(doJump == false){
             direction = 1;
             action = Action.Right;
             velX = speed;
             x += velX;
             actions.get(action).getHurtbox().setLocation((int)this.x, (int)this.y + 48);
+            }
+            else{
+                velY += -speed;
+                    JumpCounter++;
+                    if(JumpCounter > 1){
+                        y += velY;
+                    }
+                    if(y < 380) doJump = false;
+            }
         }
         else if (kb.punch == true) {
             actionNum = 1;
@@ -287,14 +307,15 @@ public class Player2 extends Entity {
                 } else {
                     actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 24 - 46, (int)this.y + 24);
                 }
-            } else if (y == 500) {
-                action = action.Idle;
-                if(direction == 1) {
-                    actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
-                } else {
-                    actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 46, (int)this.y + 32);
-                }
-            }
+            } 
+            // else if (y == 500) {
+            //     action = action.Idle;
+            //     if(direction == 1) {
+            //         actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
+            //     } else {
+            //         actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 46, (int)this.y + 32);
+            //     }
+            // }
         }
     }
         // if(player2.x < x){

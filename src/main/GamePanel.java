@@ -4,7 +4,7 @@ import java.awt.*;
 import javax.swing.JPanel;
 import src.entity.Player;
 import src.entity.Player2;
-import src.entity.Skill.KiBlast;
+import src.entity.skill.KiBlast;
 
 public class GamePanel extends JPanel implements Runnable {
     private static final int SCREEN_WIDTH = 1280;
@@ -18,7 +18,7 @@ public class GamePanel extends JPanel implements Runnable {
     private Keyboard2 keyboard2 = new Keyboard2();
     public Player2 player2 = new Player2(this, keyboard2);
 
-    public Player player = new Player(this, keyboard, player2);
+    public Player player = new Player(this, keyboard);
 
     public KiBlast L1 = new KiBlast(10000, 100000, this, 2);
     public KiBlast L2 = new KiBlast(10000, 100000, this, 2);
@@ -86,7 +86,7 @@ public class GamePanel extends JPanel implements Runnable {
         player.draw(g2);
         g2.setColor(Color.RED);
         g2.draw(player.getHitbox());
-    
+
         g2.setColor(Color.BLUE);
         g2.draw(player.getHurtbox());
 
@@ -96,7 +96,7 @@ public class GamePanel extends JPanel implements Runnable {
         player2.draw(g2);
         g2.setColor(Color.RED);
         g2.draw(player2.getHitbox());
-    
+
         g2.setColor(Color.BLUE);
         g2.draw(player2.getHurtbox());
 

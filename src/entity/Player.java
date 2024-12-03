@@ -8,27 +8,24 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
-import src.entity.Skill.KiBlast;
+import src.entity.skill.KiBlast;
 import src.main.ActionBox;
 import src.main.GamePanel;
 import src.main.Keyboard;
 
-
 public class Player extends Entity {
     GamePanel gp;
     Keyboard kb;
-    // Player2 player2;
     private Map<Action, ActionBox> actions;
 
     KiBlast L;
 
-    public Player(GamePanel gp, Keyboard kb, Player2 player2) {
+    public Player(GamePanel gp, Keyboard kb) {
         this.gp = gp;
         this.kb = kb;
-        // this.player2 = player2;
         setDefaultValues();
         getPlayerImage();
-        
+
         int x = (int)this.x;
         int y = (int)this.y;
         Rectangle zeroBox = new Rectangle(0, 0, 0, 0);
@@ -64,7 +61,7 @@ public class Player extends Entity {
     public Rectangle getHurtbox() {
         return actions.get(action).getHurtbox();
     }
-    
+
     public void getPlayerImage() {
         try {
             up1 = ImageIO.read(new File("./res/gokuu/up_1.png"));
@@ -317,7 +314,7 @@ public class Player extends Entity {
                 } else {
                     actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 24 - 46, (int)this.y + 24);
                 }
-            } 
+            }
         }
         // else  {
         //     if(action != Action.Left || action != Action.Right){
@@ -470,4 +467,3 @@ public class Player extends Entity {
         g2.drawImage(image, (int)x, (int)y, 128, 120, null);
     }
 }
-

@@ -19,23 +19,24 @@ public class Player extends Entity {
     Keyboard kb;
     GameChar character;
 
+    private HashMap<Action, ActionBox> actions;
+
     KiBlast L;
 
     public Player(GamePanel gp, Keyboard kb, String character) {
         this.gp = gp;
         this.kb = kb;
 
-        setDefaultValues();
         switch (character) {
             case "goku":
                 this.character = new Goku();
-                break;
             case "vegeta":
                 this.character = new Vegeta();
-                break;
             default:
                 return;
         }
+
+        setDefaultValues();
     }
 
     public void setDefaultValues() {
@@ -51,11 +52,11 @@ public class Player extends Entity {
     }
 
     public Rectangle getHitbox() {
-        return this.character.actions.get(action).getHitbox();
+        return actions.get(action).getHitbox();
     }
 
     public Rectangle getHurtbox() {
-        return this.character.actions.get(action).getHurtbox();
+        return actions.get(action).getHurtbox();
     }
 
     public void update(int skillx) {
@@ -64,10 +65,10 @@ public class Player extends Entity {
             velY = -speed;
             y += velY;
             if(direction == 1) {
-                this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
+                actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
 
             } else {
-                this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 24 - 46, (int)this.y + 24);
+                actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 24 - 46, (int)this.y + 24);
             }
             // velY = -speed;
             // y += velY;
@@ -77,9 +78,9 @@ public class Player extends Entity {
             // action = Action.Down;
             velY = speed;
             if(direction == 1) {
-                this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
+                actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
             } else {
-                this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 24 - 46, (int)this.y + 24);
+                actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 24 - 46, (int)this.y + 24);
             }
         }
         else if (kb.left == true) {
@@ -88,7 +89,7 @@ public class Player extends Entity {
             action = Action.Left;
             velX = -speed;
             x += velX;
-            this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 16, (int)this.y + 48);
+            actions.get(action).getHurtbox().setLocation((int)this.x + 16, (int)this.y + 48);
             }
             else{
                 velY += -speed;
@@ -105,7 +106,7 @@ public class Player extends Entity {
             action = Action.Right;
             velX = speed;
             x += velX;
-            this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 48);
+            actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 48);
             }
             else{
                 velY += -speed;
@@ -122,11 +123,11 @@ public class Player extends Entity {
             actionDo = 1;
             action = Action.Punch;
             if(direction == 1) {
-                this.character.actions.get(action).getHitbox().setLocation((int)this.x + 80, (int)this.y + 56);
-                this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 48, (int)this.y + 35);
+                actions.get(action).getHitbox().setLocation((int)this.x + 80, (int)this.y + 56);
+                actions.get(action).getHurtbox().setLocation((int)this.x + 48, (int)this.y + 35);
             } else {
-                this.character.actions.get(action).getHitbox().setLocation((int)this.x + 128 - 80 - 48, (int)this.y + 56);
-                this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 128 - 48 - 48, (int)this.y + 35);
+                actions.get(action).getHitbox().setLocation((int)this.x + 128 - 80 - 48, (int)this.y + 56);
+                actions.get(action).getHurtbox().setLocation((int)this.x + 128 - 48 - 48, (int)this.y + 35);
             }
 
             // actionCounter++;
@@ -146,11 +147,11 @@ public class Player extends Entity {
             kickDo = 1;
             action = Action.Kick;
             if(direction == 1) {
-                this.character.actions.get(action).getHitbox().setLocation((int)this.x + 56, (int)this.y + 64);
-                this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 16, (int)this.y + 32);
+                actions.get(action).getHitbox().setLocation((int)this.x + 56, (int)this.y + 64);
+                actions.get(action).getHurtbox().setLocation((int)this.x + 16, (int)this.y + 32);
             } else {
-                this.character.actions.get(action).getHitbox().setLocation((int)this.x + 120 - 56 - 70, (int)this.y + 64);
-                this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 16 - 46, (int)this.y + 32);
+                actions.get(action).getHitbox().setLocation((int)this.x + 120 - 56 - 70, (int)this.y + 64);
+                actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 16 - 46, (int)this.y + 32);
             }
 
             // kickCounter++;
@@ -170,7 +171,7 @@ public class Player extends Entity {
                 kiBlastNum = 1;
                 kiBlastDo = 1;
                 action = Action.Skill;
-                // this.character.actions.get(action).getHitbox().setLocation((int)this.x + 120 - 38 - 46, (int)this.y + 32);
+                // actions.get(action).getHitbox().setLocation((int)this.x + 120 - 38 - 46, (int)this.y + 32);
             }
         }
         else {
@@ -185,9 +186,9 @@ public class Player extends Entity {
                     if(actionNum > 4) {
                         action = Action.Idle;
                         if(direction == 1) {
-                            this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 38, (int)this.y + 32);
+                            actions.get(action).getHurtbox().setLocation((int)this.x + 38, (int)this.y + 32);
                         } else {
-                            this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 38 - 46, (int)this.y + 32);
+                            actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 38 - 46, (int)this.y + 32);
                         }
                         actionDo = 0;
                     }
@@ -201,9 +202,9 @@ public class Player extends Entity {
                     if(kickNum > 4) {
                         action = Action.Idle;
                         if(direction == 1) {
-                            this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 38, (int)this.y + 32);
+                            actions.get(action).getHurtbox().setLocation((int)this.x + 38, (int)this.y + 32);
                         } else {
-                            this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 38 - 46, (int)this.y + 32);
+                            actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 38 - 46, (int)this.y + 32);
                         }
                         kickDo = 0;
                     }
@@ -225,9 +226,9 @@ public class Player extends Entity {
                     if(kiBlastNum>2) {
                         action = Action.Idle;
                         if(direction == 1) {
-                            this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 38, (int)this.y + 32);
+                            actions.get(action).getHurtbox().setLocation((int)this.x + 38, (int)this.y + 32);
                         } else {
-                            this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 38 - 46, (int)this.y + 32);
+                            actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 38 - 46, (int)this.y + 32);
                         }
                         kiBlastDo = 0;
                     }
@@ -236,9 +237,9 @@ public class Player extends Entity {
             else {
                 action = Action.Idle;
                 if(direction == 1) {
-                    this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 38, (int)this.y + 32);
+                    actions.get(action).getHurtbox().setLocation((int)this.x + 38, (int)this.y + 32);
                 } else {
-                    this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 38 - 46, (int)this.y + 32);
+                    actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 38 - 46, (int)this.y + 32);
                 }
             }
         }
@@ -260,9 +261,9 @@ public class Player extends Entity {
                 this.velY += speed;
                 y += velY;
                 if(direction == 1) {
-                    this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
+                    actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
                 } else {
-                    this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 24 - 46, (int)this.y + 24);
+                    actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 24 - 46, (int)this.y + 24);
                 }
             }
         }
@@ -270,9 +271,9 @@ public class Player extends Entity {
         //     if(action != Action.Left || action != Action.Right){
         //     action = Action.Idle;
         //     if(direction == 1) {
-        //         this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
+        //         actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
         //     } else {
-        //         this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 46, (int)this.y + 32);
+        //         actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 46, (int)this.y + 32);
         //     }
         // }
         // }

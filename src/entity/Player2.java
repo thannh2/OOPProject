@@ -6,8 +6,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 import javax.imageio.ImageIO;
+
+import src.entity.character.*;
+import src.entity.skill.KiBlast;
 import src.main.ActionBox;
 import src.main.GamePanel;
 import src.main.Keyboard2;
@@ -15,34 +17,25 @@ import src.main.Keyboard2;
 public class Player2 extends Entity {
     GamePanel gp;
     Keyboard2 kb;
-    private Map<Action, ActionBox> actions;
+    GameChar character;
 
-    public Player2(GamePanel gp, Keyboard2 kb) {
+    KiBlast L;
+
+    public Player2(GamePanel gp, Keyboard2 kb, String character) {
         this.gp = gp;
         this.kb = kb;
+
         setDefaultValues();
-        getPlayerImage();
-        int x = (int)this.x;
-        int y = (int)this.y;
-        Rectangle zeroBox = new Rectangle(0, 0, 0, 0);
-        actions = new HashMap<>();
-
-        //hitbox & hurtbox
-        actions.put(Action.Punch, new ActionBox(new Rectangle(x + 80, y + 62, 48, 17), new Rectangle(x + 48, y + 35, 48, 85)));
-        actions.put(Action.Kick, new ActionBox(new Rectangle(x + 56, y + 64, 70, 16), new Rectangle(x + 16, y + 32, 46, 80)));
-        actions.put(Action.Idle, new ActionBox(zeroBox, new Rectangle(0, 0, 56, 72)));
-        actions.put(Action.Up, new ActionBox(zeroBox, new Rectangle(0, 0, 48, 72)));
-        actions.put(Action.Down, new ActionBox(zeroBox, new Rectangle(0, 0, 48, 72)));
-        actions.put(Action.Left, new ActionBox(zeroBox, new Rectangle(0, 0, 80, 72)));
-        actions.put(Action.Right, new ActionBox(zeroBox, new Rectangle(0, 0, 80, 72)));
-        actions.put(Action.Skill, new ActionBox(zeroBox, new Rectangle(0, 0, 104, 72)));
-    }
-    public Rectangle getHitbox() {
-        return actions.get(action).getHitbox();
-    }
-
-    public Rectangle getHurtbox() {
-        return actions.get(action).getHurtbox();
+        switch (character) {
+            case "goku":
+                this.character = new Goku();
+                break;
+            case "vegeta":
+                this.character = new Vegeta();
+                break;
+            default:
+                return;
+        }
     }
 
     public void setDefaultValues() {
@@ -53,48 +46,16 @@ public class Player2 extends Entity {
         speed = 8;
         action = Action.Idle;
         reverse = true;
+        doJump = false;
         direction = -1;
     }
 
-    public void getPlayerImage() {
-        try {
-            up1 = ImageIO.read(new File("./res/vegeta/vegetaUp.png"));
-            down1 = ImageIO.read(new File("./res/vegeta/vegetaDown.png"));
-            left1 = ImageIO.read(new File("./res/vegeta/vegetaLeft.png"));
-            right1 = ImageIO.read(new File("./res/vegeta/vegetaRight.png"));
-            idle = ImageIO.read(new File("./res/vegeta/vegetaIdle.png"));
-            idle2 = ImageIO.read(new File("./res/vegeta/vegetaIdle2.png"));
-            punch1 = ImageIO.read(new File("./res/vegeta/vegetaPunch1.png"));
-            punch2 = ImageIO.read(new File("./res/vegeta/vegetaPunch2.png"));
-            punch3 = ImageIO.read(new File("./res/vegeta/vegetaPunch3.png"));
-            punch4 = ImageIO.read(new File("./res/vegeta/vegetaPunch4.png"));
-            kick1 = ImageIO.read(new File("./res/vegeta/vegetaKick1.png"));
-            kick2 = ImageIO.read(new File("./res/vegeta/vegetaKick2.png"));
-            kick3 = ImageIO.read(new File("./res/vegeta/vegetaKick3.png"));
-            kick4 = ImageIO.read(new File("./res/vegeta/vegetaKick4.png"));
+    public Rectangle getHitbox() {
+        return this.character.actions.get(action).getHitbox();
+    }
 
-            kiBlast1 = ImageIO.read(new File("./res/vegeta/vegetaKiBlast1.png"));
-            kiBlast2 = ImageIO.read(new File("./res/vegeta/vegetaKiBlast2.png"));
-
-            //reverse image
-            rup = ImageIO.read(new File("./res/vegeta/rup.png"));
-            rdown = ImageIO.read(new File("./res/vegeta/rdown.png"));
-            ridle = ImageIO.read(new File("./res/vegeta/ridle.png"));
-            ridle2 = ImageIO.read(new File("./res/vegeta/ridle2.png"));
-            rpunch1 = ImageIO.read(new File("./res/vegeta/rpunch1.png"));
-            rpunch2 = ImageIO.read(new File("./res/vegeta/rpunch2.png"));
-            rpunch3 = ImageIO.read(new File("./res/vegeta/rpunch3.png"));
-            rpunch4 = ImageIO.read(new File("./res/vegeta/rpunch4.png"));
-            rkick1 = ImageIO.read(new File("./res/vegeta/rkick1.png"));
-            rkick2 = ImageIO.read(new File("./res/vegeta/rkick2.png"));
-            rkick3 = ImageIO.read(new File("./res/vegeta/rkick3.png"));
-            rkick4 = ImageIO.read(new File("./res/vegeta/rkick4.png"));
-
-            rkiBlast1 = ImageIO.read(new File("./res/vegeta/rvegetaKiBlast1.png"));
-            rkiBlast2 = ImageIO.read(new File("./res/vegeta/rvegetaKiBlast2.png"));
-        } catch(IOException e){
-            e.printStackTrace();
-        }
+    public Rectangle getHurtbox() {
+        return this.character.actions.get(action).getHurtbox();
     }
 
     public void update(int skillx) {
@@ -103,9 +64,9 @@ public class Player2 extends Entity {
             velY = -speed;
             y += velY;
             if(direction == 1) {
-                actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 24);
+                this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 24);
             } else {
-                actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 48, (int)this.y + 24);
+                this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 48, (int)this.y + 24);
             }
             // velY = -speed;
             // y += velY;
@@ -115,9 +76,9 @@ public class Player2 extends Entity {
         //     // action = Action.Down;
         //     velY = speed;
         //     if(direction == 1) {
-        //         actions.get(action).getHurtbox().setLocation((int)this.x + 32, (int)this.y + 24);
+        //         this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 32, (int)this.y + 24);
         //     } else {
-        //         actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 32 - 46, (int)this.y + 24);
+        //         this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 32 - 46, (int)this.y + 24);
         //     }
         // }
         else if (kb.left == true) {
@@ -126,7 +87,7 @@ public class Player2 extends Entity {
             action = Action.Left;
             velX = -speed;
             x += velX;
-            actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 48);
+            this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 48);
             }
             else{
                 velY += -speed;
@@ -143,7 +104,7 @@ public class Player2 extends Entity {
             action = Action.Right;
             velX = speed;
             x += velX;
-            actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 48);
+            this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 48);
             }
             else{
                 velY += -speed;
@@ -160,11 +121,11 @@ public class Player2 extends Entity {
             actionDo = 1;
             action = Action.Punch;
             if(direction == 1) {
-                actions.get(action).getHitbox().setLocation((int)this.x + 72, (int)this.y + 56);
-                actions.get(action).getHurtbox().setLocation((int)this.x + 48, (int)this.y + 35);
+                this.character.actions.get(action).getHitbox().setLocation((int)this.x + 72, (int)this.y + 56);
+                this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 48, (int)this.y + 35);
             } else {
-                actions.get(action).getHitbox().setLocation((int)this.x + 128 - 72 - 48, (int)this.y + 56);
-                actions.get(action).getHurtbox().setLocation((int)this.x + 128 - 48 - 48, (int)this.y + 35);
+                this.character.actions.get(action).getHitbox().setLocation((int)this.x + 128 - 72 - 48, (int)this.y + 56);
+                this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 128 - 48 - 48, (int)this.y + 35);
             }
 
             // actionCounter++;
@@ -176,7 +137,7 @@ public class Player2 extends Entity {
             //     actionNum = actionNum % 4 + 1;
             //     actionCounter = 0;
             // }
-            
+
         }
         else if (kb.kick == true){
             kickNum = 1;
@@ -184,11 +145,11 @@ public class Player2 extends Entity {
             kickDo = 1;
             action = Action.Kick;
             if(direction == 1) {
-                actions.get(action).getHitbox().setLocation((int)this.x + 48, (int)this.y + 56);
-                actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
+                this.character.actions.get(action).getHitbox().setLocation((int)this.x + 48, (int)this.y + 56);
+                this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
             } else {
-                actions.get(action).getHitbox().setLocation((int)this.x + 120 - 40 - 70, (int)this.y + 56);
-                actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 46, (int)this.y + 32);
+                this.character.actions.get(action).getHitbox().setLocation((int)this.x + 120 - 40 - 70, (int)this.y + 56);
+                this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 46, (int)this.y + 32);
             }
 
             // kickCounter++;
@@ -200,7 +161,7 @@ public class Player2 extends Entity {
             //     kickNum = kickNum % 4 + 1;
             //     kickCounter = 0;
             // }
-            
+
         }
         else if(kb.skill == true){
             if(skillx > 1280 || skillx < 0){
@@ -208,15 +169,15 @@ public class Player2 extends Entity {
                 kiBlastNum = 1;
                 kiBlastDo = 1;
                 action = Action.Skill;
-                //actions.get(action).getHitbox().setLocation((int)this.x + 120 - 38 - 46, (int)this.y + 32);
+                //this.character.actions.get(action).getHitbox().setLocation((int)this.x + 120 - 38 - 46, (int)this.y + 32);
             }
         }
         else {
            // L.update();
             // if(direction == 1) {
-            //     actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
+            //     this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
             // } else {
-            //     actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 46, (int)this.y + 32);
+            //     this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 46, (int)this.y + 32);
             // }
             if(actionDo == 1 || kickDo == 1 || doJump == true || kiBlastDo == 1){
                 if(actionDo == 1){
@@ -228,9 +189,9 @@ public class Player2 extends Entity {
                     if(actionNum > 4) {
                         action = Action.Idle;
                         if(direction == 1) {
-                            actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
+                            this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
                         } else {
-                            actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 56, (int)this.y + 32);
+                            this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 56, (int)this.y + 32);
                         }
                         actionDo = 0;
                     }
@@ -244,9 +205,9 @@ public class Player2 extends Entity {
                     if(kickNum > 4) {
                         action = Action.Idle;
                         if(direction == 1) {
-                            actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
+                            this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
                         } else {
-                            actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 56, (int)this.y + 32);
+                            this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 56, (int)this.y + 32);
                         }
                         kickDo = 0;
                     }
@@ -268,9 +229,9 @@ public class Player2 extends Entity {
                     if(kiBlastNum>2) {
                         action = Action.Idle;
                         if(direction == 1) {
-                            actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
+                            this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
                         } else {
-                            actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 56, (int)this.y + 32);
+                            this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 56, (int)this.y + 32);
                         }
                         kiBlastDo = 0;
                     }
@@ -279,9 +240,9 @@ public class Player2 extends Entity {
             else {
                 action = Action.Idle;
                 if(direction == 1) {
-                    actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
+                    this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
                 } else {
-                    actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 56, (int)this.y + 32);
+                    this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 56, (int)this.y + 32);
                 }
             }
         }
@@ -303,158 +264,153 @@ public class Player2 extends Entity {
                 this.velY += speed;
                 y += velY;
                 if(direction == 1) {
-                    actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 24);
+                    this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 24);
                 } else {
-                    actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 48, (int)this.y + 24);
+                    this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 48, (int)this.y + 24);
                 }
-            } 
+            }
             // else if (y == 500) {
             //     action = action.Idle;
             //     if(direction == 1) {
-            //         actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
+            //         this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
             //     } else {
-            //         actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 46, (int)this.y + 32);
+            //         this.character.actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 46, (int)this.y + 32);
             //     }
             // }
         }
     }
-        // if(player2.x < x){
-        //     reverse = true;
-        // }
-        // else reverse = false;
-    
 
     public void draw(Graphics2D g2) {
         BufferedImage image = null;
 
         switch (action) {
             case Up:
-                if(direction == 1){ 
-                image = up1;
+                if(direction == 1){
+                    image = character.up1;
                 }
                 else if(direction == -1){
-                    image = rup;
+                    image = character.rup;
                 }
                 break;
             case Down:
-                if(direction == 1){ 
-                    image = down1;
+                if(direction == 1){
+                    image = character.down1;
                     }
                     else if(direction == -1){
-                        image = rdown;
+                        image = character.rdown;
                     }
                     break;
             case Left:
-                image = left1;
+                image = character.left1;
                 break;
             case Right:
-                image = right1;
+                image = character.right1;
                 break;
             case Idle:
                 if(direction == 1){
                     if (spriteNum == 1) {
-                        image = idle;
+                        image = character.idle;
                     }
                     if (spriteNum == 2) {
-                        image = idle2;
+                        image = character.idle2;
                     }
                 }
                 else if(direction == -1){
                     if (spriteNum == 1) {
-                        image = ridle;
+                        image = character.ridle;
                     }
                     if (spriteNum == 2) {
-                        image = ridle2;
+                        image = character.ridle2;
                     }
                 }
                     break;
             case Punch:
                 if(direction == 1){
                     if (actionNum == 1) {
-                        image = punch1;
+                        image = character.punch1;
                     }
                     else if (actionNum == 2) {
-                        image = punch2;
+                        image = character.punch2;
                     }
                     else if (actionNum == 3) {
-                        image = punch3;
+                        image = character.punch3;
                     }
                     else if (actionNum == 4) {
-                        image = punch4;
+                        image = character.punch4;
                     }
                     else if (actionNum == 0) {
-                        image = idle;
+                        image = character.idle;
                     }
                 }
                 else if (direction == -1){
                     if (actionNum == 1) {
-                        image = rpunch1;
+                        image = character.rpunch1;
                     }
                     else if (actionNum == 2) {
-                        image = rpunch2;
+                        image = character.rpunch2;
                     }
                     else if (actionNum == 3) {
-                        image = rpunch3;
+                        image = character.rpunch3;
                     }
                     else if (actionNum == 4) {
-                        image = rpunch4;
+                        image = character.rpunch4;
                     }
                     else if (actionNum == 0) {
-                        image = ridle;
+                        image = character.ridle;
                     }
                 }
                 break;
             case Kick:
                 if(direction == 1){
                     if (kickNum == 1) {
-                        image = kick1;
+                        image = character.kick1;
                     }
                     else if (kickNum == 2) {
-                        image = kick2;
+                        image = character.kick2;
                     }
                     else if (kickNum == 3) {
-                        image = kick3;
+                        image = character.kick3;
                     }
                     else if (kickNum == 4) {
-                        image = kick4;
+                        image = character.kick4;
                     }
                     else if (kickNum == 0) {
-                        image = idle;
+                        image = character.idle;
                     }
                 }
                 else if (direction == -1){
                     if (kickNum == 1) {
-                        image = rkick1;
+                        image = character.rkick1;
                     }
                     else if (kickNum == 2) {
-                        image = rkick2;
+                        image = character.rkick2;
                     }
                     else if (kickNum == 3) {
-                        image = rkick3;
+                        image = character.rkick3;
                     }
                     else if (kickNum == 4) {
-                        image = rkick4;
+                        image = character.rkick4;
                     }
                     else if (kickNum == 0) {
-                        image = ridle;
+                        image = character.ridle;
                     }
                 }
                 break;
             case Skill:
                 if(direction == 1){
                     if(kiBlastNum == 1) {
-                        image = kiBlast1;
+                        image = character.kiBlast1;
                     }
                     else if (kiBlastNum == 2) {
-                        image = kiBlast2;
+                        image = character.kiBlast2;
                     }
                 }
                 else if (direction == -1){
                     if(kiBlastNum == 1) {
-                        image = rkiBlast1;
+                        image = character.rkiBlast1;
                     }
                     else if (kiBlastNum == 2) {
-                        image = rkiBlast2;
+                        image = character.rkiBlast2;
                     }
                 }
                 break;

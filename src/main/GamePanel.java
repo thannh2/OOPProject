@@ -15,10 +15,10 @@ public class GamePanel extends JPanel implements Runnable {
     private Thread gameThread;
     private Keyboard keyboard = new Keyboard();
 
-    private Keyboard2 keyboard2 = new Keyboard2();
-    public Player2 player2 = new Player2(this, keyboard2);
+    public Player player = new Player(this, keyboard, "goku");
 
-    public Player player = new Player(this, keyboard);
+    private Keyboard2 keyboard2 = new Keyboard2();
+    public Player2 player2 = new Player2(this, keyboard2, "vegeta");
 
     public KiBlast L1 = new KiBlast(10000, 100000, this, 2);
     public KiBlast L2 = new KiBlast(10000, 100000, this, 2);

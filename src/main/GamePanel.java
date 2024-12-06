@@ -1,9 +1,15 @@
 package src.main;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import src.entity.Player;
 import src.entity.Player2;
+import src.entity.skill.Kame;
 import src.entity.skill.KiBlast;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -15,15 +21,21 @@ public class GamePanel extends JPanel implements Runnable {
     private Thread gameThread;
     private Keyboard keyboard = new Keyboard();
 
-    public Player player = new Player(this, keyboard, "goku");
-
     private Keyboard2 keyboard2 = new Keyboard2();
-    public Player2 player2 = new Player2(this, keyboard2, "vegeta");
+    public Player2 player2 = new Player2(this, keyboard2);
+
+    public Player player = new Player(this, keyboard, player2);
 
     public KiBlast L1 = new KiBlast(10000, 100000, this, 2);
     public KiBlast L2 = new KiBlast(10000, 100000, this, 2);
 
+    public Kame K1 = new Kame((int)player.x, 500, this, 1);
+
     CollisionChecker collisionChecker = new CollisionChecker(this);
+
+    Sound sound = new Sound();
+
+    BufferedImage bg;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -37,6 +49,11 @@ public class GamePanel extends JPanel implements Runnable {
     public void startGameThread() {
         this.gameThread = new Thread(this);
         this.gameThread.start();
+        try{
+            bg = ImageIO.read(new File("./res/map/map1.png"));
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
 
@@ -52,10 +69,14 @@ public class GamePanel extends JPanel implements Runnable {
     public void update() {
         player.update(L1.x);
         player2.update(L2.x);
+
+
+
         if(L1.x < 0 || L1.x > 1280){
         if(player.kiBlastDo==1){
             if(player.direction == 1){
             L1 = new KiBlast((int)player.x + 80, (int)player.y + 40, this, player.direction);
+            
             }
             else if(player.direction == -1){
                 L1 = new KiBlast((int)player.x -20, (int)player.y + 40, this, player.direction);
@@ -75,6 +96,9 @@ public class GamePanel extends JPanel implements Runnable {
         checkCollisions();
         L1.update();
         L2.update();
+        K1.update();
+
+
     }
 
     public void paintComponent(Graphics g) {
@@ -82,11 +106,13 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D)g;
 
+        g2.drawImage(bg, 0, 0, 1280,720,null );
+
         // player.update();
         player.draw(g2);
         g2.setColor(Color.RED);
         g2.draw(player.getHitbox());
-
+    
         g2.setColor(Color.BLUE);
         g2.draw(player.getHurtbox());
 
@@ -96,11 +122,13 @@ public class GamePanel extends JPanel implements Runnable {
         player2.draw(g2);
         g2.setColor(Color.RED);
         g2.draw(player2.getHitbox());
-
+    
         g2.setColor(Color.BLUE);
         g2.draw(player2.getHurtbox());
 
         L2.draw(g2);
+
+        K1.draw(g2);
     }
 
     @Override
@@ -130,5 +158,20 @@ public class GamePanel extends JPanel implements Runnable {
                 timer = 0;
             }
         }
+    }
+
+    public void playMusic(int i){
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+
+    public void stopMusic(){
+        sound.stop();
+    }
+
+    public void playSE(int i){
+        sound.setFile(i);
+        sound.play();
     }
 }

@@ -1,31 +1,13 @@
 package src.entity.character;
 
-import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
-import src.entity.Action;
-import src.entity.Entity;
-import src.main.ActionBox;
-
-public class Vegeta extends GameChar {
+public class Vegeta extends Character {
     public Vegeta() {
         getImage();
-
-        actions = new HashMap<>();
-        Rectangle zeroBox = new Rectangle(0, 0, 0, 0);
-
-        actions.put(Action.Punch, new ActionBox(new Rectangle(0, 0, 48, 17), new Rectangle(0, 0, 48, 85)));
-        actions.put(Action.Kick, new ActionBox(new Rectangle(0, 0, 70, 16), new Rectangle(0, 0, 46, 80)));
-        actions.put(Action.Idle, new ActionBox(zeroBox, new Rectangle(0, 0, 56, 72)));
-        actions.put(Action.Up, new ActionBox(zeroBox, new Rectangle(0, 0, 48, 72)));
-        actions.put(Action.Down, new ActionBox(zeroBox, new Rectangle(0, 0, 48, 72)));
-        actions.put(Action.Left, new ActionBox(zeroBox, new Rectangle(0, 0, 80, 72)));
-        actions.put(Action.Right, new ActionBox(zeroBox, new Rectangle(0, 0, 80, 72)));
-        actions.put(Action.Skill, new ActionBox(zeroBox, new Rectangle(0, 0, 104, 72)));
     }
 
     public void getImage() {

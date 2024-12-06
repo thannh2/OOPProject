@@ -1,7 +1,5 @@
 package src.main;
-
 import java.awt.Rectangle;
-
 import src.entity.Player;
 import src.entity.Player2;
 

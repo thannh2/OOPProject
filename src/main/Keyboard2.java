@@ -31,11 +31,11 @@ public class Keyboard2 implements KeyListener {
             right = true;
         }
 
-        if (number == KeyEvent.VK_N) {
+        if (number == KeyEvent.VK_NUMPAD1) {
             punch = true;
         }
 
-        if (number == KeyEvent.VK_M) {
+        if (number == KeyEvent.VK_NUMPAD2) {
             kick = true;
         }
         if (number == KeyEvent.VK_NUMPAD3) {
@@ -63,11 +63,11 @@ public class Keyboard2 implements KeyListener {
             right = false;
         }
 
-        if (number == KeyEvent.VK_N) {
+        if (number == KeyEvent.VK_NUMPAD1) {
             punch = false;
         }
 
-        if (number == KeyEvent.VK_M) {
+        if (number == KeyEvent.VK_NUMPAD2) {
             kick = false;
         }
         if (number == KeyEvent.VK_NUMPAD3) {

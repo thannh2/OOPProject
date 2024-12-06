@@ -10,7 +10,7 @@ public class ActionBox {
         this.hitbox = hitbox;
         this.hurtbox = hurtbox;
     }
-
+    
     public Rectangle getHitbox() {
         return hitbox;
     }

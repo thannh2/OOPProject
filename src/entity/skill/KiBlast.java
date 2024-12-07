@@ -1,6 +1,7 @@
 package src.entity.skill;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +18,8 @@ public class KiBlast extends Skill {
         this.gp = gp;
         this.direction = direction;
         speed = 8;
+        Rectangle zeroBox = new Rectangle(0, 0, 0, 0);
+        this.SkillHitbox = new Rectangle(x, y, 44,40);
         getImage();
     }
 
@@ -37,11 +40,15 @@ public class KiBlast extends Skill {
 
     public void update(){
         if(direction == 1){
-        x+=speed;
+            this.SkillHitbox = new Rectangle(x + 56, y, 44,40);
+            // System.out.println(this.SkillHitbox);
+            x+=speed;
         }
         else if(direction == -1){
+            this.SkillHitbox = new Rectangle(x , y, 44,40);
             x-=speed;
         }
+        
         skillCounter++;
         if(skillCounter>2){
             if(skillAct == 1) skillAct = 2;

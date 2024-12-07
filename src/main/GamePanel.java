@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import src.entity.Player;
@@ -58,8 +57,8 @@ public class GamePanel extends JPanel implements Runnable {
 
 
     public void checkCollisions() {
-        if (collisionChecker.checkCollision(player, player2)) {
-            System.out.println("Player 1 attacked Player 2!");
+        if (collisionChecker.checkCollision(player, player2, L1, L2)) {
+            // System.out.println("Player 1 attacked Player 2!");
         }
         // if (collisionChecker.checkCollision(player2, player)) {
         //     System.out.println("Player 2 attacked Player 1!");
@@ -69,8 +68,6 @@ public class GamePanel extends JPanel implements Runnable {
     public void update() {
         player.update(L1.x);
         player2.update(L2.x);
-
-
 
         if(L1.x < 0 || L1.x > 1280){
         if(player.kiBlastDo==1){
@@ -93,11 +90,10 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
             }
-        checkCollisions();
         L1.update();
         L2.update();
         K1.update();
-
+        checkCollisions();
 
     }
 
@@ -116,7 +112,11 @@ public class GamePanel extends JPanel implements Runnable {
         g2.setColor(Color.BLUE);
         g2.draw(player.getHurtbox());
 
+        //Kiblast draw
         L1.draw(g2);
+        g2.setColor(Color.RED);
+        g2.draw(L1.getSkillHitbox());
+
 
         // player2.update();
         player2.draw(g2);

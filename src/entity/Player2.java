@@ -35,7 +35,7 @@ public class Player2 extends Entity {
         actions.put(Action.Down, new ActionBox(zeroBox, new Rectangle(0, 0, 48, 72)));
         actions.put(Action.Left, new ActionBox(zeroBox, new Rectangle(0, 0, 80, 72)));
         actions.put(Action.Right, new ActionBox(zeroBox, new Rectangle(0, 0, 80, 72)));
-        actions.put(Action.Skill, new ActionBox(zeroBox, new Rectangle(0, 0, 104, 72)));
+        actions.put(Action.Skill, new ActionBox(zeroBox, new Rectangle(0, 0, 56, 72)));
     }
     public Rectangle getHitbox() {
         return actions.get(action).getHitbox();
@@ -214,6 +214,13 @@ public class Player2 extends Entity {
                 kiBlastNum = 1;
                 kiBlastDo = 1;
                 action = Action.Skill;
+                if(direction == 1) {
+                    // actions.get(action).getHitbox().setLocation((int)actions.get(action).getHitbox().getX(), (int)this.y);
+                    actions.get(action).getHurtbox().setLocation((int)this.x + 38, (int)this.y + 32);
+                } else {
+                    // actions.get(action).getHitbox().setLocation((int)actions.get(action).getHitbox().getX(), (int)this.y);
+                    actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 38 - 46, (int)this.y + 32);
+                }
                 //actions.get(action).getHitbox().setLocation((int)this.x + 120 - 38 - 46, (int)this.y + 32);
             }
         }
@@ -241,7 +248,7 @@ public class Player2 extends Entity {
                         actionCounter = 0;
                     }
                     if(actionNum > 4) {
-                        actions.get(action).getHitbox().setLocation(100000000, 100000000);
+                        actions.get(action).getHitbox().setLocation((int)this.x, (int)this.y);
                         action = Action.Idle;
                         // if(direction == 1) {
                         //     actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
@@ -269,7 +276,7 @@ public class Player2 extends Entity {
                         kickCounter = 0;
                     }
                     if(kickNum > 4) {
-                        actions.get(action).getHitbox().setLocation(10000000, 10000000);
+                        actions.get(action).getHitbox().setLocation((int)this.x,(int)this.y);
                         action = Action.Idle;
                         // if(direction == 1) {
                         //     actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);

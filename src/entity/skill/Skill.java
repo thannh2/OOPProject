@@ -1,5 +1,6 @@
 package src.entity.skill;
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public class Skill {
@@ -10,4 +11,10 @@ public class Skill {
     public int skillCounter = 0;
     public int skillAct = 1;
     public int direction = 1;
+
+    public Rectangle SkillHitbox;
+    public Rectangle getSkillHitbox(){
+        return SkillHitbox;
+    }
+
 }

@@ -18,4 +18,7 @@ public class ActionBox {
     public Rectangle getHurtbox() {
         return hurtbox;
     }
+    public void setHitbox(Rectangle hitbox) {
+        this.hitbox = hitbox;
+    }
 }

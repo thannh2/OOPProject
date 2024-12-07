@@ -233,7 +233,7 @@ public class DragonSmashBall extends JFrame {
         mainPanel.revalidate();
         mainPanel.repaint();
     }
-    
+
     private void showCharacterSelectionScreen() {
         mainPanel.removeAll();
 
@@ -293,10 +293,10 @@ public class DragonSmashBall extends JFrame {
         mainPanel.revalidate();
         mainPanel.repaint();
     }
-    
+
     private JButton createCharacterButton(String[] images, int characterIndex) {
         JButton button = new JButton();
-        
+
         URL darkImageUrl = getClass().getResource(images[0]);
         URL lightImageUrl = getClass().getResource(images[1]);
         URL card = getClass().getResource(images[2]);
@@ -343,15 +343,14 @@ public class DragonSmashBall extends JFrame {
                 button.setIcon(new ImageIcon(lightImageUrl));
             }
         });
-        
+
         return button;
     }
-    
+
     private int currentPlayer = 1; // Người chơi hiện tại
     private int player1Selection = 0; // Nhân vật của người chơi 1
     private int player2Selection = 0; // Nhân vật của người chơi 2
-    
-    
+
     private void handleLockSelection() {
         if (currentPlayer == 1 && player1Selection != -1) {
             currentPlayer = 2; // Chuyển sang người chơi 2
@@ -359,9 +358,7 @@ public class DragonSmashBall extends JFrame {
             showMapSelectionScreen(); // Chuyển sang trang chọn bản đồ
         }
     }
-    
 
-    
     private void showMapSelectionScreen() {
         mainPanel.removeAll();
         setupBackground();

@@ -2,12 +2,6 @@ package src.entity;
 
 import java.awt.image.BufferedImage;
 
-enum Action {
-    Up, Down, Left, Right,
-    Punch, Kick,
-    Idle, Skill
-}
-
 public class Entity {
     public float x, y;
     public float velX, velY;

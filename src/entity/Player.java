@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
+
+import src.entity.character.Goku;
+import src.entity.character.Vegeta;
 import src.entity.skill.KiBlast;
 import src.main.ActionBox;
 import src.main.GamePanel;
@@ -20,12 +23,17 @@ public class Player extends Entity {
     // Player2 player2;
     private Map<Action, ActionBox> actions;
 
+    public String character = null;
+    public Goku goku = new Goku();
+    public Vegeta vegeta = new Vegeta();
+
     public KiBlast L;
     // public KiBlast L1 = new KiBlast(10000, 100000, gp, 2);
     
-    public Player(GamePanel gp, Keyboard kb, Player2 player2) {
+    public Player(GamePanel gp, Keyboard kb, String character) {
         this.gp = gp;
         this.kb = kb;
+        this.character = character;
         // this.player2 = player2;
         setDefaultValues();
         getPlayerImage();
@@ -44,6 +52,8 @@ public class Player extends Entity {
         actions.put(Action.Left, new ActionBox(zeroBox, new Rectangle(0, 0, 80, 72)));
         actions.put(Action.Right, new ActionBox(zeroBox, new Rectangle(0, 0, 80, 72)));
         actions.put(Action.Skill, new ActionBox(zeroBox, new Rectangle(0, 0, 46, 72)));
+        actions.put(Action.Hit, new ActionBox(zeroBox, zeroBox));
+        actions.put(Action.Lose, new ActionBox(zeroBox, zeroBox));
     }
 
     public void setDefaultValues() {
@@ -67,62 +77,120 @@ public class Player extends Entity {
     }
     
     public void getPlayerImage() {
-        try {
-            up1 = ImageIO.read(new File("./res/gokuu/up_1.png"));
-
-            down1 = ImageIO.read(new File("./res/gokuu/down_1.png"));
-
-            left1 = ImageIO.read(new File("./res/gokuu/left_1.png"));
-            left2 = ImageIO.read(new File("./res/gokuu/left_2.png"));
-            right1 = ImageIO.read(new File("./res/gokuu/right_1.png"));
-            right2 = ImageIO.read(new File("./res/gokuu/right_2.png"));
-            idle = ImageIO.read(new File("./res/gokuu/idle.png"));
-            idle2 = ImageIO.read(new File("./res/gokuu/idle2.png"));
-            punch1 = ImageIO.read(new File("./res/gokuu/punch1.png"));
-            punch2 = ImageIO.read(new File("./res/gokuu/punch2.png"));
-            punch3 = ImageIO.read(new File("./res/gokuu/punch3.png"));
-            punch4 = ImageIO.read(new File("./res/gokuu/punch4.png"));
-            kick1 = ImageIO.read(new File("./res/gokuu/kick1.png"));
-            kick2 = ImageIO.read(new File("./res/gokuu/kick2.png"));
-            kick3 = ImageIO.read(new File("./res/gokuu/kick3.png"));
-            kick4 = ImageIO.read(new File("./res/gokuu/kick4.png"));
-
-            kiBlast1 = ImageIO.read(new File("./res/gokuu/gokuKiBlast1.png"));
-            kiBlast2 = ImageIO.read(new File("./res/gokuu/gokuKiBlast2.png"));
-
+        if(character == "goku"){
+            up1 = goku.up1;
+            down1 = goku.down1;
+            left1 = goku.left1;
+            right1 = goku.right1;
+            idle = goku.idle;
+            idle2 = goku.idle2;
+            punch1 = goku.punch1;
+            punch2 = goku.punch2;
+            punch3 = goku.punch3;
+            punch4 = goku.punch4;
+            kick1 = goku.kick1;
+            kick2 = goku.kick2;
+            kick3 = goku.kick3;
+            kick4 = goku.kick4;
+            kiBlast1 = goku.kiBlast1;
+            kiBlast2 = goku.kiBlast2;
             //reverse image
-            rup = ImageIO.read(new File("./res/gokuu/rup.png"));
-            rdown = ImageIO.read(new File("./res/gokuu/rdown.png"));
-            ridle = ImageIO.read(new File("./res/gokuu/ridle.png"));
-            ridle2 = ImageIO.read(new File("./res/gokuu/ridle2.png"));
-            rpunch1 = ImageIO.read(new File("./res/gokuu/rpunch1.png"));
-            rpunch2 = ImageIO.read(new File("./res/gokuu/rpunch2.png"));
-            rpunch3 = ImageIO.read(new File("./res/gokuu/rpunch3.png"));
-            rpunch4 = ImageIO.read(new File("./res/gokuu/rpunch4.png"));
-            rkick1 = ImageIO.read(new File("./res/gokuu/rkick1.png"));
-            rkick2 = ImageIO.read(new File("./res/gokuu/rkick2.png"));
-            rkick3 = ImageIO.read(new File("./res/gokuu/rkick3.png"));
-            rkick4 = ImageIO.read(new File("./res/gokuu/rkick4.png"));
+            rup = goku.rup;
+            rdown = goku.rdown;
+            ridle = goku.ridle;
+            ridle2 = goku.ridle2;
+            rpunch1 = goku.rpunch1;
+            rpunch2 = goku.rpunch2;
+            rpunch3 = goku.rpunch3;
+            rpunch4 = goku.rpunch4;
+            rkick1 = goku.rkick1;
+            rkick2 = goku.rkick2;
+            rkick3 = goku.rkick3;
+            rkick4 = goku.rkick4;
+            rkiBlast1 = goku.rkiBlast1;
+            rkiBlast2 = goku.rkiBlast2;
 
-            rkiBlast1 = ImageIO.read(new File("./res/gokuu/rgokuKiBlast1.png"));
-            rkiBlast2 = ImageIO.read(new File("./res/gokuu/rgokuKiBlast2.png"));
+            getHit = goku.getHit;
+            rgetHit = goku.rgetHit;
+            lose1 = goku.lose1;
+            lose2 = goku.lose2;
+            rlose1 = goku.rlose1;
+            rlose2 = goku.rlose2;
+        }
+        else if(character == "vegeta"){
+            up1 = vegeta.up1;
+            down1 = vegeta.down1;
+            left1 = vegeta.left1;
+            right1 = vegeta.right1;
+            idle = vegeta.idle;
+            idle2 = vegeta.idle2;
+            punch1 = vegeta.punch1;
+            punch2 = vegeta.punch2;
+            punch3 = vegeta.punch3;
+            punch4 = vegeta.punch4;
+            kick1 = vegeta.kick1;
+            kick2 = vegeta.kick2;
+            kick3 = vegeta.kick3;
+            kick4 = vegeta.kick4;
+            kiBlast1 = vegeta.kiBlast1;
+            kiBlast2 = vegeta.kiBlast2;
 
-        } catch(IOException e){
-            e.printStackTrace();
+
+            rup = vegeta.rup;
+            rdown = vegeta.rdown;
+            ridle = vegeta.ridle;
+            ridle2 = vegeta.ridle2;
+            rpunch1 = vegeta.rpunch1;
+            rpunch2 = vegeta.rpunch2;
+            rpunch3 = vegeta.rpunch3;
+            rpunch4 = vegeta.rpunch4;
+            rkick1 = vegeta.rkick1;
+            rkick2 = vegeta.rkick2;
+            rkick3 = vegeta.rkick3;
+            rkick4 = vegeta.rkick4;
+            rkiBlast1 = vegeta.rkiBlast1;
+            rkiBlast2 = vegeta.rkiBlast2;
+
+            getHit = vegeta.getHit;
+            rgetHit = vegeta.rgetHit;
+            lose1 = vegeta.lose1;
+            lose2 = vegeta.lose2;
+            rlose1 = vegeta.rlose1;
+            rlose2 = vegeta.rlose2;
         }
     }
 
-    public void update(int skillx) {
-        if (kb.up == true) {
+    public void update(int skillx, int hit) {
+        if(Health <= 0){
+            action = Action.Lose;
+            loseCounter++;
+            actions.get(action).getHurtbox().setLocation((int)this.x + 38, (int)this.y + 32);
+            if(loseCounter>3){
+                if(loseNum == 1) loseNum = 2;
+            }
+        }
+        
+        else if(hit > 1){
+            if(doGetHit == false){
+            doGetHit = true;
+            action = Action.Hit;
+            if(direction == 1) {
+                actions.get(action).getHurtbox().setLocation((int)this.x + 38, (int)this.y + 32);
+            } else {
+                actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 38 - 46, (int)this.y + 32);
+            }
+        }
+        }
+        else if (kb.up == true) {
            // action = Action.Up;
             //velY = -speed;
             //y += velY;
             if(doJump == false){
             if(direction == 1) {
-                actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
+                actions.get(Action.Idle).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
 
             } else {
-                actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 24 - 46, (int)this.y + 24);
+                actions.get(Action.Idle).getHurtbox().setLocation((int)this.x + 120 - 24 - 46, (int)this.y + 24);
             }
             // velY = -speed;
             // y += velY;
@@ -235,7 +303,7 @@ public class Player extends Entity {
         }
         else {
            // L.update();
-            if(actionDo == 1 || kickDo == 1 || doJump == true || kiBlastDo == 1){
+            if(actionDo == 1 || kickDo == 1 || doJump == true || kiBlastDo == 1 || doGetHit == true){
                 if(actionDo == 1){
                     if(actionNum>3){
                     if(direction == 1) {
@@ -251,7 +319,7 @@ public class Player extends Entity {
                         actionCounter = 0;
                     }
                     if(actionNum > 4) {
-                        actions.get(action).getHitbox().setLocation((int)this.x, (int)this.y);
+                        actions.get(action).getHitbox().setLocation((int)this.x, 10000000);
                         action = Action.Idle;
                         // if(direction == 1) {
                         //     actions.get(action).getHurtbox().setLocation((int)this.x + 38, (int)this.y + 32);
@@ -322,6 +390,14 @@ public class Player extends Entity {
                         gp.playSE(7);
                     }
                 }
+                if(doGetHit == true){
+                    gethitCounter++;
+                    if(gethitCounter>8){
+                        Health = Health - 5;
+                        doGetHit = false;
+                        gethitCounter = 0;
+                    }
+                }
             }
             else {
                 action = Action.Idle;
@@ -366,6 +442,7 @@ public class Player extends Entity {
         //     }
         // }
         // }
+    
     }
 
     public void draw(Graphics2D g2) {
@@ -502,6 +579,27 @@ public class Player extends Entity {
                     }
                 }
                 break;
+                case Hit:
+                     if(direction == 1){
+                        image = getHit;
+                     }
+                     else if(direction == -1){
+                        image = rgetHit;
+                     }
+                break;
+                case Lose:
+                     if(direction == 1){
+                        if(loseNum==1){
+                            image = lose1;
+                        }
+                        else image = lose2;
+                     }
+                     else if (direction == -1){
+                        if(loseNum == 1){
+                            image = rlose1;
+                        }
+                        else image = rlose2;
+                     }
             }
 
         g2.drawImage(image, (int)x, (int)y, 128, 120, null);

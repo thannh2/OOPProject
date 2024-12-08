@@ -27,6 +27,9 @@ public class Vegeta extends Character {
             kick3 = ImageIO.read(new File("./res/vegeta/vegetaKick3.png"));
             kick4 = ImageIO.read(new File("./res/vegeta/vegetaKick4.png"));
 
+            kiBlast1 = ImageIO.read(new File("./res/vegeta/kiBlast1.png"));
+            kiBlast2 = ImageIO.read(new File("./res/vegeta/kiBlast2.png"));
+
             //reverse image
             rup = ImageIO.read(new File("./res/vegeta/rup.png"));
             rdown = ImageIO.read(new File("./res/vegeta/rdown.png"));
@@ -40,6 +43,18 @@ public class Vegeta extends Character {
             rkick2 = ImageIO.read(new File("./res/vegeta/rkick2.png"));
             rkick3 = ImageIO.read(new File("./res/vegeta/rkick3.png"));
             rkick4 = ImageIO.read(new File("./res/vegeta/rkick4.png"));
+
+            rkiBlast1 = ImageIO.read(new File("./res/vegeta/rkiBlast1.png"));
+            rkiBlast2 = ImageIO.read(new File("./res/vegeta/rkiBlast2.png"));
+
+            //get hit and lose
+            getHit = ImageIO.read(new File("./res/vegeta/getHit.png"));
+            lose1 = ImageIO.read(new File("./res/vegeta/lose1.png"));
+            lose2 = ImageIO.read(new File("./res/vegeta/lose2.png"));
+
+            rgetHit = ImageIO.read(new File("./res/vegeta/rgetHit.png"));
+            rlose1 = ImageIO.read(new File("./res/vegeta/rlose1.png"));
+            rlose2 = ImageIO.read(new File("./res/vegeta/rlose2.png"));
         } catch(IOException e) {
             e.printStackTrace();
         }

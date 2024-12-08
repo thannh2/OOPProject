@@ -29,6 +29,10 @@ public class Goku extends Character {
             kick3 = ImageIO.read(new File("./res/goku/kick3.png"));
             kick4 = ImageIO.read(new File("./res/goku/kick4.png"));
 
+            kiBlast1 = ImageIO.read(new File("./res/goku/kiBlast1.png"));
+            kiBlast2 = ImageIO.read(new File("./res/goku/kiBlast2.png"));
+
+
             //reverse image
             rup = ImageIO.read(new File("./res/goku/rup.png"));
             rdown = ImageIO.read(new File("./res/goku/rdown.png"));
@@ -42,6 +46,19 @@ public class Goku extends Character {
             rkick2 = ImageIO.read(new File("./res/goku/rkick2.png"));
             rkick3 = ImageIO.read(new File("./res/goku/rkick3.png"));
             rkick4 = ImageIO.read(new File("./res/goku/rkick4.png"));
+
+            rkiBlast1 = ImageIO.read(new File("./res/goku/rkiBlast1.png"));
+            rkiBlast2 = ImageIO.read(new File("./res/goku/rkiBlast2.png"));
+
+
+            //get hit and lose
+            getHit = ImageIO.read(new File("./res/goku/getHit.png"));
+            lose1 = ImageIO.read(new File("./res/goku/lose1.png"));
+            lose2 = ImageIO.read(new File("./res/goku/lose2.png"));
+
+            rgetHit = ImageIO.read(new File("./res/goku/rgetHit.png"));
+            rlose1 = ImageIO.read(new File("./res/goku/rlose1.png"));
+            rlose2 = ImageIO.read(new File("./res/goku/rlose2.png"));
         } catch(IOException e) {
             e.printStackTrace();
         }

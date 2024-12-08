@@ -21,9 +21,9 @@ public class GamePanel extends JPanel implements Runnable {
     private Keyboard keyboard = new Keyboard();
 
     private Keyboard2 keyboard2 = new Keyboard2();
-    public Player2 player2 = new Player2(this, keyboard2);
+    public Player2 player2 = new Player2(this, keyboard2, "vegeta");
 
-    public Player player = new Player(this, keyboard, player2);
+    public Player player = new Player(this, keyboard, "goku");
 
     public KiBlast L1 = new KiBlast(10000, 100000, this, 2);
     public KiBlast L2 = new KiBlast(10000, 100000, this, 2);
@@ -35,6 +35,15 @@ public class GamePanel extends JPanel implements Runnable {
     Sound sound = new Sound();
 
     BufferedImage bg;
+
+    //Health
+    BufferedImage border1, border2;
+    BufferedImage health1, health2;
+
+    BufferedImage P1, P2;
+    BufferedImage win;
+
+    BufferedImage gokuAvt, vegetaAvt;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -50,6 +59,20 @@ public class GamePanel extends JPanel implements Runnable {
         this.gameThread.start();
         try{
             bg = ImageIO.read(new File("./res/map/map1.png"));
+            
+            border1 = ImageIO.read(new File("./res/health/border.png"));
+            border2 = ImageIO.read(new File("./res/health/border.png"));
+
+            health1 = ImageIO.read(new File("./res/health/health.png"));
+            health2 = ImageIO.read(new File("./res/health/health.png"));
+
+            P1 = ImageIO.read(new File("./res/map/P1.jpg"));
+            P2 = ImageIO.read(new File("./res/map/P2.jpg"));
+
+            win = ImageIO.read(new File("./res/map/win.png"));
+
+            gokuAvt = ImageIO.read(new File("./res/map/goku.png"));
+            vegetaAvt = ImageIO.read(new File("./res/map/vegeta.png"));
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -66,8 +89,15 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        player.update(L1.x);
-        player2.update(L2.x);
+        player.update(L1.x, collisionChecker.getHit1);
+        player2.update(L2.x, collisionChecker.getHit2);
+
+        if(collisionChecker.skillHit1 > 1){
+            L2.x = 1000000;
+        }
+        if(collisionChecker.skillHit2 > 1){
+            L1.x = 1000000;
+        }
 
         if(L1.x < 0 || L1.x > 1280){
         if(player.kiBlastDo==1){
@@ -90,6 +120,7 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
             }
+        
         L1.update();
         L2.update();
         K1.update();
@@ -103,6 +134,34 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D)g;
 
         g2.drawImage(bg, 0, 0, 1280,720,null );
+
+        g2.drawImage(border1, 68, 0, 879/3,94/3,null );
+
+        g2.drawImage(border2, 1284-70, 0, -879/3,94/3,null );
+
+        g2.drawImage(health1, 68+4, 5, (int)(player.Health/100*859/3), 65/3,null );
+
+        g2.drawImage(health2, 1280-70, 5, (int)-(player2.Health/100*859/3), 65/3,null );
+
+        //avatar
+        //p1
+        if(player.character == "goku"){
+            g2.drawImage(gokuAvt, 0, 0, 136/2,136/2,null );
+        }
+        else if(player.character == "vegeta"){
+            g2.drawImage(vegetaAvt, 0, 0, 136/2,136/2,null );
+        }
+        //p2
+        if(player2.character == "goku"){
+            g2.drawImage(gokuAvt, 1280-68, 0, 136/2,136/2,null );
+        }
+        else if(player2.character == "vegeta"){
+            g2.drawImage(vegetaAvt, 1280-68, 0, 136/2,136/2,null );
+        }
+
+        //P1 and P2
+        g2.drawImage(P1, (int)player.x + 30, (int)player.y - 20, 252/5, 158/5, null);
+        g2.drawImage(P2, (int)player2.x + 50, (int)player2.y - 20, 252/5, 158/5, null);
 
         // player.update();
         player.draw(g2);

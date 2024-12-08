@@ -7,6 +7,11 @@ import src.entity.skill.KiBlast;
 public class CollisionChecker {
 
 	GamePanel gp;
+
+	public int getHit1 = 0, getHit2 = 0;
+	public int skillHit1 = 0, skillHit2 = 0;
+
+
 	public CollisionChecker(GamePanel gp) {
 		this.gp = gp;
 	}
@@ -25,20 +30,30 @@ public class CollisionChecker {
 		Rectangle player2Hitbox = player2.getHitbox();
 		if(intersects(playerHitbox, player2Hurtbox)) {
 			System.out.println("Attack!! 1 -> 2");
+			getHit2++;
 			return true;
 		}
 		if(intersects(player2Hitbox, playerHurtbox)){
 			System.out.println("Attack!! 2 -> 1");
+			getHit1++;
 			return true;
 		}
 		if(intersects(L1.getSkillHitbox(), player2Hurtbox)){
 			System.out.println("Skill Attack!! 1 -> 2");
+			skillHit2++;
+			getHit2++;
 			return true;
 		}
 		if(intersects(L2.getSkillHitbox(), playerHurtbox)){
 			System.out.println("Skill Attack!! 2 -> 1");
+			skillHit1++;
+			getHit1++;
 			return true;
 		}
+		getHit1 = 0;
+		getHit2 = 0;
+		skillHit1 = 0;
+		skillHit2 = 0;
 		return false;
 	}
 }

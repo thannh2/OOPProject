@@ -30,4 +30,15 @@ public class Entity {
     public BufferedImage kiBlast1, kiBlast2, rkiBlast1, rkiBlast2;
     public int kiBlastCounter = 0;
     public int kiBlastNum = 1, kiBlastDo = 0;
+
+    public double Health = 100;
+
+    public BufferedImage getHit, rgetHit, lose1, lose2, rlose1, rlose2;
+
+    public int gethitCounter = 0;
+    public boolean doGetHit = false;
+
+    public boolean doLose = false;
+    public int loseCounter = 0;
+    public int loseNum = 1;
 }

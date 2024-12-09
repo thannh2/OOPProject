@@ -3,12 +3,8 @@ package src.entity;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import javax.imageio.ImageIO;
-
 import src.entity.character.Goku;
 import src.entity.character.Vegeta;
 import src.entity.skill.KiBlast;
@@ -182,29 +178,29 @@ public class Player extends Entity {
         }
         }
         else if (kb.up == true) {
-           // action = Action.Up;
-            //velY = -speed;
-            //y += velY;
-            if(doJump == false){
-            if(direction == 1) {
-                actions.get(Action.Idle).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
-
-            } else {
-                actions.get(Action.Idle).getHurtbox().setLocation((int)this.x + 120 - 24 - 46, (int)this.y + 24);
-            }
+            // action = Action.Up;
             // velY = -speed;
             // y += velY;
-            doJump = true;
+            if(doJump == false){
+                if(direction == 1) {
+                    actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
+
+                } else {
+                    actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 24 - 46, (int)this.y + 24);
+                }
+            // velY = -speed;
+            // y += velY;
+                doJump = true;
             }
-        }
-        else if (kb.down == true) {
-            // action = Action.Down;
-            velY = speed;
-            if(direction == 1) {
-                actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
-            } else {
-                actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 24 - 46, (int)this.y + 24);
-            }
+        // }
+        // else if (kb.down == true) {
+        //     // action = Action.Down;
+        //     velY = speed;
+        //     if(direction == 1) {
+        //         actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
+        //     } else {
+        //         actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 24 - 46, (int)this.y + 24);
+        //     }
         }
         else if (kb.left == true) {
             if(doJump == false){
@@ -370,7 +366,14 @@ public class Player extends Entity {
                     if(JumpCounter > 1){
                         y += velY;
                     }
-                    if(y<530) action = Action.Up;
+                    if(y<530) {
+                        action = Action.Up; 
+                        if(direction == 1) {
+                            actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
+                        } else {
+                            actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 24 - 46, (int)this.y + 24);
+                        }
+                    }
                     if(y < 380) doJump = false;
                 }
                 if(kiBlastDo == 1){

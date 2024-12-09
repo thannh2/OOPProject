@@ -3,12 +3,8 @@ package src.entity;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import javax.imageio.ImageIO;
-
 import src.entity.character.Goku;
 import src.entity.character.Vegeta;
 import src.main.ActionBox;
@@ -177,15 +173,15 @@ public class Player2 extends Entity {
             // velY = -speed;
             // y += velY;
             if(doJump == false){
-            if(direction == 1) {
-                actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 24);
-            } else {
-                actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 48, (int)this.y + 24);
-            }
+                if(direction == 1) {
+                    actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 24);
+                } else {
+                    actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 48, (int)this.y + 24);
+                }
             // velY = -speed;
             // y += velY;
-            doJump = true;
-        }
+                doJump = true;
+            }
         }
         // else if (kb.down == true) {
         //     // action = Action.Down;
@@ -368,7 +364,14 @@ public class Player2 extends Entity {
                     if(JumpCounter > 1){
                         y += velY;
                     }
-                    if(y<530) action = Action.Up;
+                    if(y<530) {
+                        action = Action.Up;
+                        if(direction == 1) {
+                            actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 32);
+                        } else {
+                            actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 56, (int)this.y + 32);
+                        }
+                    } 
                     if(y < 380) doJump = false;
                 }
                 if(kiBlastDo == 1){

@@ -61,10 +61,6 @@ public class Keyboard implements KeyListener {
             keyboardTime = currentTime;
         }
 
-        if (left || right || up) {
-            return;  
-        }
-
         if (number == KeyEvent.VK_J && currentTime - lastPunchTime >= PUNCH_COOLDOWN && currentTime - keyboardTime >= KEYBOARD_COOLDOWN && !isFalling) {
             punch = true;
             lastPunchTime = currentTime;

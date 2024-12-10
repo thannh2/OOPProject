@@ -28,7 +28,7 @@ public class DragonSmashBall extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        setupBackground("/imagesUI/menu/menuback.png");
+        setupBackground("/res/imagesUI/menu/menuback.png");
         setupTitle();
         setupCharacterAnimations();
         setupButtons();
@@ -62,8 +62,8 @@ public class DragonSmashBall extends JFrame {
     }
 
     private void setupCharacterAnimations() {
-        gokuImage = createImageLabel("/imagesUI/menu/songokumenu.gif", (int)(30*scaleX), 120, 450, 580);
-        gohanImage = createImageLabel("/imagesUI/menu/gohanmenu.gif", 1200, 120, 300, 280);
+        gokuImage = createImageLabel("/res/imagesUI/menu/songokumenu.gif", (int)(30*scaleX), 120, 450, 580);
+        gohanImage = createImageLabel("/res/imagesUI/menu/gohanmenu.gif", 1200, 120, 300, 280);
 
         animationTimer = new Timer(1000 / currentFps, new ActionListener() {
             int direction = 1;
@@ -104,8 +104,8 @@ public class DragonSmashBall extends JFrame {
 
     private JButton createButton(String label) {
         JButton button = new JButton(label);
-        URL beforeIcon = getClass().getResource("/imagesUI/titlemenucursorbefore.gif");
-        URL afterIcon = getClass().getResource("/imagesUI/titlemenucursorAfter.gif");
+        URL beforeIcon = getClass().getResource("/res/imagesUI/titlemenucursorbefore.gif");
+        URL afterIcon = getClass().getResource("/res/imagesUI/titlemenucursorAfter.gif");
         if (beforeIcon != null) button.setIcon(new ImageIcon(beforeIcon));
         if (afterIcon != null) button.setRolloverIcon(new ImageIcon(afterIcon));
         button.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -125,9 +125,9 @@ public class DragonSmashBall extends JFrame {
         return button;
     }
 
-    private void setupBackgroundMusic() {
+    public void setupBackgroundMusic() {
         try {
-            URL soundUIUrl = getClass().getResource("/soundUI/menu.wav");
+            URL soundUIUrl = getClass().getResource("/res/UI/SoundUI/menu.wav");
             if (soundUIUrl != null) {
                 AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundUIUrl);
                 menuMusicClip = AudioSystem.getClip();
@@ -141,7 +141,7 @@ public class DragonSmashBall extends JFrame {
         }
     }
 
-    private void togglesoundUI() {
+    public void togglesoundUI() {
         if (issoundUIOn) {
             menuMusicClip.stop();
         } else {
@@ -152,7 +152,7 @@ public class DragonSmashBall extends JFrame {
 
     private void showSettingsScreen() {
         mainPanel.removeAll();
-        setupBackground("/imagesUI/menu/menuback.png");
+        setupBackground("/res/imagesUI/menu/menuback.png");
         setupTitle();
         setupCharacterAnimations();
         int yPosition = 280;
@@ -230,7 +230,7 @@ public class DragonSmashBall extends JFrame {
 
     private void showMainScreen() {
         mainPanel.removeAll();
-        setupBackground("/imagesUI/menu/menuback.png");
+        setupBackground("/res/imagesUI/menu/menuback.png");
         setupTitle();
         setupCharacterAnimations();
         setupButtons();
@@ -247,7 +247,7 @@ public class DragonSmashBall extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                URL backgroundUrl = getClass().getResource("/imagesUI/select/backgroundSelect.jpg");
+                URL backgroundUrl = getClass().getResource("/res/imagesUI/select/backgroundSelect.jpg");
 
                 if (backgroundUrl != null) {
                     g.drawImage(new ImageIcon(backgroundUrl).getImage(), 0, 0, getWidth(), getHeight(), this);
@@ -272,14 +272,14 @@ public class DragonSmashBall extends JFrame {
 
         // Danh sách nhân vật (ảnh tối và sáng)
         String[][] characterimagesUI = {
-            {"/imagesUI/goku/gokuAvatar2Off.png", "/imagesUI/goku/gokuAvatar2.png", "/imagesUI/goku/gokuCard.jpg"},
-            {"/imagesUI/picolo/picoloAvatarOff.png", "/imagesUI/picolo/picoloAvatar.png", "/imagesUI/picolo/picoloCard.jpg"},
-            {"/imagesUI/vegeta/vegetaAvatarOff.png", "/imagesUI/vegeta/vegetaAvatar.png", "/imagesUI/vegeta/vegetaCard.jpg"},
-            {"/imagesUI/kameSennin/kameSenninAvatarOff.png", "/imagesUI/kameSennin/kameSenninAvatar.png", "/imagesUI/kameSennin/kameSenninCard.jpg"},
-            {"/imagesUI/freeza/frieezaAvatarOff.png", "/imagesUI/freeza/frieezaAvatar.png", "/imagesUI/freeza/freezaCard.jpg"},
-            {"/imagesUI/buu/buuAvatarOff.png", "/imagesUI/buu/buuAvatar.png", "/imagesUI/buu/buuCard.jpg"},
-            {"/imagesUI/cell/cellAvatarOff.png", "/imagesUI/cell/cellAvatar.png", "/imagesUI/cell/cellCard.jpg"},
-            {"/imagesUI/gohan/gohanAvatarOff.png", "/imagesUI/gohan/gohanAvatar.png", "/imagesUI/gohan/gohanCard.jpg"}
+            {"/res/imagesUI/goku/gokuAvatar2Off.png", "/res/imagesUI/goku/gokuAvatar2.png", "/res/imagesUI/goku/gokuCard.jpg"},
+            {"/res/imagesUI/picolo/picoloAvatarOff.png", "/res/imagesUI/picolo/picoloAvatar.png", "/res/imagesUI/picolo/picoloCard.jpg"},
+            {"/res/imagesUI/vegeta/vegetaAvatarOff.png", "/res/imagesUI/vegeta/vegetaAvatar.png", "/res/imagesUI/vegeta/vegetaCard.jpg"},
+            {"/res/imagesUI/kameSennin/kameSenninAvatarOff.png", "/res/imagesUI/kameSennin/kameSenninAvatar.png", "/res/imagesUI/kameSennin/kameSenninCard.jpg"},
+            {"/res/imagesUI/freeza/frieezaAvatarOff.png", "/res/imagesUI/freeza/frieezaAvatar.png", "/res/imagesUI/freeza/freezaCard.jpg"},
+            {"/res/imagesUI/buu/buuAvatarOff.png", "/res/imagesUI/buu/buuAvatar.png", "/res/imagesUI/buu/buuCard.jpg"},
+            {"/res/imagesUI/cell/cellAvatarOff.png", "/res/imagesUI/cell/cellAvatar.png", "/res/imagesUI/cell/cellCard.jpg"},
+            {"/res/imagesUI/gohan/gohanAvatarOff.png", "/res/imagesUI/gohan/gohanAvatar.png", "/res/imagesUI/gohan/gohanCard.jpg"}
         };
 
         // Tạo các nút nhân vật
@@ -368,7 +368,7 @@ public class DragonSmashBall extends JFrame {
     
     private void showMapSelectionScreen() {
         mainPanel.removeAll();
-        setupBackground("/imagesUI/menu/menuback.png");
+        setupBackground("/res/imagesUI/menu/menuback.png");
 
         JLabel titleLabel = new JLabel("Chọn bản đồ");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 30));
@@ -383,7 +383,7 @@ public class DragonSmashBall extends JFrame {
         mapGrid.setOpaque(false);
 
         String[] mapimagesUI = {
-            "/imagesUI/map/map0.gif", "/imagesUI/map/map1.gif", "/imagesUI/map/map2.gif","/imagesUI/map/map3.gif"
+            "/res/imagesUI/map/map0.gif", "/res/imagesUI/map/map1.gif", "/res/imagesUI/map/map2.gif","/res/imagesUI/map/map3.gif"
         };
 
         for (String mapImage : mapimagesUI) {
@@ -429,7 +429,7 @@ public class DragonSmashBall extends JFrame {
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 
-        gamePanel.startGameThread("./res"+mapImage);
+        gamePanel.startGameThread(mapImage);
 
         gamePanel.playMusic(6);
         this.dispose();

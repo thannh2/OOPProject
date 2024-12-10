@@ -35,7 +35,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     CollisionChecker collisionChecker = new CollisionChecker(this);
 
-    sound sound = new sound();
+    Sound sound = new Sound();
 
     BufferedImage bg;
 
@@ -61,7 +61,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.gameThread = new Thread(this);
         this.gameThread.start();
         try{
-            bg = ImageIO.read(new File(backGround));
+            bg = ImageIO.read(new File("."+backGround));
             
             border1 = ImageIO.read(new File("./res/health/border.png"));
             border2 = ImageIO.read(new File("./res/health/border.png"));

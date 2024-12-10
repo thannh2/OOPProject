@@ -4,7 +4,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import src.entity.Player;
 import src.entity.Player2;
@@ -32,7 +35,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     CollisionChecker collisionChecker = new CollisionChecker(this);
 
-    Sound sound = new Sound();
+    sound sound = new sound();
 
     BufferedImage bg;
 
@@ -54,11 +57,11 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
     }
 
-    public void startGameThread() {
+    public void startGameThread(String backGround) {
         this.gameThread = new Thread(this);
         this.gameThread.start();
         try{
-            bg = ImageIO.read(new File("./res/map/map1.png"));
+            bg = ImageIO.read(new File(backGround));
             
             border1 = ImageIO.read(new File("./res/health/border.png"));
             border2 = ImageIO.read(new File("./res/health/border.png"));

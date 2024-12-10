@@ -28,7 +28,6 @@ public class CollisionChecker {
 		Rectangle player2Hurtbox = player2.getHurtbox();
 		Rectangle playerHurtbox = player.getHurtbox();
 		Rectangle player2Hitbox = player2.getHitbox();
-		
 		if(intersects(playerHitbox, player2Hurtbox)) {
 			System.out.println("Attack!! 1 -> 2");
 			getHit2++;

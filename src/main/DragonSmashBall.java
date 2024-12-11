@@ -292,7 +292,7 @@ public class DragonSmashBall extends JFrame {
 
         // Nút Lock
         JButton lockButton = createButton("Lock");
-        lockButton.setBounds(850, 650, 200, 50);
+        lockButton.setBounds(600, 650, 500, 50);
         lockButton.addActionListener(e -> handleLockSelection());
         mainPanel.add(lockButton);
         mainPanel.revalidate();
@@ -392,9 +392,10 @@ public class DragonSmashBall extends JFrame {
             mapButton.setContentAreaFilled(false);
             mapButton.setBorderPainted(false);
 
-            mapButton.addActionListener(e -> startGameWithMap(mapImage));
+            mapButton.addActionListener(e -> showReady(mapImage));
             mapGrid.add(mapButton);
         }
+        
 
         mainPanel.add(mapGrid);
 
@@ -405,17 +406,8 @@ public class DragonSmashBall extends JFrame {
     private void startGameWithMap(String mapImage) {
         // Bắt đầu game với map đã chọn
         System.out.println("Bắt đầu game với map: " + mapImage);
-        // mainPanel.removeAll();
-        // setupBackground(mapImage);
-        
-        // mainPanel.add(gamePanel);
-
-        // mainPanel.setVisible(true);
-        // gamePanel.startGameThread();
-        // gamePanel.playMusic(6);
-        // mainPanel.revalidate();
-        // mainPanel.repaint();
-        
+        menuMusicClip.stop();
+       
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
@@ -435,5 +427,54 @@ public class DragonSmashBall extends JFrame {
         this.dispose();
 
     }
+    public void showReady(String mapImage) {
+    	mainPanel.removeAll();
+    	setupBackground("/res/imagesUI/menu/menuback.png");
 
+        JLabel titleLabel = new JLabel("Sẵn sàng vào trận ?");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 30));
+        titleLabel.setForeground(Color.YELLOW);
+        titleLabel.setBounds(600, 20, 600, 50);
+        mainPanel.add(titleLabel);
+//       JPanel startPanel = new JPanel();
+//       startPanel.setBounds(300, 200, 300, 200);
+//       startPanel.setForeground(Color.YELLOW);
+        JButton playButton = createButton("SẴN SÀNG");
+        playButton.setBounds(600, 400, 500, 50);
+        playButton.addActionListener(e ->startGameWithMap(mapImage));
+        mainPanel.add(playButton);
+        mainPanel.revalidate();
+        mainPanel.repaint();
+        JButton backButton = createButton("Cách chơi");
+        backButton.setBounds(600, 500, 500, 50);
+        backButton.addActionListener(e ->showInstruction(mapImage));
+        mainPanel.add(backButton);
+        mainPanel.revalidate();
+        mainPanel.repaint();
+        JButton lockButton = createButton("Trở về");
+        lockButton.setBounds(600, 600, 500, 50);
+        lockButton.addActionListener(e ->showMapSelectionScreen());
+        mainPanel.add(lockButton);
+        mainPanel.revalidate();
+        mainPanel.repaint();
+    }
+    public void showInstruction(String mapImage) {
+    	mainPanel.removeAll();
+    	setupBackground("/res/imagesUI/menu/menuback.png");
+
+        JLabel titleLabel = new JLabel("Hướng dẫn");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 30));
+        titleLabel.setForeground(Color.YELLOW);
+        titleLabel.setBounds(650, 20, 600, 50);
+        mainPanel.add(titleLabel);
+//       JPanel startPanel = new JPanel();
+//       startPanel.setBounds(300, 200, 300, 200);
+//       startPanel.setForeground(Color.YELLOW);
+        JButton playButton = createButton("Trở về");
+        playButton.setBounds(300, 750, 500, 50);
+        playButton.addActionListener(e ->showReady(mapImage));
+        mainPanel.add(playButton);
+        mainPanel.revalidate();
+        mainPanel.repaint();
+    }
 }

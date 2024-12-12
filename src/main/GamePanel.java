@@ -22,7 +22,8 @@ import src.entity.skill.KiBlast;
 public class GamePanel extends JPanel implements Runnable {
     private static final int SCREEN_WIDTH = 1280;
     private static final int SCREEN_HEIGHT = 720;
-    private boolean isPaused = false; // Biến trạng thái tạm dừng
+    private boolean isPaused = false; 
+    private JLabel backgroundLabel2;
 
     private static final int FPS = 60;
 
@@ -54,6 +55,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     BufferedImage gokuAvt, vegetaAvt;
 
+    public int check = 0;
+
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.white);
@@ -61,6 +64,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(keyboard);
         this.addKeyListener(keyboard2);
         this.setFocusable(true);
+
         JButton pauseButton = new JButton();
         URL pauseIcon = getClass().getResource("/res/imagesUI/menu/pause.png");
         if (pauseIcon != null) pauseButton.setIcon(new ImageIcon(pauseIcon));
@@ -69,7 +73,6 @@ public class GamePanel extends JPanel implements Runnable {
         pauseButton.setBounds(600, 20, 200, 100);
         pauseButton.addActionListener(e -> showPause());
         this.add(pauseButton);
-        
     }
 
     public void startGameThread(String backGround) {
@@ -143,6 +146,7 @@ public class GamePanel extends JPanel implements Runnable {
         L2.update();
         K1.update();
         checkCollisions();
+        checkGameOver();
 
     }
 
@@ -274,8 +278,8 @@ public class GamePanel extends JPanel implements Runnable {
         backgroundLabel.setBounds(330, 50, getWidth(), getHeight());
         this.add(backgroundLabel);
 
-      JButton resumeButton = createButton("Tiếp tục");
-      resumeButton.setBounds(40, 260, 500, 50);
+        JButton resumeButton = createButton("Tiếp tục");
+        resumeButton.setBounds(40, 260, 500, 50);
         backgroundLabel.add(resumeButton);
         
         JButton backMainMenu = createButton("Quay lại màn hình chính");
@@ -286,7 +290,6 @@ public class GamePanel extends JPanel implements Runnable {
       exitButton.setBounds(40, 420, 500, 50);
         backgroundLabel.add(exitButton);
 
-        // Lắng nghe sự kiện nút
         resumeButton.addActionListener(e -> {
             this.remove(backgroundLabel);
         });
@@ -294,29 +297,50 @@ public class GamePanel extends JPanel implements Runnable {
         exitButton.addActionListener(e -> System.exit(0));
     	
 	}
+    private void checkGameOver() {
+        if (player.Health <= 0 || player2.Health <= 0) {
+            isPaused = true;
+            String winner = player.Health <= 0 ? player2.character : player.character;
+            showGameOver(winner);
+        }
+    }
+    
+    private void showGameOver(String winner) {
+        if (backgroundLabel2 != null) this.remove(backgroundLabel2);
 
-	public void exit() {
-		System.exit(0);
-	}
+        backgroundLabel2 = new JLabel(new ImageIcon("res/imagesUI/menu/pausePanel.png"));
+        backgroundLabel2.setBounds(0, 50, getWidth(), getHeight());
+        this.add(backgroundLabel2);
+
+        JButton restartButton2 = createButton("Chơi lại");
+        restartButton2.setBounds(380, 260, 500, 50);
+        backgroundLabel2.add(restartButton2);
+        
+        JButton backMainMenu = createButton("Quay lại màn hình chính");
+        backMainMenu.setBounds(380, 340, 500, 50);
+          backgroundLabel2.add(backMainMenu);
+
+        JButton exitButton2 = createButton("Thoát trò chơi");
+        exitButton2.setBounds(380, 420, 500, 50);
+        backgroundLabel2.add(exitButton2);
+
+        restartButton2.addActionListener(e -> {
+            this.remove(backgroundLabel2);
+            restartGame();
+        });
+
+        exitButton2.addActionListener(e -> System.exit(0));
+    }
+    
+    private void restartGame() {
+        player.Health = 100;
+        player2.Health = 100;
+        player.x = 100;  // Reset vị trí ban đầu
+        player.y = 400;
+        player2.x = 1000;
+        player2.y = 400;
+        isPaused = false; // Tiếp tục trò chơi
+        repaint();
+    }
+    
 }
-//JPanel panel = new JPanel() {
-//    @Override
-//    protected void paintComponent(Graphics g) {
-//        super.paintComponent(g);
-//        URL imageUrl = getClass().getResource("res/imagesUI/menu/pausePanel");
-//        if (imageUrl != null) {
-//            g.drawImage(new ImageIcon(imageUrl).getImage(), 0,0, getWidth(), getHeight(), this);
-//        }
-//    }
-//};
-//panel.setLayout(null);
-//this.add(panel);
-//JButton resumeButton = createButton("Tiếp tục");
-//resumeButton.setBounds(390, 300, 500, 50);
-//panel.add(resumeButton);
-//JButton exitButton = createButton("Thoát trò chơi");
-//exitButton.setBounds(390, 400, 500, 50);
-//exitButton.addActionListener(e -> exit());
-//panel.add(exitButton);
-//resumeButton.addActionListener(e -> {
-//});

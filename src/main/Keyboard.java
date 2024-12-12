@@ -15,12 +15,12 @@ public class Keyboard implements KeyListener {
     private long lastFallingTime = 0;
 
     private final long UP_COOLDOWN = 800;
-    private final long PUNCH_COOLDOWN = 500; 
-    private final long KICK_COOLDOWN = 500; 
-    private final long SKILL_COOLDOWN = 1000;
-    private final long KEYBOARD_COOLDOWN = 300;
+    private final long PUNCH_COOLDOWN = 400; 
+    private final long KICK_COOLDOWN = 400; 
+    private final long SKILL_COOLDOWN = 900;
+    private final long KEYBOARD_COOLDOWN = 350;
     private final long MOVEMENT_COOLDOWN = 10;
-    
+
     @Override
     public void keyTyped(KeyEvent e) {
         // Để trống
@@ -65,13 +65,13 @@ public class Keyboard implements KeyListener {
             return;  
         }
 
-        if (number == KeyEvent.VK_J && currentTime - lastPunchTime >= PUNCH_COOLDOWN && currentTime - keyboardTime >= KEYBOARD_COOLDOWN && !isFalling) {
+        if (number == KeyEvent.VK_J && currentTime - lastPunchTime >= PUNCH_COOLDOWN && currentTime - lastKickTime >= KICK_COOLDOWN&& !isFalling) {
             punch = true;
             lastPunchTime = currentTime;
             keyboardTime = currentTime;
         }
 
-        if (number == KeyEvent.VK_K && currentTime - lastKickTime >= KICK_COOLDOWN && currentTime - keyboardTime >= KEYBOARD_COOLDOWN && !isFalling) {
+        if (number == KeyEvent.VK_K && currentTime - lastKickTime >= KICK_COOLDOWN && currentTime - lastPunchTime >= PUNCH_COOLDOWN && !isFalling) {
             kick = true;
             lastKickTime = currentTime;
             keyboardTime = currentTime;

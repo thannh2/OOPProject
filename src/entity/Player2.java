@@ -150,7 +150,6 @@ public class Player2 extends Entity {
         if(Health <= 0){
             action = Action.Lose;
             loseCounter++;
-            actions.get(action).getHurtbox().setLocation((int)this.x + 38, (int)this.y + 32);
             if(loseCounter>3){
                 if(loseNum == 1) loseNum = 2;
             }

@@ -8,7 +8,11 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
 import src.entity.Player;
 import src.entity.Player2;
 import src.entity.skill.Kame;
@@ -55,6 +59,15 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(keyboard);
         this.addKeyListener(keyboard2);
         this.setFocusable(true);
+        JButton pauseButton = new JButton();
+        URL pauseIcon = getClass().getResource("/res/imagesUI/menu/pause.png");
+        if (pauseIcon != null) pauseButton.setIcon(new ImageIcon(pauseIcon));
+        pauseButton.setContentAreaFilled(false);
+        pauseButton.setBorderPainted(false);
+        pauseButton.setBounds(600, 20, 200, 100);
+        pauseButton.addActionListener(e -> showPause());
+        this.add(pauseButton);
+        
     }
 
     public void startGameThread(String backGround) {
@@ -235,5 +248,55 @@ public class GamePanel extends JPanel implements Runnable {
     public void playSE(int i){
         sound.setFile(i);
         sound.play();
+    }
+    
+    private JButton createButton(String label) {
+        JButton button = new JButton(label);
+        URL beforeIcon = getClass().getResource("/res/imagesUI/titlemenucursorbefore.gif");
+        URL afterIcon = getClass().getResource("/res/imagesUI/titlemenucursorAfter.gif");
+        if (beforeIcon != null) button.setIcon(new ImageIcon(beforeIcon));
+        if (afterIcon != null) button.setRolloverIcon(new ImageIcon(afterIcon));
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+        button.setVerticalTextPosition(SwingConstants.CENTER);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);
+        return button;
+    }
+    
+//    private JLabel createImageLabel(String resourcePath, int x, int y, int width, int height) {
+//        URL imageUrl = getClass().getResource(resourcePath);
+//        JLabel label = new JLabel();
+//        if (imageUrl != null) {
+//            label.setIcon(new ImageIcon(imageUrl));
+//        }
+//        label.setBounds(x, y, width, height);
+//        this.add(label);
+//        return label;
+//    }
+    
+    
+    public void showPause() {
+//    	JLabel pauselabel = new JLabel();
+//    	pauselabel = createImageLabel("/res/imagesUI/menu/pausePanel.png",350, 100, 660, 488);
+    	JButton resumeButton = createButton("Tiếp tục");
+        resumeButton.setBounds(390, 300, 500, 50);
+        
+        this.add(resumeButton);
+        JButton exitButton = createButton("Thoát trò chơi");
+        exitButton.setBounds(390, 400, 500, 50);
+        exitButton.addActionListener(e -> exit());
+        this.add(exitButton);
+        //this.add(pauselabel);
+        resumeButton.addActionListener(e -> {
+        	this.remove(resumeButton);
+        	//this.remove(pauselabel);
+        	this.remove(exitButton);
+        });
+        //     	this.revalidate();
+//    	this.repaint();
+    }
+    
+    public void exit() {
+    	System.exit(0);
     }
 }

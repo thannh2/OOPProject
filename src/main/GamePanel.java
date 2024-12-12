@@ -9,6 +9,7 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -21,6 +22,7 @@ import src.entity.skill.KiBlast;
 public class GamePanel extends JPanel implements Runnable {
     private static final int SCREEN_WIDTH = 1280;
     private static final int SCREEN_HEIGHT = 720;
+    private boolean isPaused = false; // Biến trạng thái tạm dừng
 
     private static final int FPS = 60;
 
@@ -263,40 +265,58 @@ public class GamePanel extends JPanel implements Runnable {
         return button;
     }
     
-//    private JLabel createImageLabel(String resourcePath, int x, int y, int width, int height) {
-//        URL imageUrl = getClass().getResource(resourcePath);
-//        JLabel label = new JLabel();
-//        if (imageUrl != null) {
-//            label.setIcon(new ImageIcon(imageUrl));
-//        }
-//        label.setBounds(x, y, width, height);
-//        this.add(label);
-//        return label;
-//    }
     
     
     public void showPause() {
-//    	JLabel pauselabel = new JLabel();
-//    	pauselabel = createImageLabel("/res/imagesUI/menu/pausePanel.png",350, 100, 660, 488);
-    	JButton resumeButton = createButton("Tiếp tục");
-        resumeButton.setBounds(390, 300, 500, 50);
+
+        JLabel backgroundLabel = new JLabel();
+        backgroundLabel.setIcon(new ImageIcon("res/imagesUI/menu/pausePanel.png"));
+        backgroundLabel.setBounds(330, 50, getWidth(), getHeight());
+        this.add(backgroundLabel);
+
+      JButton resumeButton = createButton("Tiếp tục");
+      resumeButton.setBounds(40, 260, 500, 50);
+        backgroundLabel.add(resumeButton);
         
-        this.add(resumeButton);
-        JButton exitButton = createButton("Thoát trò chơi");
-        exitButton.setBounds(390, 400, 500, 50);
-        exitButton.addActionListener(e -> exit());
-        this.add(exitButton);
-        //this.add(pauselabel);
+        JButton backMainMenu = createButton("Quay lại màn hình chính");
+        backMainMenu.setBounds(40, 340, 500, 50);
+          backgroundLabel.add(backMainMenu); 
+
+      JButton exitButton = createButton("Thoát trò chơi");
+      exitButton.setBounds(40, 420, 500, 50);
+        backgroundLabel.add(exitButton);
+
+        // Lắng nghe sự kiện nút
         resumeButton.addActionListener(e -> {
-        	this.remove(resumeButton);
-        	//this.remove(pauselabel);
-        	this.remove(exitButton);
+            this.remove(backgroundLabel);
         });
-        //     	this.revalidate();
-//    	this.repaint();
-    }
-    
-    public void exit() {
-    	System.exit(0);
-    }
+
+        exitButton.addActionListener(e -> System.exit(0));
+    	
+	}
+
+	public void exit() {
+		System.exit(0);
+	}
 }
+//JPanel panel = new JPanel() {
+//    @Override
+//    protected void paintComponent(Graphics g) {
+//        super.paintComponent(g);
+//        URL imageUrl = getClass().getResource("res/imagesUI/menu/pausePanel");
+//        if (imageUrl != null) {
+//            g.drawImage(new ImageIcon(imageUrl).getImage(), 0,0, getWidth(), getHeight(), this);
+//        }
+//    }
+//};
+//panel.setLayout(null);
+//this.add(panel);
+//JButton resumeButton = createButton("Tiếp tục");
+//resumeButton.setBounds(390, 300, 500, 50);
+//panel.add(resumeButton);
+//JButton exitButton = createButton("Thoát trò chơi");
+//exitButton.setBounds(390, 400, 500, 50);
+//exitButton.addActionListener(e -> exit());
+//panel.add(exitButton);
+//resumeButton.addActionListener(e -> {
+//});

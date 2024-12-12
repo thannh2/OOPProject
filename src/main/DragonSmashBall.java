@@ -371,6 +371,7 @@ public class DragonSmashBall extends JFrame {
 
     
     private void showMapSelectionScreen() {
+    	currentPlayer = 1;
         mainPanel.removeAll();
         setupBackground("/res/imagesUI/menu/menuback.png");
 
@@ -470,11 +471,14 @@ public class DragonSmashBall extends JFrame {
         titleLabel.setForeground(Color.YELLOW);
         titleLabel.setBounds(500, 20, 600, 50);
         mainPanel.add(titleLabel);
+        JLabel introlabel = new JLabel();
+        introlabel = createImageLabel("/res/imagesUI/menu/intro.png", 300, 100, 660, 488);
+        mainPanel.add(introlabel);
 //       JPanel startPanel = new JPanel();
 //       startPanel.setBounds(300, 200, 300, 200);
 //       startPanel.setForeground(Color.YELLOW);
         JButton backButton = createButton("Quay lại");
-        backButton.setBounds(370, 550, 500, 50);
+        backButton.setBounds(370, 620, 500, 50);
         backButton.addActionListener(e ->showReady(mapImage));
         mainPanel.add(backButton);
         mainPanel.revalidate();

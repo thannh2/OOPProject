@@ -17,7 +17,7 @@ public class KiBlast extends Skill {
         this.y = y;
         this.gp = gp;
         this.direction = direction;
-        speed = 8;
+        speed = 15;
         Rectangle zeroBox = new Rectangle(0, 0, 0, 0);
         this.SkillHitbox = new Rectangle(x, y, 44,40);
         getImage();

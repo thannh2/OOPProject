@@ -43,6 +43,7 @@ public class GamePanel extends JPanel implements Runnable {
     CollisionChecker collisionChecker = new CollisionChecker(this);
 
     Sound sound = new Sound();
+    private int delay = 1;
 
     BufferedImage bg;
 
@@ -76,6 +77,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void startGameThread(String backGround) {
+        this.playSE(8);
         this.gameThread = new Thread(this);
         this.gameThread.start();
         try{
@@ -187,25 +189,25 @@ public class GamePanel extends JPanel implements Runnable {
 
         // player.update();
         player.draw(g2);
-        g2.setColor(Color.RED);
-        g2.draw(player.getHitbox());
+        //g2.setColor(Color.RED);
+        // g2.draw(player.getHitbox());
     
-        g2.setColor(Color.BLUE);
-        g2.draw(player.getHurtbox());
+        // g2.setColor(Color.BLUE);
+        // g2.draw(player.getHurtbox());
 
         //Kiblast draw
         L1.draw(g2);
-        g2.setColor(Color.RED);
-        g2.draw(L1.getSkillHitbox());
+        //g2.setColor(Color.RED);
+        // g2.draw(L1.getSkillHitbox());
 
 
         // player2.update();
         player2.draw(g2);
-        g2.setColor(Color.RED);
-        g2.draw(player2.getHitbox());
+        // g2.setColor(Color.RED);
+        // g2.draw(player2.getHitbox());
     
-        g2.setColor(Color.BLUE);
-        g2.draw(player2.getHurtbox());
+        // g2.setColor(Color.BLUE);
+        // g2.draw(player2.getHurtbox());
 
         L2.draw(g2);
 
@@ -300,28 +302,41 @@ public class GamePanel extends JPanel implements Runnable {
     private void checkGameOver() {
         if (player.Health <= 0 || player2.Health <= 0) {
             isPaused = true;
+            //this.playSE(9);
             String winner = player.Health <= 0 ? player2.character : player.character;
             showGameOver(winner);
         }
     }
     
     private void showGameOver(String winner) {
+        if (delay < 100) delay++;
+        else{
         if (backgroundLabel2 != null) this.remove(backgroundLabel2);
 
         backgroundLabel2 = new JLabel(new ImageIcon("res/imagesUI/menu/pausePanel.png"));
         backgroundLabel2.setBounds(0, 50, getWidth(), getHeight());
         this.add(backgroundLabel2);
+        JLabel winLabel = new JLabel(new ImageIcon("res/imagesUI/menu/ko.png"));
+        winLabel.setBounds(0, -120, getWidth(), getHeight());
+        backgroundLabel2.add(winLabel);
+
+        JLabel wintitle = new JLabel(winner + " chiến thắng");
+        wintitle.setFont(new Font("Arial", Font.BOLD, 40));
+        wintitle.setForeground(Color.YELLOW);
+        wintitle.setBounds(440, 300, 400, 50);
+        wintitle.setHorizontalAlignment(SwingConstants.CENTER);
+        backgroundLabel2.add(wintitle);
 
         JButton restartButton2 = createButton("Chơi lại");
-        restartButton2.setBounds(380, 260, 500, 50);
+        restartButton2.setBounds(380, 360, 500, 50);
         backgroundLabel2.add(restartButton2);
         
         JButton backMainMenu = createButton("Quay lại màn hình chính");
-        backMainMenu.setBounds(380, 340, 500, 50);
+        backMainMenu.setBounds(380, 430, 500, 50);
           backgroundLabel2.add(backMainMenu);
 
         JButton exitButton2 = createButton("Thoát trò chơi");
-        exitButton2.setBounds(380, 420, 500, 50);
+        exitButton2.setBounds(380, 500, 500, 50);
         backgroundLabel2.add(exitButton2);
 
         restartButton2.addActionListener(e -> {
@@ -330,6 +345,7 @@ public class GamePanel extends JPanel implements Runnable {
         });
 
         exitButton2.addActionListener(e -> System.exit(0));
+        }
     }
     
     private void restartGame() {

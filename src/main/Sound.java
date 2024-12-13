@@ -23,7 +23,8 @@ public class Sound {
         soundURL[6] = getClass().getResource("/res/sounds/backmusic.wav");
 
         soundURL[7] = getClass().getResource("/res/sounds/kiBlast.wav");
-
+        soundURL[8] = getClass().getResource("/res/UI/soundUI/s26.wav");
+        soundURL[9] = getClass().getResource("/res/UI/soundUI/s27.wav");
     }
 
     public void setFile(int i){
@@ -46,6 +47,6 @@ public class Sound {
     }
 
     public void stop(){
-        clip.stop();
+        if (clip != null && clip.isRunning()) clip.stop(); 
     }
 }

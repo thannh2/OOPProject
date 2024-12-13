@@ -14,11 +14,11 @@ public class Keyboard2 implements KeyListener {
     private long keyboardTime = 0;
     private long lastFallingTime = 0;
 
-    private final long UP_COOLDOWN = 800;
-    private final long PUNCH_COOLDOWN = 400; 
-    private final long KICK_COOLDOWN = 400; 
-    private final long SKILL_COOLDOWN = 900;
-    private final long KEYBOARD_COOLDOWN = 350;
+    private final long UP_COOLDOWN = 750;
+    private final long PUNCH_COOLDOWN = 500; 
+    private final long KICK_COOLDOWN = 500; 
+    private final long SKILL_COOLDOWN = 1000;
+    private final long KEYBOARD_COOLDOWN = 300;
     private final long MOVEMENT_COOLDOWN = 10;
     
     @Override

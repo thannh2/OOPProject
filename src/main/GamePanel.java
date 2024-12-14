@@ -5,14 +5,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
 import src.entity.Player;
 import src.entity.Player2;
 import src.entity.skill.Kame;
@@ -21,6 +19,8 @@ import src.entity.skill.KiBlast;
 public class GamePanel extends JPanel implements Runnable {
     private static final int SCREEN_WIDTH = 1280;
     private static final int SCREEN_HEIGHT = 720;
+    private boolean isPaused = false; 
+    private JLabel backgroundLabel2;
 
     private static final int FPS = 60;
 
@@ -40,6 +40,7 @@ public class GamePanel extends JPanel implements Runnable {
     CollisionChecker collisionChecker = new CollisionChecker(this);
 
     Sound sound = new Sound();
+    private int delay = 1;
 
     BufferedImage bg;
 
@@ -52,6 +53,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     BufferedImage gokuAvt, vegetaAvt;
 
+    public int check = 0;
+
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.white);
@@ -59,6 +62,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(keyboard);
         this.addKeyListener(keyboard2);
         this.setFocusable(true);
+
         JButton pauseButton = new JButton();
         URL pauseIcon = getClass().getResource("/res/imagesUI/menu/pause.png");
         if (pauseIcon != null) pauseButton.setIcon(new ImageIcon(pauseIcon));
@@ -67,10 +71,10 @@ public class GamePanel extends JPanel implements Runnable {
         pauseButton.setBounds(600, 20, 200, 100);
         pauseButton.addActionListener(e -> showPause());
         this.add(pauseButton);
-        
     }
 
     public void startGameThread(String backGround) {
+        this.playSE(8);
         this.gameThread = new Thread(this);
         this.gameThread.start();
         try{
@@ -141,6 +145,7 @@ public class GamePanel extends JPanel implements Runnable {
         L2.update();
         K1.update();
         checkCollisions();
+        checkGameOver();
 
     }
 
@@ -181,25 +186,25 @@ public class GamePanel extends JPanel implements Runnable {
 
         // player.update();
         player.draw(g2);
-        g2.setColor(Color.RED);
-        g2.draw(player.getHitbox());
+        //g2.setColor(Color.RED);
+        // g2.draw(player.getHitbox());
     
-        g2.setColor(Color.BLUE);
-        g2.draw(player.getHurtbox());
+        // g2.setColor(Color.BLUE);
+        // g2.draw(player.getHurtbox());
 
         //Kiblast draw
         L1.draw(g2);
-        g2.setColor(Color.RED);
-        g2.draw(L1.getSkillHitbox());
+        //g2.setColor(Color.RED);
+        // g2.draw(L1.getSkillHitbox());
 
 
         // player2.update();
         player2.draw(g2);
-        g2.setColor(Color.RED);
-        g2.draw(player2.getHitbox());
+        // g2.setColor(Color.RED);
+        // g2.draw(player2.getHitbox());
     
-        g2.setColor(Color.BLUE);
-        g2.draw(player2.getHurtbox());
+        // g2.setColor(Color.BLUE);
+        // g2.draw(player2.getHurtbox());
 
         L2.draw(g2);
 
@@ -263,40 +268,92 @@ public class GamePanel extends JPanel implements Runnable {
         return button;
     }
     
-//    private JLabel createImageLabel(String resourcePath, int x, int y, int width, int height) {
-//        URL imageUrl = getClass().getResource(resourcePath);
-//        JLabel label = new JLabel();
-//        if (imageUrl != null) {
-//            label.setIcon(new ImageIcon(imageUrl));
-//        }
-//        label.setBounds(x, y, width, height);
-//        this.add(label);
-//        return label;
-//    }
     
     
     public void showPause() {
-//    	JLabel pauselabel = new JLabel();
-//    	pauselabel = createImageLabel("/res/imagesUI/menu/pausePanel.png",350, 100, 660, 488);
-    	JButton resumeButton = createButton("Tiếp tục");
-        resumeButton.setBounds(390, 300, 500, 50);
+
+        JLabel backgroundLabel = new JLabel();
+        backgroundLabel.setIcon(new ImageIcon("res/imagesUI/menu/pausePanel.png"));
+        backgroundLabel.setBounds(330, 50, getWidth(), getHeight());
+        this.add(backgroundLabel);
+
+        JButton resumeButton = createButton("Tiếp tục");
+        resumeButton.setBounds(40, 260, 500, 50);
+        backgroundLabel.add(resumeButton);
         
-        this.add(resumeButton);
-        JButton exitButton = createButton("Thoát trò chơi");
-        exitButton.setBounds(390, 400, 500, 50);
-        exitButton.addActionListener(e -> exit());
-        this.add(exitButton);
-        //this.add(pauselabel);
+        JButton backMainMenu = createButton("Quay lại màn hình chính");
+        backMainMenu.setBounds(40, 340, 500, 50);
+          backgroundLabel.add(backMainMenu); 
+
+      JButton exitButton = createButton("Thoát trò chơi");
+      exitButton.setBounds(40, 420, 500, 50);
+        backgroundLabel.add(exitButton);
+
         resumeButton.addActionListener(e -> {
-        	this.remove(resumeButton);
-        	//this.remove(pauselabel);
-        	this.remove(exitButton);
+            this.remove(backgroundLabel);
         });
-        //     	this.revalidate();
-//    	this.repaint();
+
+        exitButton.addActionListener(e -> System.exit(0));
+    	
+	}
+    private void checkGameOver() {
+        if (player.Health <= 0 || player2.Health <= 0) {
+            isPaused = true;
+            //this.playSE(9);
+            String winner = player.Health <= 0 ? player2.character : player.character;
+            showGameOver(winner);
+        }
     }
     
-    public void exit() {
-    	System.exit(0);
+    private void showGameOver(String winner) {
+        if (delay < 100) delay++;
+        else{
+        if (backgroundLabel2 != null) this.remove(backgroundLabel2);
+
+        backgroundLabel2 = new JLabel(new ImageIcon("res/imagesUI/menu/pausePanel.png"));
+        backgroundLabel2.setBounds(0, 50, getWidth(), getHeight());
+        this.add(backgroundLabel2);
+        JLabel winLabel = new JLabel(new ImageIcon("res/imagesUI/menu/ko.png"));
+        winLabel.setBounds(0, -120, getWidth(), getHeight());
+        backgroundLabel2.add(winLabel);
+
+        JLabel wintitle = new JLabel(winner + " chiến thắng");
+        wintitle.setFont(new Font("Arial", Font.BOLD, 40));
+        wintitle.setForeground(Color.YELLOW);
+        wintitle.setBounds(440, 300, 400, 50);
+        wintitle.setHorizontalAlignment(SwingConstants.CENTER);
+        backgroundLabel2.add(wintitle);
+
+        JButton restartButton2 = createButton("Chơi lại");
+        restartButton2.setBounds(380, 360, 500, 50);
+        backgroundLabel2.add(restartButton2);
+        
+        JButton backMainMenu = createButton("Quay lại màn hình chính");
+        backMainMenu.setBounds(380, 430, 500, 50);
+          backgroundLabel2.add(backMainMenu);
+
+        JButton exitButton2 = createButton("Thoát trò chơi");
+        exitButton2.setBounds(380, 500, 500, 50);
+        backgroundLabel2.add(exitButton2);
+
+        restartButton2.addActionListener(e -> {
+            this.remove(backgroundLabel2);
+            restartGame();
+        });
+
+        exitButton2.addActionListener(e -> System.exit(0));
+        }
     }
+    
+    private void restartGame() {
+        player.Health = 100;
+        player2.Health = 100;
+        player.x = 100;  // Reset vị trí ban đầu
+        player.y = 400;
+        player2.x = 1000;
+        player2.y = 400;
+        isPaused = false; // Tiếp tục trò chơi
+        repaint();
+    }
+    
 }

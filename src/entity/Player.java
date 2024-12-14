@@ -57,7 +57,7 @@ public class Player extends Entity {
         y = 100.0f;
         velX = 0.0f;
         velY = 0.0f;
-        speed = 8;
+        speed = 10;
         action = Action.Idle;
         reverse = false;
         doJump = false;
@@ -160,6 +160,7 @@ public class Player extends Entity {
         if(Health <= 0){
             action = Action.Lose;
             loseCounter++;
+            actions.get(action).getHurtbox().setLocation((int)this.x + 38, (int)this.y + 32);
             if(loseCounter>3){
                 if(loseNum == 1) loseNum = 2;
             }
@@ -189,6 +190,7 @@ public class Player extends Entity {
                 }
             // velY = -speed;
             // y += velY;
+            velY = -20;
                 doJump = true;
             }
         // }
@@ -202,6 +204,7 @@ public class Player extends Entity {
         //     }
         }
         else if (kb.left == true) {
+            if(x>-50 && x<1230){
             if(doJump == false){
             direction = -1;
             action = Action.Left;
@@ -210,15 +213,30 @@ public class Player extends Entity {
             actions.get(action).getHurtbox().setLocation((int)this.x + 16, (int)this.y + 48);
             }
             else{
-                velY += -speed;
+                velX = -speed;
+            x += velX;
+                velY += 1;
                     JumpCounter++;
                     if(JumpCounter > 1){
                         y += velY;
                     }
-                    if(y < 380) doJump = false;
+                    if(velY<0) {
+                        action = Action.Up; 
+                        if(direction == 1) {
+                            actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
+                        } else {
+                            actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 24 - 46, (int)this.y + 24);
+                        }
+                    }
+                    if(velY>=0) doJump = false;
             }
+        } else{
+            if(x<=-50) x += 5;
+            else if(x>=1230) x-=5;
         }
+    }
         else if (kb.right == true) {
+            if(x>-50 && x<1230){
             if(doJump == false){
             direction = 1;
             action = Action.Right;
@@ -227,14 +245,28 @@ public class Player extends Entity {
             actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 48);
             }
             else{
-                velY += -speed;
+                velX = speed;
+            x += velX;
+                velY += 1;
                     JumpCounter++;
                     if(JumpCounter > 1){
                         y += velY;
                     }
-                    if(y < 380) doJump = false;
+                    if(velY<0) {
+                        action = Action.Up; 
+                        if(direction == 1) {
+                            actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
+                        } else {
+                            actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 24 - 46, (int)this.y + 24);
+                        }
+                    }
+                    if(velY>=0) doJump = false;
             }
+        }  else{
+            if(x<=-50) x += 5;
+            else if(x>=1230) x-=5;
         }
+    }
         else if (kb.punch == true) {
             // actionNum = 1;
             // actionCounter = 4;
@@ -360,12 +392,12 @@ public class Player extends Entity {
                     }
                 }
                 if(doJump==true){
-                    velY += -speed;
+                    velY += 1;
                     JumpCounter++;
                     if(JumpCounter > 1){
                         y += velY;
                     }
-                    if(y<530) {
+                    if(velY<0) {
                         action = Action.Up; 
                         if(direction == 1) {
                             actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);
@@ -373,7 +405,7 @@ public class Player extends Entity {
                             actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 24 - 46, (int)this.y + 24);
                         }
                     }
-                    if(y < 380) doJump = false;
+                    if(velY>=0) doJump = false;
                 }
                 if(kiBlastDo == 1){
                     kiBlastCounter++;
@@ -421,11 +453,11 @@ public class Player extends Entity {
 
        // this.x += this.velX;
        // this.y += this.velY;
-        velY = 0;
+        
         if(y < 535) {
             if(doJump == false){
                 action = Action.Down;
-                this.velY += speed;
+                velY += 1;
                 y += velY;
                 if(direction == 1) {
                     actions.get(action).getHurtbox().setLocation((int)this.x + 24, (int)this.y + 24);

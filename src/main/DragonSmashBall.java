@@ -19,7 +19,7 @@ public class DragonSmashBall extends JFrame {
     private int currentWidth = 1280;
     private int currentHeight = 720;
     private double scaleX = 1, scaleY = 1;
-
+    private int currentPlayer = 1; // Người chơi hiện tại
     public DragonSmashBall() {
         setTitle("Dragon Smash Ball Z");
         setSize((int)(currentWidth * scaleX), (int)(currentHeight * scaleY )); // Tăng kích thước màn hình
@@ -160,7 +160,7 @@ public class DragonSmashBall extends JFrame {
         screenSizeLabel.setBounds(350, yPosition, 600, 30);
         mainPanel.add(screenSizeLabel);
 
-        String[] screenSizes = {"1920x1080", "1280x720", "800x600"};
+        String[] screenSizes = {"1280x720", "1920x1080", "800x600"};
         JComboBox<String> screenSizeComboBox = new JComboBox<>(screenSizes);
         screenSizeComboBox.setBounds(350, yPosition + 40, 600, 30);
         mainPanel.add(screenSizeComboBox);
@@ -232,14 +232,14 @@ public class DragonSmashBall extends JFrame {
         //setupTitle();
         setupCharacterAnimations();
         setupButtons();
-        setupBackgroundMusic();
+        //setupBackgroundMusic();
         mainPanel.revalidate();
         mainPanel.repaint();
     }
     
     private void showCharacterSelectionScreen() {
         mainPanel.removeAll();
-
+        currentPlayer = 1;
         // Đặt nền cho giao diện chọn nhân vật
         mainPanel = new JPanel() {
             @Override
@@ -355,7 +355,7 @@ public class DragonSmashBall extends JFrame {
         return button;
     }
     
-    private int currentPlayer = 1; // Người chơi hiện tại
+    
     private int player1Selection = 0; // Nhân vật của người chơi 1
     private int player2Selection = 0; // Nhân vật của người chơi 2
     
@@ -369,7 +369,7 @@ public class DragonSmashBall extends JFrame {
 
     
     private void showMapSelectionScreen() {
-    	currentPlayer = 1;
+    	
         mainPanel.removeAll();
         setupBackground("/res/imagesUI/menu/menuback.png");
 

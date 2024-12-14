@@ -32,7 +32,7 @@ public class Keyboard implements KeyListener {
         long currentTime = System.currentTimeMillis();
         
 
-        if (number == KeyEvent.VK_W && currentTime - lastUpTime >= UP_COOLDOWN && !(left || right || down || punch || kick || skill)) {
+        if (number == KeyEvent.VK_W && currentTime - lastUpTime >= UP_COOLDOWN) {
             up = true;
             isFalling = true;
             lastFallingTime = currentTime;
@@ -77,7 +77,7 @@ public class Keyboard implements KeyListener {
             keyboardTime = currentTime;
         }
 
-        if (number == KeyEvent.VK_L && currentTime - lastSkillTime >= SKILL_COOLDOWN && currentTime - keyboardTime >= KEYBOARD_COOLDOWN && !isFalling) {
+        if (number == KeyEvent.VK_L && currentTime - lastSkillTime >= SKILL_COOLDOWN && currentTime - keyboardTime >= KEYBOARD_COOLDOWN) {
             skill = true;
             lastSkillTime = currentTime;
             keyboardTime = currentTime;

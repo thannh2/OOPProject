@@ -20,6 +20,8 @@ public class DragonSmashBall extends JFrame {
     private int currentHeight = 720;
     private double scaleX = 1, scaleY = 1;
     private int currentPlayer = 1; // Người chơi hiện tại
+    Sound sound = new Sound();
+    private JFrame window;
     public DragonSmashBall() {
         setTitle("Dragon Smash Ball Z");
         setSize((int)(currentWidth * scaleX), (int)(currentHeight * scaleY )); // Tăng kích thước màn hình
@@ -34,6 +36,7 @@ public class DragonSmashBall extends JFrame {
 
         setVisible(true);
     }
+    
 
     private void setupBackground(String backGround) {
         mainPanel = new JPanel() {
@@ -112,6 +115,8 @@ public class DragonSmashBall extends JFrame {
         button.setBorderPainted(false);
 
         button.addActionListener(e -> {
+            sound.setFile(10);
+            sound.play();
             if (label.equals("Vào Game")) {
                 showCharacterSelectionScreen(); // Hiển thị màn hình chọn nhân vật
             } else if (label.equals("Cài đặt")) {
@@ -267,7 +272,17 @@ public class DragonSmashBall extends JFrame {
         characterGrid.setBounds(310, 150, 650, 350); // Điều chỉnh tọa độ và kích thước
         characterGrid.setLayout(new GridLayout(2, 4, 5, 5));
         characterGrid.setOpaque(false);
+        JPanel frameGrid = new JPanel();
+        frameGrid.setBounds(320, 150, 650, 350); // Điều chỉnh tọa độ và kích thước
+        frameGrid.setLayout(new GridLayout(2, 4, 5, 5));
+        frameGrid.setOpaque(false);
+        for (int i = 0; i < 8; i++){
+            JLabel frameLabel = new JLabel();
+            frameLabel = createImageLabel("/res/imagesUI/menu/avatarBorder.png",0, 0, getWidth(), getHeight());
+            frameGrid.add(frameLabel);
 
+        }
+        mainPanel.add(frameGrid);
         // Danh sách nhân vật (ảnh tối và sáng)
         String[][] characterimagesUI = {
             {"/res/imagesUI/goku/gokuAvatar2Off.png", "/res/imagesUI/goku/gokuAvatar2.png", "/res/imagesUI/goku/gokuCard.jpg"},
@@ -307,6 +322,7 @@ public class DragonSmashBall extends JFrame {
         URL darkImageUrl = getClass().getResource(imagesUI[0]);
         URL lightImageUrl = getClass().getResource(imagesUI[1]);
         URL card = getClass().getResource(imagesUI[2]);
+        
         if (darkImageUrl != null && lightImageUrl != null) {
             button.setIcon(new ImageIcon(darkImageUrl));
             button.setRolloverIcon(new ImageIcon(lightImageUrl));
@@ -413,8 +429,7 @@ public class DragonSmashBall extends JFrame {
         // Bắt đầu game với map đã chọn
         System.out.println("Bắt đầu game với map: " + mapImage);
         menuMusicClip.stop();
-       
-        JFrame window = new JFrame();
+        window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setTitle("Fighting Game");
@@ -423,15 +438,14 @@ public class DragonSmashBall extends JFrame {
         window.add(gamePanel);
 
         window.pack();
-
+        
         window.setLocationRelativeTo(null);
         window.setVisible(true);
-
         gamePanel.startGameThread(mapImage);
-
         gamePanel.playMusic(6);
-        this.dispose();
-
+        //this.dispose();
+        // gamePanel.revalidate();
+        // gamePanel.repaint();
     }
     public void showReady(String mapImage) {
     	mainPanel.removeAll();

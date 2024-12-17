@@ -5,13 +5,17 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+
 import src.entity.Player;
 import src.entity.Player2;
 import src.entity.skill.Kame;
@@ -187,7 +191,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         // player.update();
         player.draw(g2);
-        //g2.setColor(Color.RED);
+        // g2.setColor(Color.RED);
         // g2.draw(player.getHitbox());
     
         // g2.setColor(Color.BLUE);
@@ -290,6 +294,13 @@ public class GamePanel extends JPanel implements Runnable {
       exitButton.setBounds(40, 420, 500, 50);
         backgroundLabel.add(exitButton);
 
+        backMainMenu.addActionListener(e -> {
+            this.stopMusic();
+            SwingUtilities.invokeLater(() -> new DragonSmashBall());
+            JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            if (parentFrame != null) parentFrame.dispose();
+        });
+
         resumeButton.addActionListener(e -> {
             this.remove(backgroundLabel);
         });
@@ -331,11 +342,18 @@ public class GamePanel extends JPanel implements Runnable {
         
         JButton backMainMenu = createButton("Quay lại màn hình chính");
         backMainMenu.setBounds(380, 430, 500, 50);
-          backgroundLabel2.add(backMainMenu);
+        backgroundLabel2.add(backMainMenu);
 
         JButton exitButton2 = createButton("Thoát trò chơi");
         exitButton2.setBounds(380, 500, 500, 50);
         backgroundLabel2.add(exitButton2);
+        
+        backMainMenu.addActionListener(e -> {
+            this.stopMusic();
+            SwingUtilities.invokeLater(() -> new DragonSmashBall());
+            JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            if (parentFrame != null) parentFrame.dispose();
+        });
 
         restartButton2.addActionListener(e -> {
             this.remove(backgroundLabel2);
@@ -353,7 +371,8 @@ public class GamePanel extends JPanel implements Runnable {
         player.y = 400;
         player2.x = 1000;
         player2.y = 400;
-        isPaused = false; // Tiếp tục trò chơi
+        isPaused = false; // Tiếp tục trò chơi\
+        revalidate();
         repaint();
     }
     

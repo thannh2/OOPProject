@@ -443,7 +443,7 @@ public class DragonSmashBall extends JFrame {
         window.setVisible(true);
         gamePanel.startGameThread(mapImage);
         gamePanel.playMusic(6);
-        //this.dispose();
+        this.dispose();
         // gamePanel.revalidate();
         // gamePanel.repaint();
     }

@@ -25,6 +25,7 @@ public class Sound {
         soundURL[7] = getClass().getResource("/res/sounds/kiBlast.wav");
         soundURL[8] = getClass().getResource("/res/UI/soundUI/s26.wav");
         soundURL[9] = getClass().getResource("/res/UI/soundUI/s27.wav");
+        soundURL[10] = getClass().getResource("/res/UI/soundUI/s17.wav");
     }
 
     public void setFile(int i){

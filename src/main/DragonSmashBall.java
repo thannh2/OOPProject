@@ -28,7 +28,8 @@ public class DragonSmashBall extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        setupBackground("/res/imagesUI/menu/title.png");     
+        setupBackground("/res/imagesUI/menu/title.png");
+        //setupTitle();
         setupCharacterAnimations();
         setupButtons();
         setupBackgroundMusic();

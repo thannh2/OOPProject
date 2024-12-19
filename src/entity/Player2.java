@@ -42,6 +42,7 @@ public class Player2 extends Entity {
         actions.put(Action.Skill, new ActionBox(zeroBox, new Rectangle(0, 0, 56, 72)));
         actions.put(Action.Hit, new ActionBox(zeroBox, zeroBox));
         actions.put(Action.Lose, new ActionBox(zeroBox, zeroBox));
+        actions.put(Action.Kame, new ActionBox(zeroBox, zeroBox));
     }
     public Rectangle getHitbox() {
         return actions.get(action).getHitbox();
@@ -52,7 +53,7 @@ public class Player2 extends Entity {
     }
 
     public void setDefaultValues() {
-        x = 400.0f;
+        x = 1000.0f;
         y = 100.0f;
         velX = 0.0f;
         velY = 0.0f;
@@ -80,6 +81,10 @@ public class Player2 extends Entity {
             kick4 = goku.kick4;
             kiBlast1 = goku.kiBlast1;
             kiBlast2 = goku.kiBlast2;
+            kame1 = goku.kame1;
+            kame2 = goku.kame2;
+            kame3 = goku.kame3;
+            kame4 = goku.kame4;
             //reverse image
             rup = goku.rup;
             rdown = goku.rdown;
@@ -95,6 +100,10 @@ public class Player2 extends Entity {
             rkick4 = goku.rkick4;
             rkiBlast1 = goku.rkiBlast1;
             rkiBlast2 = goku.rkiBlast2;
+            rkame1 = goku.rkame1;
+            rkame2 = goku.rkame2;
+            rkame3 = goku.rkame3;
+            rkame4 = goku.rkame4;
 
             getHit = goku.getHit;
             rgetHit = goku.rgetHit;
@@ -120,6 +129,10 @@ public class Player2 extends Entity {
             kick4 = vegeta.kick4;
             kiBlast1 = vegeta.kiBlast1;
             kiBlast2 = vegeta.kiBlast2;
+            kame1 = vegeta.kame1;
+            kame2 = vegeta.kame2;
+            kame3 = vegeta.kame3;
+            kame4 = vegeta.kame4;
 
 
             rup = vegeta.rup;
@@ -136,6 +149,10 @@ public class Player2 extends Entity {
             rkick4 = vegeta.rkick4;
             rkiBlast1 = vegeta.rkiBlast1;
             rkiBlast2 = vegeta.rkiBlast2;
+            rkame1 = vegeta.rkame1;
+            rkame2 = vegeta.rkame2;
+            rkame3 = vegeta.rkame3;
+            rkame4 = vegeta.rkame4;
 
             getHit = vegeta.getHit;
             rgetHit = vegeta.rgetHit;
@@ -146,7 +163,7 @@ public class Player2 extends Entity {
         }
     }
 
-    public void update(int skillx, int hit) {
+    public void update(int skillx, int hit, int kameHit) {
         if(Health <= 0){
             action = Action.Lose;
             loseCounter++;
@@ -172,6 +189,7 @@ public class Player2 extends Entity {
            // action = Action.Up;
             // velY = -speed;
             // y += velY;
+            if(doKame==false){
             if(doJump == false){
                 if(direction == 1) {
                     actions.get(action).getHurtbox().setLocation((int)this.x + 8, (int)this.y + 24);
@@ -183,7 +201,7 @@ public class Player2 extends Entity {
 
             velY = -20;
                 doJump = true;
-            }
+            }}
         }
         // else if (kb.down == true) {
         //     // action = Action.Down;
@@ -195,6 +213,7 @@ public class Player2 extends Entity {
         //     }
         // }
         else if (kb.left == true) {
+            if(doKame==false){
             if(x>-50 && x<1230){
             if(doJump == false){
             direction = -1;
@@ -224,9 +243,10 @@ public class Player2 extends Entity {
         } else{
             if(x<=-50) x += 5;
             else if(x>=1230) x-=5;
-        }
+        }}
     }
         else if (kb.right == true) {
+            if(doKame==false){
             if(x>-50 && x<1230){
             if(doJump == false){
             direction = 1;
@@ -257,7 +277,7 @@ public class Player2 extends Entity {
             if(x<=-50) x += 5;
             else if(x>=1230) x-=5;
         }
-    }
+    }}
         else if (kb.punch == true) {
             // actionNum = 1;
             // actionCounter = 4;
@@ -326,6 +346,19 @@ public class Player2 extends Entity {
                 //actions.get(action).getHitbox().setLocation((int)this.x + 120 - 38 - 46, (int)this.y + 32);
             }
         }
+        else if(kb.kame == true){
+            if(y>=535 && mana >= 80){
+            action = Action.Kame;
+            doKame = true;
+            kameDo = true;
+            if(direction == 1) {
+                // actions.get(action).getHitbox().setLocation((int)actions.get(action).getHitbox().getX(), (int)this.y);
+                actions.get(action).getHurtbox().setLocation((int)this.x + 38, (int)this.y + 32);
+            } else {
+                // actions.get(action).getHitbox().setLocation((int)actions.get(action).getHitbox().getX(), (int)this.y);
+                actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 38 - 46, (int)this.y + 32);
+            }}
+        }
         else {
            // L.update();
             // if(direction == 1) {
@@ -333,7 +366,7 @@ public class Player2 extends Entity {
             // } else {
             //     actions.get(action).getHurtbox().setLocation((int)this.x + 120 - 8 - 46, (int)this.y + 32);
             // }
-            if(actionDo == 1 || kickDo == 1 || doJump == true || kiBlastDo == 1 || doGetHit == true){
+            if(actionDo == 1 || kickDo == 1 || doJump == true || kiBlastDo == 1 || doGetHit == true || kameHit == 1 || doKame == true){
                 if(actionDo == 1){
                     if(actionNum>3){
                         if(direction == 1) {
@@ -427,10 +460,40 @@ public class Player2 extends Entity {
                     gethitCounter++;
                     if(gethitCounter>8){
                         Health -= 5;
+                        if(mana<80) mana+=5;
                         doGetHit = false;
                         gethitCounter = 0;
                     }
                 }
+                if(kameHit == 1){
+                    System.out.println("kameHit");
+                    action = Action.Hit;
+                    if(minusHealth > -50){
+                    gethitCounter++;
+                if(gethitCounter>1){
+                    Health -= 5;
+                    minusHealth -=5;
+                    gethitCounter = 0;
+                }
+                }else{
+                    System.out.println("null kamehit");
+                    action = Action.Idle;
+                    kameHit = -1;
+                }
+            }
+            if(doKame == true){
+                mana = 0;
+                kameDo = false;
+                kameCounter++;
+                if(kameCounter>20){
+                    kameNum++;
+                    kameCounter=0;
+                }
+                if(kameNum>=4){
+                     kameNum=1;
+                     doKame = false;
+                }
+            }
             }
             else {
                 action = Action.Idle;
@@ -634,6 +697,32 @@ public class Player2 extends Entity {
                             image = rlose1;
                         }
                         else image = rlose2;
+                     }
+                     break;
+                     case Kame:
+                     if(direction == 1){
+                        switch(kameNum){
+                            case 1:
+                              image = kame1;
+                            case 2:
+                              image = kame2;
+                            case 3:
+                              image = kame3;
+                            case 4:
+                              image = kame4;
+                        }
+                     }
+                     else if (direction==-1){
+                        switch(kameNum){
+                            case 1:
+                              image = rkame1;
+                            case 2:
+                              image = rkame2;
+                            case 3:
+                              image = rkame3;
+                            case 4:
+                              image = rkame4;
+                        }
                      }
             }
 

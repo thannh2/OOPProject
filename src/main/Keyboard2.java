@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class Keyboard2 implements KeyListener {
-    public boolean up, down, right, left, punch, kick, skill;
+    public boolean up, down, right, left, punch, kick, skill, kame;
     private boolean isFalling = false;
 
     private long lastPunchTime = 0;
@@ -82,6 +82,12 @@ public class Keyboard2 implements KeyListener {
             lastSkillTime = currentTime;
             keyboardTime = currentTime;
         }
+
+        if(number == KeyEvent.VK_NUMPAD5 && currentTime - lastSkillTime >= SKILL_COOLDOWN && currentTime - keyboardTime >= KEYBOARD_COOLDOWN && !isFalling) {
+            kame = true;
+            lastSkillTime = currentTime;
+            keyboardTime = currentTime;
+        }
     }
 
     @Override
@@ -114,6 +120,10 @@ public class Keyboard2 implements KeyListener {
 
         if (number == KeyEvent.VK_NUMPAD3) {
             skill = false;
+        }
+
+        if (number == KeyEvent.VK_NUMPAD5) {
+            kame = false;
         }
     }
 }

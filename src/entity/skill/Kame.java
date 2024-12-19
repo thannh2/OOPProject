@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import java.awt.Rectangle;
 
 import src.main.GamePanel;
 
@@ -13,7 +14,7 @@ public class Kame extends Skill {
     
     GamePanel gp;
 
-    BufferedImage kame1, kame2, kame3, kame4, kame5, kame6, kame7, kame8;
+    BufferedImage back1, back2, back3, back4, body1, body2, body3, body4, head;
 
 
     public Kame(int x, int y, GamePanel gp, int direction){
@@ -21,18 +22,22 @@ public class Kame extends Skill {
         this.y = y;
         this.gp = gp;
         this.direction = direction;
+        Rectangle zeroBox = new Rectangle(0, 0, 0, 0);
+        this.SkillHitbox = new Rectangle(x, y, 1100,80);
+        getImage();
     }
 
     public void getImage(){
         try{
-            kame1 = ImageIO.read(new File("./res/skill/kamehameHa/1.jpg"));
-            kame2 = ImageIO.read(new File("./res/skill/kamehameHa/2.jpg"));
-            kame3 = ImageIO.read(new File("./res/skill/kamehameHa/3.jpg"));
-            kame4 = ImageIO.read(new File("./res/skill/kamehameHa/4.jpg"));
-            kame5 = ImageIO.read(new File("./res/skill/kamehameHa/5.jpg"));
-            kame6 = ImageIO.read(new File("./res/skill/kamehameHa/6.jpg"));
-            kame7 = ImageIO.read(new File("./res/skill/kamehameHa/7.jpg"));
-            kame8 = ImageIO.read(new File("./res/skill/kamehameHa/8.jpg"));
+            back1 = ImageIO.read(new File("./res/skill/kamehameHa/back1.png"));
+            back2 = ImageIO.read(new File("./res/skill/kamehameHa/back2.png"));
+            back3 = ImageIO.read(new File("./res/skill/kamehameHa/back3.png"));
+            back4 = ImageIO.read(new File("./res/skill/kamehameHa/back4.png"));
+            body1 = ImageIO.read(new File("./res/skill/kamehameHa/body1.png"));
+            body2 = ImageIO.read(new File("./res/skill/kamehameHa/body2.png"));
+            body3 = ImageIO.read(new File("./res/skill/kamehameHa/body3.png"));
+            body4 = ImageIO.read(new File("./res/skill/kamehameHa/body4.png"));
+            head = ImageIO.read(new File("./res/skill/kamehameHa/head1.png"));
 
         }
         catch(IOException e){
@@ -41,59 +46,81 @@ public class Kame extends Skill {
     }
 
     public void update(){
-        // skillCounter++;
-        // if(skillCounter>3){
-        //     skillAct++;
-        // }
-        // if(skillAct > 8){
-        //     skillAct = 1;
-        // }
-
-        skillAct = 8;
+        if(direction == 1){
+            this.SkillHitbox = new Rectangle(x , y, 1100,70);
+            // System.out.println(this.SkillHitbox);
+            //x+=speed;
+        }
+        else if(direction == -1){
+            this.SkillHitbox = new Rectangle(x -1100, y, 1100,70);
+            //x-=speed;
+        }
+           skillCounter++;
+           if(skillCounter>20){
+               skillAct++;
+               skillCounter = 0;
+           }
+           if(skillAct > 4){
+               skillAct = 1;
+           }
+        //skillAct = 1;
     }
 
     public void draw(Graphics2D g2){
-        BufferedImage image = null;
+        BufferedImage back = null;
+        BufferedImage body = null;
+        if(direction == 1){
             switch (skillAct) {
-              case 1:
-              image = kame1;
-              break;
-
-              case 2:
-              image = kame2;
-              break;
-
-              case 3:
-              image = kame3;
-              break;
-
-              case 4:
-              image = kame4;
-              break;
-
-              case 5:
-              image = kame5;
-              break;
-              
-              case 6:
-              image = kame6;
-
-              case 7:
-              image = kame7;
-              break;
-
-              case 8:
-              image = kame8;
-              break;
-              
+                case 1:
+                back = back1;
+                body = body1;
+                g2.drawImage(head, x+1100, y+2,70,72,null);
+                break;
+                case 2:
+                back = back2;
+                body = body2;
+                g2.drawImage(head, x+1100, y+8,58,60,null);
+                break;
+                case 3:
+                back = back3;
+                body = body3;
+                g2.drawImage(head, x+1089, y+27,70/3,72/3,null);
+                break;
+                case 4:
+                body = body4;
+                back = back4;
+                g2.drawImage(head, x+1089, y+30,21,22,null);
+                break;
             }
-
-            if(direction == 1){
-                g2.drawImage(image, x, y, 827,71*3,null);
+            g2.drawImage(back, x, y, 80,80,null);
+            g2.drawImage(body, x+55, y+15, 1050,48,null);
+        }
+        else if(direction == -1){
+            switch (skillAct) {
+                case 1:
+                back = back1;
+                body = body1;
+                g2.drawImage(head, x-1100, y+2,-70,72,null);
+                break;
+                case 2:
+                back = back2;
+                body = body2;
+                g2.drawImage(head, x-1100, y+8,-58,60,null);
+                break;
+                case 3:
+                back = back3;
+                body = body3;
+                g2.drawImage(head, x-1089, y+27,-70/3,72/3,null);
+                break;
+                case 4:
+                body = body4;
+                back = back4;
+                g2.drawImage(head, x-1089, y+30,-21,22,null);
+                break;
             }
-            else if(direction == -1){
-                g2.drawImage(image, x, y, -827, 71*3, null);
-            }
+            g2.drawImage(back, x, y, -80,80,null);
+            g2.drawImage(body, x-55, y+15, -1050,48,null);
+        }
     }
 
 

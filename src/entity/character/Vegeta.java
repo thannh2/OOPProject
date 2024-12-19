@@ -30,6 +30,11 @@ public class Vegeta extends Character {
             kiBlast1 = ImageIO.read(new File("./res/vegeta/kiBlast1.png"));
             kiBlast2 = ImageIO.read(new File("./res/vegeta/kiBlast2.png"));
 
+            kame1 = ImageIO.read(new File("./res/vegeta/kame1.png"));
+            kame2 = ImageIO.read(new File("./res/vegeta/kame2.png"));
+            kame3 = ImageIO.read(new File("./res/vegeta/kame3.png"));
+            kame4 = ImageIO.read(new File("./res/vegeta/kame4.png"));
+
             //reverse image
             rup = ImageIO.read(new File("./res/vegeta/rup.png"));
             rdown = ImageIO.read(new File("./res/vegeta/rdown.png"));
@@ -46,6 +51,11 @@ public class Vegeta extends Character {
 
             rkiBlast1 = ImageIO.read(new File("./res/vegeta/rkiBlast1.png"));
             rkiBlast2 = ImageIO.read(new File("./res/vegeta/rkiBlast2.png"));
+
+            rkame1 = ImageIO.read(new File("./res/vegeta/rkame1.png"));
+            rkame2 = ImageIO.read(new File("./res/vegeta/rkame2.png"));
+            rkame3 = ImageIO.read(new File("./res/vegeta/rkame3.png"));
+            rkame4 = ImageIO.read(new File("./res/vegeta/rkame4.png"));
 
             //get hit and lose
             getHit = ImageIO.read(new File("./res/vegeta/getHit.png"));

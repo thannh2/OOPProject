@@ -32,6 +32,7 @@ public class Entity {
     public int kiBlastNum = 1, kiBlastDo = 0;
 
     public double Health = 100;
+    public double minusHealth=0;
 
     public BufferedImage getHit, rgetHit, lose1, lose2, rlose1, rlose2;
 
@@ -41,4 +42,10 @@ public class Entity {
     public boolean doLose = false;
     public int loseCounter = 0;
     public int loseNum = 1;
+
+    public BufferedImage kame1, kame2, kame3, kame4, rkame1, rkame2, rkame3, rkame4;
+    public boolean doKame = false, kameDo = false;
+    public int kameCounter = 0, kameNum = 1;
+
+    public double mana = 0;
 }

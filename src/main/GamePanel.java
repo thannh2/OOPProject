@@ -5,17 +5,15 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 
+import src.entity.Action;
 import src.entity.Player;
 import src.entity.Player2;
 import src.entity.skill.Kame;
@@ -40,7 +38,8 @@ public class GamePanel extends JPanel implements Runnable {
     public KiBlast L1 = new KiBlast(10000, 100000, this, 2);
     public KiBlast L2 = new KiBlast(10000, 100000, this, 2);
 
-    public Kame K1 = new Kame((int)player.x, 500, this, 1);
+    public Kame K1 = new Kame(1200, 50000, this, -1);
+    public Kame K2 = new Kame(1200, 50000, this, -1);
 
     CollisionChecker collisionChecker = new CollisionChecker(this);
 
@@ -50,8 +49,8 @@ public class GamePanel extends JPanel implements Runnable {
     BufferedImage bg;
 
     //Health
-    BufferedImage border1, border2;
-    BufferedImage health1, health2;
+    BufferedImage border1, manaborder;
+    BufferedImage health1, mana;
 
     BufferedImage P1, P2;
     BufferedImage win;
@@ -86,10 +85,10 @@ public class GamePanel extends JPanel implements Runnable {
             bg = ImageIO.read(new File("."+backGround));
             
             border1 = ImageIO.read(new File("./res/health/border.png"));
-            border2 = ImageIO.read(new File("./res/health/border.png"));
+            manaborder = ImageIO.read(new File("./res/health/manaborder.png"));
 
             health1 = ImageIO.read(new File("./res/health/health.png"));
-            health2 = ImageIO.read(new File("./res/health/health.png"));
+            mana = ImageIO.read(new File("./res/health/mana.png"));
 
             P1 = ImageIO.read(new File("./res/map/P1.jpg"));
             P2 = ImageIO.read(new File("./res/map/P2.jpg"));
@@ -105,7 +104,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 
     public void checkCollisions() {
-        if (collisionChecker.checkCollision(player, player2, L1, L2)) {
+        if (collisionChecker.checkCollision(player, player2, L1, L2, K1, K2)) {
             // System.out.println("Player 1 attacked Player 2!");
         }
         // if (collisionChecker.checkCollision(player2, player)) {
@@ -114,8 +113,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        player.update(L1.x, collisionChecker.getHit1);
-        player2.update(L2.x, collisionChecker.getHit2);
+        player.update(L1.x, collisionChecker.getHit1, collisionChecker.kameHit1);
+        player2.update(L2.x, collisionChecker.getHit2, collisionChecker.kameHit2);
 
         if(collisionChecker.skillHit1 > 1){
             L2.x = 1000000;
@@ -145,10 +144,38 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
             }
+
+        if(player.kameDo == true){
+            playSE(11);
+            if(player.direction == 1){
+                K1 = new Kame((int)player.x+120, (int)player.y+20, this, player.direction);
+            }
+            else{
+                K1 = new Kame((int)player.x, (int)player.y+20, this, player.direction);
+            }
+        }
+        else if(player.doKame == false){
+            K1 = new Kame(1200, 50000, this, -1);
+        }
+
+        if(player2.kameDo == true){
+            playSE(11);
+            if(player2.direction == 1){
+                K2 = new Kame((int)player2.x+90, (int)player2.y+20, this, player2.direction);
+            }
+            else{
+                K2 = new Kame((int)player2.x +40, (int)player2.y+20, this, player2.direction);
+            }
+        }
+        else if(player2.doKame == false){
+            K2 = new Kame(1200, 50000, this, -1);
+        }
         
+
         L1.update();
         L2.update();
         K1.update();
+        K2.update();
         checkCollisions();
         checkGameOver();
 
@@ -158,16 +185,25 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D)g;
-
+        //background
         g2.drawImage(bg, 0, 0, 1280,720,null );
 
+        //p1
         g2.drawImage(border1, 68, 0, 879/3,94/3,null );
-
-        g2.drawImage(border2, 1284-70, 0, -879/3,94/3,null );
-
         g2.drawImage(health1, 68+4, 5, (int)(player.Health/100*859/3), 65/3,null );
 
-        g2.drawImage(health2, 1280-70, 5, (int)-(player2.Health/100*859/3), 65/3,null );
+        
+
+        g2.drawImage(manaborder, 61, 28, 879/4,94/4,null );
+        g2.drawImage(mana, 61, 28,(int)(player.mana/80*879/4),65/4+5,null );
+
+        //p2
+
+        g2.drawImage(border1, 1284-70, 0, -879/3,94/3,null );
+        g2.drawImage(health1, 1280-70, 5, (int)-(player2.Health/100*859/3), 65/3,null );
+
+        g2.drawImage(manaborder, 1284-66, 28, -879/4,94/4,null );
+        g2.drawImage(mana, 1284-66, 28,(int)-(player2.mana/80*879/4),65/4+5,null );
 
         //avatar
         //p1
@@ -191,7 +227,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         // player.update();
         player.draw(g2);
-        // g2.setColor(Color.RED);
+        //g2.setColor(Color.RED);
         // g2.draw(player.getHitbox());
     
         // g2.setColor(Color.BLUE);
@@ -214,6 +250,8 @@ public class GamePanel extends JPanel implements Runnable {
         L2.draw(g2);
 
         K1.draw(g2);
+       // g2.draw(K1.getSkillHitbox());
+        K2.draw(g2);
     }
 
     @Override
@@ -294,13 +332,6 @@ public class GamePanel extends JPanel implements Runnable {
       exitButton.setBounds(40, 420, 500, 50);
         backgroundLabel.add(exitButton);
 
-        backMainMenu.addActionListener(e -> {
-            this.stopMusic();
-            SwingUtilities.invokeLater(() -> new DragonSmashBall());
-            JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            if (parentFrame != null) parentFrame.dispose();
-        });
-
         resumeButton.addActionListener(e -> {
             this.remove(backgroundLabel);
         });
@@ -342,18 +373,11 @@ public class GamePanel extends JPanel implements Runnable {
         
         JButton backMainMenu = createButton("Quay lại màn hình chính");
         backMainMenu.setBounds(380, 430, 500, 50);
-        backgroundLabel2.add(backMainMenu);
+          backgroundLabel2.add(backMainMenu);
 
         JButton exitButton2 = createButton("Thoát trò chơi");
         exitButton2.setBounds(380, 500, 500, 50);
         backgroundLabel2.add(exitButton2);
-        
-        backMainMenu.addActionListener(e -> {
-            this.stopMusic();
-            SwingUtilities.invokeLater(() -> new DragonSmashBall());
-            JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            if (parentFrame != null) parentFrame.dispose();
-        });
 
         restartButton2.addActionListener(e -> {
             this.remove(backgroundLabel2);
@@ -367,12 +391,13 @@ public class GamePanel extends JPanel implements Runnable {
     private void restartGame() {
         player.Health = 100;
         player2.Health = 100;
+        player.mana = 0;
+        player2.mana = 0;
         player.x = 100;  // Reset vị trí ban đầu
         player.y = 400;
         player2.x = 1000;
         player2.y = 400;
-        isPaused = false; // Tiếp tục trò chơi\
-        revalidate();
+        isPaused = false; // Tiếp tục trò chơi
         repaint();
     }
     

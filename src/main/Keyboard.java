@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class Keyboard implements KeyListener {
-    public boolean up, down, right, left, punch, kick, skill;
+    public boolean up, down, right, left, punch, kick, skill, kame;
     private boolean isFalling = false;
 
     private long lastPunchTime = 0;
@@ -32,7 +32,7 @@ public class Keyboard implements KeyListener {
         long currentTime = System.currentTimeMillis();
         
 
-        if (number == KeyEvent.VK_W && currentTime - lastUpTime >= UP_COOLDOWN) {
+        if (number == KeyEvent.VK_W && currentTime - lastUpTime >= UP_COOLDOWN && !(left || right || down || punch || kick || skill)) {
             up = true;
             isFalling = true;
             lastFallingTime = currentTime;
@@ -77,8 +77,13 @@ public class Keyboard implements KeyListener {
             keyboardTime = currentTime;
         }
 
-        if (number == KeyEvent.VK_L && currentTime - lastSkillTime >= SKILL_COOLDOWN && currentTime - keyboardTime >= KEYBOARD_COOLDOWN) {
+        if (number == KeyEvent.VK_L && currentTime - lastSkillTime >= SKILL_COOLDOWN && currentTime - keyboardTime >= KEYBOARD_COOLDOWN && !isFalling) {
             skill = true;
+            lastSkillTime = currentTime;
+            keyboardTime = currentTime;
+        }
+        if(number == KeyEvent.VK_I && currentTime - lastSkillTime >= SKILL_COOLDOWN && currentTime - keyboardTime >= KEYBOARD_COOLDOWN && !isFalling){
+            kame = true;
             lastSkillTime = currentTime;
             keyboardTime = currentTime;
         }
@@ -114,6 +119,10 @@ public class Keyboard implements KeyListener {
 
         if (number == KeyEvent.VK_L) {
             skill = false;
+        }
+
+        if(number == KeyEvent.VK_I) {
+            kame = false;
         }
     }
 }

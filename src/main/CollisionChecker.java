@@ -2,6 +2,7 @@ package src.main;
 import java.awt.Rectangle;
 import src.entity.Player;
 import src.entity.Player2;
+import src.entity.skill.Kame;
 import src.entity.skill.KiBlast;
 
 public class CollisionChecker {
@@ -10,6 +11,7 @@ public class CollisionChecker {
 
 	public int getHit1 = 0, getHit2 = 0;
 	public int skillHit1 = 0, skillHit2 = 0;
+	public int kameHit1 = 0, kameHit2 = 0;
 
 
 	public CollisionChecker(GamePanel gp) {
@@ -23,7 +25,7 @@ public class CollisionChecker {
                mine.y + mine.height > other.y;
 	}
 
-	public boolean checkCollision(Player player, Player2 player2, KiBlast L1, KiBlast L2) {
+	public boolean checkCollision(Player player, Player2 player2, KiBlast L1, KiBlast L2, Kame K1, Kame K2) {
 		Rectangle playerHitbox = player.getHitbox();
 		Rectangle player2Hurtbox = player2.getHurtbox();
 		Rectangle playerHurtbox = player.getHurtbox();
@@ -50,10 +52,22 @@ public class CollisionChecker {
 			getHit1++;
 			return true;
 		}
+		if(intersects(K1.getSkillHitbox(), player2Hurtbox)){
+			System.out.println("Kame 1->2");
+			kameHit2=1;
+			//getHit2++;
+			return true;
+		}
+		if(intersects(K2.getSkillHitbox(), playerHurtbox)){
+			kameHit1=1;
+			return true;
+		}
 		getHit1 = 0;
 		getHit2 = 0;
 		skillHit1 = 0;
 		skillHit2 = 0;
+		kameHit2 = -1;
+		kameHit1 = -1;
 		return false;
 	}
 }
